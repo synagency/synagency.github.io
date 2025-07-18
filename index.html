@@ -4,11 +4,17 @@
     <meta charset="UTF-8">
     <title>Syn Agency – Agence Digitale Premium</title>
     <meta name="description" content="Syn Agency : agence digitale haut de gamme, portfolio, services, expertise OnlyFans.">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="./css/style.css?v=1.7">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Barre de progression de scroll -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+    
     <!-- Navigation -->
     <header>
         <div style="display:flex;align-items:center;justify-content:center;gap:22px;max-width:980px;margin:0 auto;">
@@ -23,14 +29,14 @@
             <a href="#contact" id="nav-contact">Contact</a>
         </nav>
         <div id="lang-switch" style="margin-top:18px;display:flex;justify-content:center;gap:16px;">
-            <button id="fr-btn" class="btn" style="padding:8px 14px;font-size:1.1em;background:none;border:none;box-shadow:none;">🇫🇷</button>
-            <button id="en-btn" class="btn" style="padding:8px 14px;font-size:1.1em;background:none;border:none;box-shadow:none;">🇬🇧</button>
+            <button id="fr-btn" style="padding:8px 14px;font-size:1.4em;background:rgba(26,9,62,0.7);border:1px solid #23233a;border-radius:8px;cursor:pointer;transition:all 0.2s;color:#f5f5fa;">🇫🇷</button>
+            <button id="en-btn" style="padding:8px 14px;font-size:1.4em;background:rgba(26,9,62,0.7);border:1px solid #23233a;border-radius:8px;cursor:pointer;transition:all 0.2s;color:#f5f5fa;">🇬🇧</button>
         </div>
     </header>
     <main class="container" id="main-animate" style="opacity:0; transform:translateY(40px); transition:opacity 1.2s, transform 1.2s;">
         <!-- Accueil -->
-        <section id="home" class="section hero" style="min-height:48vh;">
-            <div class="hero-content" style="max-width:580px;">
+        <section id="home" class="section hero">
+            <div class="hero-content">
                 <h2 class="hero-title" id="hero-title">Agence digitale haut de gamme pour créateurs ambitieux</h2>
                 <div style="margin:28px 0;">
                     <span id="member-counter" style="font-size:2.6em;font-weight:700;color:#b48aff;">0</span>
@@ -39,7 +45,6 @@
                         -webkit-background-clip: text;
                         -webkit-text-fill-color: transparent;
                         background-clip: text;
-                        text-fill-color: transparent;
                         font-weight:600;
                         opacity:0; transition:opacity 1.2s;">
                         clients satisfaits
@@ -49,8 +54,10 @@
                     Syn Agency propulse votre image et votre business avec une approche créative, minimaliste et premium.<br>
                     <span class="highlight" id="hero-highlight">Stratégie. Créativité. Résultats.</span>
                 </p>
-                <a href="#contact" class="btn hero-btn" id="audit-btn">Demander un audit gratuit</a>
-                <a href="https://calendly.com/bytonio0ck/30min" target="_blank" rel="noopener" class="btn hero-btn" id="calendly-btn" style="margin-left:12px;">Prendre rendez-vous</a>
+                <div class="hero-buttons" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
+                    <a href="#contact" class="btn hero-btn" id="audit-btn">Demander un audit gratuit</a>
+                    <a href="https://calendly.com/bytonio0ck/30min" target="_blank" rel="noopener" class="btn hero-btn" id="calendly-btn">Prendre rendez-vous</a>
+                </div>
             </div>
         </section>
         <!-- Images juste après Accueil -->
@@ -85,15 +92,15 @@
         <section id="results" class="section">
             <h2 style="color:#b48aff;">Nos résultats</h2>
             <div style="display:flex;flex-wrap:wrap;gap:36px;justify-content:center;">
-                <div style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:180px;max-width:220px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
+                <div class="result-card" style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:180px;max-width:220px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
                     <div id="result-revenue" style="font-size:2.2em;font-weight:800;color:#b48aff;margin-bottom:8px;">0€</div>
                     <div style="color:#f5f5fa;font-size:1em;">Revenus générés pour nos clients</div>
                 </div>
-                <div style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:180px;max-width:220px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
+                <div class="result-card" style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:180px;max-width:220px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
                     <div id="result-clients" style="font-size:2.2em;font-weight:800;color:#b48aff;margin-bottom:8px;">0</div>
                     <div style="color:#f5f5fa;font-size:1em;">Clients satisfaits</div>
                 </div>
-                <div style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:180px;max-width:220px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
+                <div class="result-card" style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:180px;max-width:220px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
                     <div id="result-satisfaction" style="font-size:2.2em;font-weight:800;color:#b48aff;margin-bottom:8px;">0%</div>
                     <div style="color:#f5f5fa;font-size:1em;">Taux de satisfaction</div>
                 </div>
@@ -103,17 +110,17 @@
         <section id="team" class="section">
             <h2 style="color:#b48aff;">Notre équipe</h2>
             <div style="display:flex;flex-wrap:wrap;gap:36px;justify-content:center;">
-                <div style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
+                <div class="team-card" style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
                     <img src="assets/team-antoine.jpg" alt="Antoine CEO" style="width:80px;height:80px;border-radius:50%;margin-bottom:14px;object-fit:cover;">
                     <h3 style="color:#b48aff;margin-bottom:8px;font-size:1.12em;font-weight:700;">Antoine</h3>
                     <p style="color:#f5f5fa;font-size:1em;margin:0;">CEO & Stratégie</p>
                 </div>
-                <div style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
+                <div class="team-card" style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
                     <img src="assets/team-charli.jpg" alt="Charli CEO" style="width:80px;height:80px;border-radius:50%;margin-bottom:14px;object-fit:cover;">
                     <h3 style="color:#b48aff;margin-bottom:8px;font-size:1.12em;font-weight:700;">Charli</h3>
                     <p style="color:#f5f5fa;font-size:1em;margin:0;">CEO</p>
                 </div>
-                <div style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
+                <div class="team-card" style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
                     <img src="assets/team-bradley.jpg" alt="Bradley Marketing Digital" style="width:80px;height:80px;border-radius:50%;margin-bottom:14px;object-fit:cover;">
                     <h3 style="color:#b48aff;margin-bottom:8px;font-size:1.12em;font-weight:700;">Bradley</h3>
                     <p style="color:#f5f5fa;font-size:1em;margin:0;">Marketing Digital</p>
@@ -200,6 +207,12 @@
                 document.querySelector('header').style.transform = 'translateY(0)';
                 document.getElementById('header-title').style.opacity = '1';
                 document.getElementById('header-title').style.transform = 'translateY(0)';
+                
+                // Ajouter l'animation glow au titre
+                setTimeout(() => {
+                    document.getElementById('header-title').classList.add('loaded');
+                }, 500);
+                
                 triggerResultsAnimation(); // au cas où la section est déjà visible au chargement
             }, 100);
         });
@@ -338,12 +351,132 @@
         };
         let currentLang = "fr";
         function updateLangUI() {
-            document.getElementById('fr-btn').style.opacity = currentLang === "fr" ? "1" : "0.5";
-            document.getElementById('en-btn').style.opacity = currentLang === "en" ? "1" : "0.5";
+            // Reset complet des styles des boutons avant de définir l'opacité
+            const frBtn = document.getElementById('fr-btn');
+            const enBtn = document.getElementById('en-btn');
+            
+            // Définir les styles de base pour chaque bouton
+            [frBtn, enBtn].forEach(btn => {
+                btn.style.padding = '8px 14px';
+                btn.style.fontSize = '1.4em';
+                btn.style.background = 'rgba(26,9,62,0.7)';
+                btn.style.border = '1px solid #23233a';
+                btn.style.borderRadius = '8px';
+                btn.style.cursor = 'pointer';
+                btn.style.transition = 'all 0.2s';
+                btn.style.color = '#f5f5fa';
+            });
+            
+            // Appliquer l'opacité selon la langue actuelle
+            frBtn.style.opacity = currentLang === "fr" ? "1" : "0.5";
+            enBtn.style.opacity = currentLang === "en" ? "1" : "0.5";
         }
-        document.getElementById('fr-btn').addEventListener('click', function() {
-            currentLang = "fr";
-            const dict = fr;
+
+        // Fonction pour animer le changement de langue
+        function animateLanguageChange(newDict) {
+            // Animation des boutons de langue avec effet ultra-fluide
+            const buttons = document.querySelectorAll('#lang-switch button');
+            buttons.forEach((btn, index) => {
+                setTimeout(() => {
+                    btn.style.transition = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    btn.style.transform = 'scale(1.2) rotateY(10deg) translateZ(10px)';
+                    btn.style.background = 'linear-gradient(135deg, #b48aff, #ffffff, #6c2eb6, #ffffff, #b48aff)';
+                    btn.style.backgroundSize = '300% 300%';
+                    btn.style.backgroundPosition = '100% 0';
+                    btn.style.boxShadow = '0 10px 50px rgba(180, 138, 255, 0.9), 0 0 80px rgba(108, 46, 182, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.4)';
+                    btn.style.filter = 'brightness(1.4) saturate(1.5) drop-shadow(0 5px 15px rgba(180, 138, 255, 0.5))';
+                    
+                    setTimeout(() => {
+                        btn.style.transform = '';
+                        btn.style.background = '';
+                        btn.style.backgroundSize = '';
+                        btn.style.backgroundPosition = '';
+                        btn.style.boxShadow = '';
+                        btn.style.filter = '';
+                        btn.style.transition = '';
+                        
+                        // Force le reset complet des styles
+                        btn.removeAttribute('style');
+                        btn.style.padding = '8px 14px';
+                        btn.style.fontSize = '1.4em';
+                        btn.style.background = 'rgba(26,9,62,0.7)';
+                        btn.style.border = '1px solid #23233a';
+                        btn.style.borderRadius = '8px';
+                        btn.style.cursor = 'pointer';
+                        btn.style.transition = 'all 0.2s';
+                        btn.style.color = '#f5f5fa';
+                        
+                        // Réappliquer l'opacité selon la langue actuelle
+                        updateLangUI();
+                    }, 800);
+                }, index * 80);
+            });
+
+            // Animation de sortie ultra-fluide avec effet de dispersion
+            const elementsToAnimate = document.querySelectorAll('h1, h2, p, button, a, input, textarea, .highlight, .service-card, .result-card, .team-card');
+            
+            elementsToAnimate.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    el.style.opacity = '0.1';
+                    el.style.transform = 'translateY(-20px) scale(0.92) rotateX(8deg) translateZ(-20px)';
+                    el.style.filter = 'blur(4px) brightness(0.7) saturate(0.5)';
+                }, index * 12); // Cascade plus rapide et fluide
+            });
+
+            // Effet de vague lumineuse traversant l'écran
+            const body = document.body;
+            const wave = document.createElement('div');
+            wave.style.position = 'fixed';
+            wave.style.top = '0';
+            wave.style.left = '-100%';
+            wave.style.width = '300%';
+            wave.style.height = '100vh';
+            wave.style.background = 'linear-gradient(90deg, transparent, rgba(180, 138, 255, 0.15), rgba(255, 255, 255, 0.1), rgba(180, 138, 255, 0.15), transparent)';
+            wave.style.zIndex = '9998';
+            wave.style.transition = 'left 1.4s cubic-bezier(0.4, 0, 0.2, 1)';
+            wave.style.pointerEvents = 'none';
+            wave.style.backdropFilter = 'blur(2px)';
+            body.appendChild(wave);
+            
+            setTimeout(() => {
+                wave.style.left = '100%';
+                setTimeout(() => {
+                    body.removeChild(wave);
+                }, 1400);
+            }, 200);
+
+            // Changement du contenu avec timing optimisé
+            setTimeout(() => {
+                updateContent(newDict);
+                
+                // Animation d'entrée ultra-fluide avec effet de matérialisation
+                elementsToAnimate.forEach((el, index) => {
+                    setTimeout(() => {
+                        el.style.transition = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0) scale(1) rotateX(0deg) translateZ(0)';
+                        el.style.filter = 'blur(0) brightness(1) saturate(1)';
+                        
+                        // Petit effet de rebond en fin d'animation
+                        setTimeout(() => {
+                            el.style.transform = 'translateY(-2px) scale(1.02)';
+                            setTimeout(() => {
+                                el.style.transform = 'translateY(0) scale(1)';
+                                // Reset des transitions après l'animation complète
+                                setTimeout(() => {
+                                    el.style.transition = '';
+                                }, 300);
+                            }, 150);
+                        }, 600);
+                        
+                    }, index * 8); // Cascade d'entrée plus rapide et plus fluide
+                });
+            }, 500);
+        }
+
+        // Fonction pour mettre à jour le contenu
+        function updateContent(dict) {
             document.getElementById('nav-home').textContent = dict.nav[0];
             document.getElementById('nav-services').textContent = dict.nav[1];
             document.getElementById('nav-results').textContent = dict.nav[2];
@@ -380,69 +513,151 @@
             document.getElementById('form-send').textContent = dict.formSend;
             document.getElementById('footer-txt').innerHTML = dict.footer;
             document.getElementById('client-satisfait').textContent = dict.clientSatisfait;
+        }
+        document.getElementById('fr-btn').addEventListener('click', function() {
+            if (currentLang === "fr") return; // Éviter l'animation si déjà en français
+            
+            currentLang = "fr";
+            
+            // Animation du bouton cliqué
+            this.style.transform = 'scale(1.2)';
+            this.style.transition = 'all 0.3s ease';
+            
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 300);
+            
+            animateLanguageChange(fr);
             updateLangUI();
         });
         document.getElementById('en-btn').addEventListener('click', function() {
+            if (currentLang === "en") return; // Éviter l'animation si déjà en anglais
+            
             currentLang = "en";
-            const dict = en;
-            document.getElementById('nav-home').textContent = dict.nav[0];
-            document.getElementById('nav-services').textContent = dict.nav[1];
-            document.getElementById('nav-results').textContent = dict.nav[2];
-            document.getElementById('nav-team').textContent = dict.nav[3];
-            document.getElementById('nav-contact').textContent = dict.nav[4];
-            document.getElementById('hero-title').textContent = dict.heroTitle;
-            document.getElementById('hero-desc').innerHTML = dict.heroDesc;
-            document.getElementById('audit-btn').textContent = dict.auditBtn;
-            document.getElementById('calendly-btn').textContent = dict.calendlyBtn;
-            document.getElementById('services-title').textContent = dict.servicesTitle;
-            document.getElementById('service1-title').textContent = dict.service1Title;
-            document.getElementById('service1-desc').textContent = dict.service1Desc;
-            document.getElementById('service2-title').textContent = dict.service2Title;
-            document.getElementById('service2-desc').textContent = dict.service2Desc;
-            document.getElementById('service3-title').textContent = dict.service3Title;
-            document.getElementById('service3-desc').textContent = dict.service3Desc;
-            document.getElementById('service4-title').textContent = dict.service4Title;
-            document.getElementById('service4-desc').textContent = dict.service4Desc;
-            document.querySelector('#results h2').textContent = dict.resultsTitle;
-            document.querySelector('#result-revenue').nextElementSibling.textContent = dict.resultRevenue;
-            document.querySelector('#result-clients').nextElementSibling.textContent = dict.resultClients;
-            document.querySelector('#result-satisfaction').nextElementSibling.textContent = dict.resultSatisfaction;
-            document.querySelector('#team h2').textContent = dict.teamTitle;
-            document.querySelectorAll('#team .service-card, #team div > p').forEach((el, i) => {
-                if (i === 0) el.textContent = dict.teamAntoine;
-                if (i === 1) el.textContent = dict.teamCharli;
-                if (i === 2) el.textContent = dict.teamBradley;
-            });
-            document.getElementById('contact-title').textContent = dict.contactTitle;
-            document.getElementById('contact-desc').innerHTML = dict.contactDesc;
-            document.getElementById('form-name').placeholder = dict.formName;
-            document.getElementById('form-email').placeholder = dict.formEmail;
-            document.getElementById('form-message').placeholder = dict.formMessage;
-            document.getElementById('form-send').textContent = dict.formSend;
-            document.getElementById('footer-txt').innerHTML = dict.footer;
-            document.getElementById('client-satisfait').textContent = dict.clientSatisfait;
+            
+            // Animation du bouton cliqué
+            this.style.transform = 'scale(1.2)';
+            this.style.transition = 'all 0.3s ease';
+            
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 300);
+            
+            animateLanguageChange(en);
             updateLangUI();
         });
         updateLangUI();
 
-        // Smooth scroll for menu navigation
+        // Smooth scroll for menu navigation avec ralenti personnalisé
         document.querySelectorAll('nav a[href^="#"]').forEach(link => {
             link.addEventListener('click', function(e) {
+                // Retirer la classe active de tous les liens
+                document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+                // Ajouter la classe active au lien cliqué
+                this.classList.add('active');
+                
                 const targetId = this.getAttribute('href').slice(1);
                 const target = document.getElementById(targetId);
                 if (target) {
                     e.preventDefault();
-                    window.scrollTo({
-                        top: target.getBoundingClientRect().top + window.scrollY - 32,
-                        behavior: 'smooth'
-                    });
+                    
+                    // Scroll fluide personnalisé avec ralenti
+                    let targetPosition;
+                    
+                    // Pour la section "home", aller au tout début de la page
+                    if (targetId === 'home') {
+                        targetPosition = 0;
+                    } else {
+                        targetPosition = target.getBoundingClientRect().top + window.scrollY - 120;
+                    }
+                    const startPosition = window.scrollY;
+                    const distance = targetPosition - startPosition;
+                    const duration = Math.min(Math.abs(distance) * 0.8 + 800, 2500); // Durée variable selon la distance
+                    let start = null;
+                    
+                    function smoothScroll(timestamp) {
+                        if (!start) start = timestamp;
+                        const progress = Math.min((timestamp - start) / duration, 1);
+                        
+                        // Fonction d'easing pour un ralenti en fin de course
+                        const ease = 1 - Math.pow(1 - progress, 4);
+                        
+                        window.scrollTo(0, startPosition + (distance * ease));
+                        
+                        if (progress < 1) {
+                            requestAnimationFrame(smoothScroll);
+                        }
+                    }
+                    
+                    requestAnimationFrame(smoothScroll);
                 }
             });
         });
 
-        // Scroll-to-top button
+        // Observer pour mettre à jour l'état actif basé sur le scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('nav a[href^="#"]');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, {
+            threshold: 0.3,
+            rootMargin: '-120px 0px -50% 0px' // Ajusté pour tenir compte du header
+        });
+
+        sections.forEach(section => observer.observe(section));
+
+        // Intersection Observer pour les animations au scroll
+        const scrollObserverOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    
+                    // Animation spéciale pour les cartes
+                    if (entry.target.classList.contains('service-card') || 
+                        entry.target.classList.contains('result-card') || 
+                        entry.target.classList.contains('team-card')) {
+                        entry.target.style.animation = 'slideInUp 0.6s ease-out forwards';
+                    }
+                }
+            });
+        }, scrollObserverOptions);
+
+        // Observer tous les éléments animables
+        document.querySelectorAll('.section, .service-card, .result-card, .team-card, .portfolio-item').forEach(el => {
+            scrollObserver.observe(el);
+        });
+
+        // Scroll-to-top button et barre de progression
         const scrollBtn = document.getElementById('scroll-top-btn');
+        const scrollProgress = document.getElementById('scroll-progress');
+        
         window.addEventListener('scroll', () => {
+            // Calcul du pourcentage de scroll
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            
+            // Mise à jour de la barre de progression
+            scrollProgress.style.width = scrollPercent + '%';
+            
+            // Bouton scroll-to-top
             scrollBtn.style.display = window.scrollY > 180 ? 'flex' : 'none';
             scrollBtn.style.opacity = window.scrollY > 180 ? '1' : '0';
             scrollBtn.style.transform = window.scrollY > 180 ? 'scale(1)' : 'scale(0.8)';
@@ -459,7 +674,26 @@
             scrollBtn.style.transform = 'scale(1)';
         });
         scrollBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Scroll vers le haut avec ralenti personnalisé
+            const startPosition = window.scrollY;
+            const duration = Math.min(startPosition * 0.6 + 600, 2000);
+            let start = null;
+            
+            function smoothScrollToTop(timestamp) {
+                if (!start) start = timestamp;
+                const progress = Math.min((timestamp - start) / duration, 1);
+                
+                // Fonction d'easing pour un ralenti en fin de course
+                const ease = 1 - Math.pow(1 - progress, 4);
+                
+                window.scrollTo(0, startPosition * (1 - ease));
+                
+                if (progress < 1) {
+                    requestAnimationFrame(smoothScrollToTop);
+                }
+            }
+            
+            requestAnimationFrame(smoothScrollToTop);
         });
     </script>
 </body>
