@@ -29,8 +29,8 @@
             <a href="#contact" id="nav-contact">Contact</a>
         </nav>
         <div id="lang-switch" style="margin-top:18px;display:flex;justify-content:center;gap:16px;">
-            <button id="fr-btn" style="padding:8px 14px;font-size:1.4em;background:rgba(26,9,62,0.7);border:1px solid #23233a;border-radius:8px;cursor:pointer;transition:all 0.2s;color:#f5f5fa;">🇫🇷</button>
-            <button id="en-btn" style="padding:8px 14px;font-size:1.4em;background:rgba(26,9,62,0.7);border:1px solid #23233a;border-radius:8px;cursor:pointer;transition:all 0.2s;color:#f5f5fa;">🇬🇧</button>
+            <button id="fr-btn" style="padding:8px 14px;font-size:1em;font-weight:600;background:rgba(26,9,62,0.7);border:1px solid #23233a;border-radius:8px;cursor:pointer;transition:all 0.2s;color:#f5f5fa;letter-spacing:0.5px;">FR</button>
+            <button id="en-btn" style="padding:8px 14px;font-size:1em;font-weight:600;background:rgba(26,9,62,0.7);border:1px solid #23233a;border-radius:8px;cursor:pointer;transition:all 0.2s;color:#f5f5fa;letter-spacing:0.5px;">EN</button>
         </div>
     </header>
     <main class="container" id="main-animate" style="opacity:0; transform:translateY(40px); transition:opacity 1.2s, transform 1.2s;">
@@ -110,16 +110,16 @@
         <section id="team" class="section">
             <h2 style="color:#b48aff;">Notre équipe</h2>
             <div style="display:flex;flex-wrap:wrap;gap:36px;justify-content:center;">
-                <div class="team-card" style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
+                <a href="https://www.instagram.com/antoinehzr2/" target="_blank" rel="noopener" class="team-card" style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;text-decoration:none;display:block;transition:all 0.3s ease;">
                     <img src="assets/team-antoine.jpg" alt="Antoine CEO" style="width:80px;height:80px;border-radius:50%;margin-bottom:14px;object-fit:cover;">
                     <h3 style="color:#b48aff;margin-bottom:8px;font-size:1.12em;font-weight:700;">Antoine</h3>
                     <p style="color:#f5f5fa;font-size:1em;margin:0;">CEO & Stratégie</p>
-                </div>
-                <div class="team-card" style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
+                </a>
+                <a href="https://www.instagram.com/charli.sclr/" target="_blank" rel="noopener" class="team-card" style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;text-decoration:none;display:block;transition:all 0.3s ease;">
                     <img src="assets/team-charli.jpg" alt="Charli CEO" style="width:80px;height:80px;border-radius:50%;margin-bottom:14px;object-fit:cover;">
                     <h3 style="color:#b48aff;margin-bottom:8px;font-size:1.12em;font-weight:700;">Charli</h3>
                     <p style="color:#f5f5fa;font-size:1em;margin:0;">CEO</p>
-                </div>
+                </a>
                 <div class="team-card" style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
                     <img src="assets/team-bradley.jpg" alt="Bradley Marketing Digital" style="width:80px;height:80px;border-radius:50%;margin-bottom:14px;object-fit:cover;">
                     <h3 style="color:#b48aff;margin-bottom:8px;font-size:1.12em;font-weight:700;">Bradley</h3>
@@ -176,6 +176,30 @@
         <img src="https://images.icon-icons.com/1875/PNG/512/arrowup_120105.png" alt="Scroll to top" style="width:40px;height:40px;filter:brightness(0) invert(0);margin-top:-2px;">
     </button>
     <script>
+        // Détection du navigateur et affichage des drapeaux appropriés
+        function initLanguageButtons() {
+            const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+            const frBtn = document.getElementById('fr-btn');
+            const enBtn = document.getElementById('en-btn');
+            
+            if (!isChrome) {
+                // Pour tous les navigateurs sauf Chrome, afficher les drapeaux emojis
+                frBtn.innerHTML = '🇫🇷';
+                enBtn.innerHTML = '🇬🇧';
+                // Ajouter la classe pour les styles d'emojis
+                frBtn.classList.add('emoji-mode');
+                enBtn.classList.add('emoji-mode');
+                // Ajuster la taille de police pour les emojis
+                frBtn.style.fontSize = '1.4em';
+                enBtn.style.fontSize = '1.4em';
+                frBtn.style.fontWeight = 'normal';
+                enBtn.style.fontWeight = 'normal';
+                frBtn.style.letterSpacing = '0';
+                enBtn.style.letterSpacing = '0';
+            }
+            // Pour Chrome, on garde "FR" et "EN" comme c'est déjà défini dans le HTML
+        }
+        
         // Animation au survol portfolio
         document.querySelectorAll('.portfolio-item img').forEach(img => {
             img.addEventListener('mouseenter', () => img.classList.add('active'));
@@ -198,6 +222,9 @@
         }
         window.addEventListener('scroll', triggerResultsAnimation);
         window.addEventListener('DOMContentLoaded', () => {
+            // Initialiser les boutons de langue selon le navigateur
+            initLanguageButtons();
+            
             setTimeout(() => {
                 document.getElementById('main-animate').style.opacity = '1';
                 document.getElementById('main-animate').style.transform = 'translateY(0)';
@@ -500,7 +527,7 @@
             document.querySelector('#result-clients').nextElementSibling.textContent = dict.resultClients;
             document.querySelector('#result-satisfaction').nextElementSibling.textContent = dict.resultSatisfaction;
             document.querySelector('#team h2').textContent = dict.teamTitle;
-            document.querySelectorAll('#team .service-card, #team div > p').forEach((el, i) => {
+            document.querySelectorAll('#team .team-card p').forEach((el, i) => {
                 if (i === 0) el.textContent = dict.teamAntoine;
                 if (i === 1) el.textContent = dict.teamCharli;
                 if (i === 2) el.textContent = dict.teamBradley;
@@ -694,6 +721,27 @@
             }
             
             requestAnimationFrame(smoothScrollToTop);
+        });
+
+        // Effet de clic sur les cartes d'équipe cliquables uniquement
+        document.querySelectorAll('#team a.team-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Animation de clic
+                this.style.transform = 'translateY(-10px) scale(0.95)';
+                this.style.transition = 'all 0.1s ease-out';
+                
+                setTimeout(() => {
+                    this.style.transform = 'translateY(-15px) scale(1.05)';
+                    this.style.transition = 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                }, 100);
+                
+                // Petit délai avant la redirection pour voir l'animation
+                setTimeout(() => {
+                    window.open(this.href, '_blank');
+                }, 200);
+                
+                e.preventDefault();
+            });
         });
     </script>
 </body>

@@ -675,18 +675,28 @@ footer {
 
 /* Styles pour les boutons de langue */
 #lang-switch button {
-    font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+    font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
     line-height: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     min-width: 44px;
-    min-height: 44px;
+    min-height: 36px;
     position: relative;
     overflow: hidden;
     transform-style: preserve-3d;
     backface-visibility: hidden;
     perspective: 1000px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Styles spécifiques pour les emojis (navigateurs non-Chrome) */
+#lang-switch button.emoji-mode {
+    font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+    font-weight: normal;
+    letter-spacing: 0;
+    min-height: 44px;
 }
 
 #lang-switch button::before {
@@ -758,13 +768,79 @@ footer {
     background: linear-gradient(135deg, rgba(26, 9, 62, 0.8) 0%, rgba(45, 27, 105, 0.6) 100%);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(180, 138, 255, 0.2);
+    position: relative;
+    overflow: hidden;
 }
 
-#team .team-card:hover {
+/* Styles spécifiques pour les cartes cliquables (liens) */
+#team a.team-card {
+    cursor: pointer;
+}
+
+/* Styles pour les cartes non-cliquables (div) */
+#team div.team-card {
+    cursor: default;
+}
+
+#team div.team-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(108, 46, 182, 0.2) !important;
+    border-color: rgba(180, 138, 255, 0.4) !important;
+}
+
+#team a.team-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(180, 138, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+    z-index: 1;
+}
+
+#team a.team-card:hover::before {
+    left: 100%;
+}
+
+#team a.team-card:hover {
     transform: translateY(-15px) scale(1.05);
     box-shadow: 0 20px 60px rgba(108, 46, 182, 0.4) !important;
     border-color: rgba(180, 138, 255, 0.8) !important;
     background: linear-gradient(135deg, rgba(45, 27, 105, 0.9) 0%, rgba(26, 9, 62, 0.8) 100%);
+}
+
+#team a.team-card:hover h3 {
+    color: #ffffff !important;
+    text-shadow: 0 0 15px rgba(180, 138, 255, 0.8);
+    transform: translateY(-2px);
+}
+
+#team a.team-card:hover p {
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+/* Ajout d'un indicateur visuel pour montrer que c'est cliquable */
+#team a.team-card::after {
+    content: '🔗';
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1em;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 2;
+    transform: scale(0.8);
+    color: #b48aff;
+}
+
+#team a.team-card:hover::after {
+    opacity: 0.9;
+    transform: scale(1.2);
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(180, 138, 255, 0.6);
 }
 
 /* Styles pour les cartes de résultats */
@@ -945,6 +1021,12 @@ footer {
         min-height: 36px !important;
     }
     
+    /* Ajustements spécifiques pour les emojis sur mobile */
+    #lang-switch button.emoji-mode {
+        font-size: 1.3em !important;
+        min-height: 40px !important;
+    }
+    
 /* Bouton scroll-to-top amélioré */
 #scroll-top-btn {
     position: fixed;
@@ -1109,4 +1191,5 @@ footer {
         padding: 20px 0 12px 0;
         font-size: 0.95em;
     }
+}
 }
