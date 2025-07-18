@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Syn Agency – Agence Digitale Premium</title>
+    <meta name="description" content="Syn Agency : agence digitale haut de gamme, portfolio, services, expertise OnlyFans.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <div style="display:flex;align-items:center;justify-content:center;gap:22px;max-width:980px;margin:0 auto;">
+            <!-- Le logo a été retiré -->
+            <h1 id="header-title" style="opacity:0; transform:translateY(-40px); transition:opacity 1.2s 0.1s, transform 1.2s 0.1s;">Syn Agency</h1>
+        </div>
+        <nav>
+            <a href="#home" id="nav-home">Accueil</a>
+            <a href="#services" id="nav-services">Services</a>
+            <a href="#results" id="nav-results">Résultats</a>
+            <a href="#team" id="nav-team">Équipe</a>
+            <a href="#contact" id="nav-contact">Contact</a>
+        </nav>
+        <div id="lang-switch" style="margin-top:18px;display:flex;justify-content:center;gap:16px;">
+            <button id="fr-btn" class="btn" style="padding:8px 14px;font-size:1.1em;background:none;border:none;box-shadow:none;">🇫🇷</button>
+            <button id="en-btn" class="btn" style="padding:8px 14px;font-size:1.1em;background:none;border:none;box-shadow:none;">🇬🇧</button>
+        </div>
+    </header>
+    <main class="container" id="main-animate" style="opacity:0; transform:translateY(40px); transition:opacity 1.2s, transform 1.2s;">
+        <!-- Accueil -->
+        <section id="home" class="section hero" style="min-height:48vh;">
+            <div class="hero-content" style="max-width:580px;">
+                <h2 class="hero-title" id="hero-title">Agence digitale haut de gamme pour créateurs ambitieux</h2>
+                <div style="margin:28px 0;">
+                    <span id="member-counter" style="font-size:2.6em;font-weight:700;color:#b48aff;">0</span>
+                    <span id="client-satisfait" style="font-size:1.3em;
+                        background: linear-gradient(90deg, #b48aff 0%, #fff 100%);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        background-clip: text;
+                        text-fill-color: transparent;
+                        font-weight:600;
+                        opacity:0; transition:opacity 1.2s;">
+                        clients satisfaits
+                    </span>
+                </div>
+                <p class="hero-desc" id="hero-desc" style="margin-bottom:22px;">
+                    Syn Agency propulse votre image et votre business avec une approche créative, minimaliste et premium.<br>
+                    <span class="highlight" id="hero-highlight">Stratégie. Créativité. Résultats.</span>
+                </p>
+                <a href="#contact" class="btn hero-btn" id="audit-btn">Demander un audit gratuit</a>
+                <a href="https://calendly.com/bytonio0ck/30min" target="_blank" rel="noopener" class="btn hero-btn" id="calendly-btn" style="margin-left:12px;">Prendre rendez-vous</a>
+            </div>
+        </section>
+        <!-- Images juste après Accueil -->
+        <div class="portfolio-grid" style="margin-bottom:56px; display:block;">
+            <div class="portfolio-item" style="width:100%; max-width:540px; margin:0 auto;">
+                <img src="assets/portfolio1.jpg" alt="Projet 1 Syn Agency" class="fade-img" style="opacity:0; width:100%; height:220px; object-fit:cover;">
+            </div>
+        </div>
+        <!-- Services -->
+        <section id="services" class="section">
+            <h2 id="services-title">Nos Services</h2>
+            <div class="services-list">
+                <div class="service-card">
+                    <h3 id="service1-title">Gestion & Optimisation</h3>
+                    <p id="service1-desc">Prise en charge complète de votre compte OnlyFans : contenu, abonnés, messages, analyse de performance.</p>
+                </div>
+                <div class="service-card">
+                    <h3 id="service2-title">Stratégie & Marketing</h3>
+                    <p id="service2-desc">Campagnes sur-mesure, branding, réseaux sociaux, collaborations et acquisition de nouveaux fans.</p>
+                </div>
+                <div class="service-card">
+                    <h3 id="service3-title">Création de contenu</h3>
+                    <p id="service3-desc">Accompagnement créatif, production photo/vidéo et storytelling pour sublimer votre image.</p>
+                </div>
+                <div class="service-card">
+                    <h3 id="service4-title">Support & Conseil</h3>
+                    <p id="service4-desc">Coaching personnalisé, assistance 7j/7, confidentialité et expertise pour atteindre vos objectifs.</p>
+                </div>
+            </div>
+        </section>
+        <!-- Résultats -->
+        <section id="results" class="section">
+            <h2 style="color:#b48aff;">Nos résultats</h2>
+            <div style="display:flex;flex-wrap:wrap;gap:36px;justify-content:center;">
+                <div style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:180px;max-width:220px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
+                    <div id="result-revenue" style="font-size:2.2em;font-weight:800;color:#b48aff;margin-bottom:8px;">0€</div>
+                    <div style="color:#f5f5fa;font-size:1em;">Revenus générés pour nos clients</div>
+                </div>
+                <div style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:180px;max-width:220px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
+                    <div id="result-clients" style="font-size:2.2em;font-weight:800;color:#b48aff;margin-bottom:8px;">0</div>
+                    <div style="color:#f5f5fa;font-size:1em;">Clients satisfaits</div>
+                </div>
+                <div style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:180px;max-width:220px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
+                    <div id="result-satisfaction" style="font-size:2.2em;font-weight:800;color:#b48aff;margin-bottom:8px;">0%</div>
+                    <div style="color:#f5f5fa;font-size:1em;">Taux de satisfaction</div>
+                </div>
+            </div>
+        </section>
+        <!-- Équipe -->
+        <section id="team" class="section">
+            <h2 style="color:#b48aff;">Notre équipe</h2>
+            <div style="display:flex;flex-wrap:wrap;gap:36px;justify-content:center;">
+                <div style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
+                    <img src="assets/team-antoine.jpg" alt="Antoine CEO" style="width:80px;height:80px;border-radius:50%;margin-bottom:14px;object-fit:cover;">
+                    <h3 style="color:#b48aff;margin-bottom:8px;font-size:1.12em;font-weight:700;">Antoine</h3>
+                    <p style="color:#f5f5fa;font-size:1em;margin:0;">CEO & Stratégie</p>
+                </div>
+                <div style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
+                    <img src="assets/team-charli.jpg" alt="Charli CEO" style="width:80px;height:80px;border-radius:50%;margin-bottom:14px;object-fit:cover;">
+                    <h3 style="color:#b48aff;margin-bottom:8px;font-size:1.12em;font-weight:700;">Charli</h3>
+                    <p style="color:#f5f5fa;font-size:1em;margin:0;">CEO</p>
+                </div>
+                <div style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
+                    <img src="assets/team-bradley.jpg" alt="Bradley Marketing Digital" style="width:80px;height:80px;border-radius:50%;margin-bottom:14px;object-fit:cover;">
+                    <h3 style="color:#b48aff;margin-bottom:8px;font-size:1.12em;font-weight:700;">Bradley</h3>
+                    <p style="color:#f5f5fa;font-size:1em;margin:0;">Marketing Digital</p>
+                </div>
+            </div>
+        </section>
+        <!-- Contact -->
+        <section id="contact" class="section">
+            <h2 id="contact-title">Contactez-nous</h2>
+            <p id="contact-desc">
+                Prêt à passer au niveau supérieur ?<br>
+                Écrivez-nous à <a href="mailto:contact@synagency.fr" class="highlight" id="contact-mail">contact@synagency.fr</a> ou remplissez le formulaire ci-dessous.
+            </p>
+            <form>
+                <input type="text" placeholder="Votre nom" required id="form-name">
+                <input type="email" placeholder="Votre email" required id="form-email">
+                <textarea placeholder="Votre message" required id="form-message"></textarea>
+                <button type="submit" class="btn" id="form-send">Envoyer</button>
+            </form>
+        </section>
+    </main>
+    <!-- ...existing code... -->
+    <footer id="footer-animate" style="opacity:0; transform:translateY(40px); transition:opacity 1.2s 0.3s, transform 1.2s 0.3s;">
+        <span id="footer-txt">&copy; 2025 Syn Agency. Expertise digitale premium. Tous droits réservés.</span>
+        <br>
+        <a href="https://www.instagram.com/syn.agencyy/?hl=fr" target="_blank" rel="noopener" style="color:#b48aff;font-weight:700;text-decoration:none;margin-top:8px;display:inline-block;">
+            Instagram @syn.agencyy
+        </a>
+    </footer>
+    <button id="scroll-top-btn" style="
+        position:fixed;
+        right:32px;
+        bottom:38px;
+        z-index:999;
+        background: linear-gradient(135deg, #b48aff 0%, #6c2eb6 100%);
+        border:none;
+        border-radius:50%;
+        width:58px;
+        height:58px;
+        box-shadow:0 12px 36px #6c2eb6a0, 0 2px 8px #fff2 inset;
+        cursor:pointer;
+        font-size:2.2em;
+        display:none;
+        transition:opacity 0.3s, box-shadow 0.2s, transform 0.2s, background 0.2s;
+        outline:none;
+        opacity:0;
+        padding:0;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        border: 2px solid #23233a;
+    ">
+        <img src="https://images.icon-icons.com/1875/PNG/512/arrowup_120105.png" alt="Scroll to top" style="width:40px;height:40px;filter:brightness(0) invert(0);margin-top:-2px;">
+    </button>
+    <script>
+        // Animation au survol portfolio
+        document.querySelectorAll('.portfolio-item img').forEach(img => {
+            img.addEventListener('mouseenter', () => img.classList.add('active'));
+            img.addEventListener('mouseleave', () => img.classList.remove('active'));
+        });
+
+        // Animation chiffres résultats au scroll
+        let resultsAnimated = false;
+        function triggerResultsAnimation() {
+            if (resultsAnimated) return;
+            const resultsSection = document.getElementById('results');
+            const rect = resultsSection.getBoundingClientRect();
+            const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+            if (rect.top < windowHeight - 80) {
+                resultsAnimated = true;
+                animateResult('result-revenue', 250000, 1200, '€', true);
+                animateResult('result-clients', 100, 900, '+', false);
+                animateResult('result-satisfaction', 98, 900, '%', false);
+            }
+        }
+        window.addEventListener('scroll', triggerResultsAnimation);
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.getElementById('main-animate').style.opacity = '1';
+                document.getElementById('main-animate').style.transform = 'translateY(0)';
+                document.getElementById('footer-animate').style.opacity = '1';
+                document.getElementById('footer-animate').style.transform = 'translateY(0)';
+                document.querySelector('header').style.opacity = '1';
+                document.querySelector('header').style.transform = 'translateY(0)';
+                document.getElementById('header-title').style.opacity = '1';
+                document.getElementById('header-title').style.transform = 'translateY(0)';
+                triggerResultsAnimation(); // au cas où la section est déjà visible au chargement
+            }, 100);
+        });
+        // Ajout animation au header
+        document.querySelector('header').style.opacity = '0';
+        document.querySelector('header').style.transform = 'translateY(-40px)';
+        document.querySelector('header').style.transition = 'opacity 1.2s 0.1s, transform 1.2s 0.1s';
+        document.getElementById('header-title').style.opacity = '0';
+        document.getElementById('header-title').style.transform = 'translateY(-40px)';
+        document.getElementById('header-title').style.transition = 'opacity 1.2s 0.1s, transform 1.2s 0.1s';
+
+        // Animation chiffres résultats
+        function animateResult(id, end, duration, suffix, formatThousands) {
+            const el = document.getElementById(id);
+            let start = 0;
+            let startTime = null;
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const progress = Math.min((timestamp - startTime) / duration, 1);
+                let value = Math.floor(progress * (end - start) + start);
+                if (formatThousands) {
+                    value = value.toLocaleString('fr-FR');
+                }
+                el.textContent = progress < 1 ? value + suffix : end.toLocaleString('fr-FR') + suffix;
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                } else {
+                    el.textContent = end.toLocaleString('fr-FR') + suffix;
+                }
+            }
+            requestAnimationFrame(step);
+        }
+
+        // Animation du compteur de clients satisfaits (0 à 100+)
+        function animateCounter(id, end, duration) {
+            const el = document.getElementById(id);
+            const txt = document.getElementById('client-satisfait');
+            let start = 0;
+            const range = end - start;
+            let startTime = null;
+            txt.style.opacity = '0'; // reset before animation
+            let imagesFaded = false;
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const progress = Math.min((timestamp - startTime) / duration, 1);
+                const value = Math.floor(progress * range + start);
+                el.textContent = progress < 1 ? value : end + '+';
+                // Apparition plus rapide du texte (dès 10% au lieu de 20%)
+                txt.style.opacity = String(Math.max(progress * 2, 0)); // fondu synchronisé, plus rapide
+                if (!imagesFaded && progress > 0.1) {
+                    imagesFaded = true;
+                    document.querySelectorAll('.fade-img').forEach((img, i) => {
+                        setTimeout(() => {
+                            img.style.transition = 'opacity 1.2s';
+                            img.style.opacity = '1';
+                        }, i * 200);
+                    });
+                }
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                } else {
+                    el.textContent = end + '+';
+                    txt.style.opacity = '1';
+                }
+            }
+            requestAnimationFrame(step);
+        }
+        animateCounter('member-counter', 100, 2500);
+
+        // Langues
+        const fr = {
+            nav: ["Accueil", "Services", "Résultats", "Équipe", "Contact"],
+            langBtn: "EN",
+            heroTitle: "Agence digitale haut de gamme pour créateurs ambitieux",
+            heroDesc: "Syn Agency propulse votre image et votre business avec une approche créative, minimaliste et premium.<br><span class='highlight' id='hero-highlight'>Stratégie. Créativité. Résultats.</span>",
+            auditBtn: "Demander un audit gratuit",
+            calendlyBtn: "Prendre rendez-vous",
+            servicesTitle: "Nos Services",
+            service1Title: "Gestion & Optimisation",
+            service1Desc: "Prise en charge complète de votre compte OnlyFans : contenu, abonnés, messages, analyse de performance.",
+            service2Title: "Stratégie & Marketing",
+            service2Desc: "Campagnes sur-mesure, branding, réseaux sociaux, collaborations et acquisition de nouveaux fans.",
+            service3Title: "Création de contenu",
+            service3Desc: "Accompagnement créatif, production photo/vidéo et storytelling pour sublimer votre image.",
+            service4Title: "Support & Conseil",
+            service4Desc: "Coaching personnalisé, assistance 7j/7, confidentialité et expertise pour atteindre vos objectifs.",
+            resultsTitle: "Nos résultats",
+            resultRevenue: "Revenus générés pour nos clients",
+            resultClients: "Clients satisfaits",
+            resultSatisfaction: "Taux de satisfaction",
+            teamTitle: "Notre équipe",
+            teamAntoine: "CEO & Stratégie",
+            teamCharli: "CEO",
+            teamBradley: "Marketing Digital",
+            contactTitle: "Contactez-nous",
+            contactDesc: "Prêt à passer au niveau supérieur ?<br>Écrivez-nous à <a href='mailto:contact@synagency.fr' class='highlight' id='contact-mail'>contact@synagency.fr</a> ou remplissez le formulaire ci-dessous.",
+            formName: "Votre nom",
+            formEmail: "Votre email",
+            formMessage: "Votre message",
+            formSend: "Envoyer",
+            footer: "&copy; 2025 Syn Agency. Expertise digitale premium. Tous droits réservés.",
+            clientSatisfait: "clients satisfaits"
+        };
+        const en = {
+            nav: ["Home", "Services", "Results", "Team", "Contact"],
+            langBtn: "FR",
+            heroTitle: "Premium digital agency for ambitious creators",
+            heroDesc: "Syn Agency boosts your image and business with a creative, minimalist and premium approach.<br><span class='highlight' id='hero-highlight'>Strategy. Creativity. Results.</span>",
+            auditBtn: "Request a free audit",
+            calendlyBtn: "Book an appointment",
+            servicesTitle: "Our Services",
+            service1Title: "Management & Optimization",
+            service1Desc: "Full management of your OnlyFans account: content, subscribers, messages, performance analysis.",
+            service2Title: "Strategy & Marketing",
+            service2Desc: "Tailor-made campaigns, branding, social media, collaborations and new fan acquisition.",
+            service3Title: "Content Creation",
+            service3Desc: "Creative support, photo/video production and storytelling to enhance your image.",
+            service4Title: "Support & Consulting",
+            service4Desc: "Personalized coaching, 7/7 assistance, confidentiality and expertise to reach your goals.",
+            resultsTitle: "Our Results",
+            resultRevenue: "Revenue generated for our clients",
+            resultClients: "Satisfied clients",
+            resultSatisfaction: "Satisfaction rate",
+            teamTitle: "Our Team",
+            teamAntoine: "CEO & Strategy",
+            teamCharli: "CEO",
+            teamBradley: "Digital Marketing",
+            contactTitle: "Contact Us",
+            contactDesc: "Ready to take it to the next level?<br>Email us at <a href='mailto:contact@synagency.fr' class='highlight' id='contact-mail'>contact@synagency.fr</a> or fill out the form below.",
+            formName: "Your name",
+            formEmail: "Your email",
+            formMessage: "Your message",
+            formSend: "Send",
+            footer: "&copy; 2025 Syn Agency. Premium digital expertise. All rights reserved.",
+            clientSatisfait: "satisfied clients"
+        };
+        let currentLang = "fr";
+        function updateLangUI() {
+            document.getElementById('fr-btn').style.opacity = currentLang === "fr" ? "1" : "0.5";
+            document.getElementById('en-btn').style.opacity = currentLang === "en" ? "1" : "0.5";
+        }
+        document.getElementById('fr-btn').addEventListener('click', function() {
+            currentLang = "fr";
+            const dict = fr;
+            document.getElementById('nav-home').textContent = dict.nav[0];
+            document.getElementById('nav-services').textContent = dict.nav[1];
+            document.getElementById('nav-results').textContent = dict.nav[2];
+            document.getElementById('nav-team').textContent = dict.nav[3];
+            document.getElementById('nav-contact').textContent = dict.nav[4];
+            document.getElementById('hero-title').textContent = dict.heroTitle;
+            document.getElementById('hero-desc').innerHTML = dict.heroDesc;
+            document.getElementById('audit-btn').textContent = dict.auditBtn;
+            document.getElementById('calendly-btn').textContent = dict.calendlyBtn;
+            document.getElementById('services-title').textContent = dict.servicesTitle;
+            document.getElementById('service1-title').textContent = dict.service1Title;
+            document.getElementById('service1-desc').textContent = dict.service1Desc;
+            document.getElementById('service2-title').textContent = dict.service2Title;
+            document.getElementById('service2-desc').textContent = dict.service2Desc;
+            document.getElementById('service3-title').textContent = dict.service3Title;
+            document.getElementById('service3-desc').textContent = dict.service3Desc;
+            document.getElementById('service4-title').textContent = dict.service4Title;
+            document.getElementById('service4-desc').textContent = dict.service4Desc;
+            document.querySelector('#results h2').textContent = dict.resultsTitle;
+            document.querySelector('#result-revenue').nextElementSibling.textContent = dict.resultRevenue;
+            document.querySelector('#result-clients').nextElementSibling.textContent = dict.resultClients;
+            document.querySelector('#result-satisfaction').nextElementSibling.textContent = dict.resultSatisfaction;
+            document.querySelector('#team h2').textContent = dict.teamTitle;
+            document.querySelectorAll('#team .service-card, #team div > p').forEach((el, i) => {
+                if (i === 0) el.textContent = dict.teamAntoine;
+                if (i === 1) el.textContent = dict.teamCharli;
+                if (i === 2) el.textContent = dict.teamBradley;
+            });
+            document.getElementById('contact-title').textContent = dict.contactTitle;
+            document.getElementById('contact-desc').innerHTML = dict.contactDesc;
+            document.getElementById('form-name').placeholder = dict.formName;
+            document.getElementById('form-email').placeholder = dict.formEmail;
+            document.getElementById('form-message').placeholder = dict.formMessage;
+            document.getElementById('form-send').textContent = dict.formSend;
+            document.getElementById('footer-txt').innerHTML = dict.footer;
+            document.getElementById('client-satisfait').textContent = dict.clientSatisfait;
+            updateLangUI();
+        });
+        document.getElementById('en-btn').addEventListener('click', function() {
+            currentLang = "en";
+            const dict = en;
+            document.getElementById('nav-home').textContent = dict.nav[0];
+            document.getElementById('nav-services').textContent = dict.nav[1];
+            document.getElementById('nav-results').textContent = dict.nav[2];
+            document.getElementById('nav-team').textContent = dict.nav[3];
+            document.getElementById('nav-contact').textContent = dict.nav[4];
+            document.getElementById('hero-title').textContent = dict.heroTitle;
+            document.getElementById('hero-desc').innerHTML = dict.heroDesc;
+            document.getElementById('audit-btn').textContent = dict.auditBtn;
+            document.getElementById('calendly-btn').textContent = dict.calendlyBtn;
+            document.getElementById('services-title').textContent = dict.servicesTitle;
+            document.getElementById('service1-title').textContent = dict.service1Title;
+            document.getElementById('service1-desc').textContent = dict.service1Desc;
+            document.getElementById('service2-title').textContent = dict.service2Title;
+            document.getElementById('service2-desc').textContent = dict.service2Desc;
+            document.getElementById('service3-title').textContent = dict.service3Title;
+            document.getElementById('service3-desc').textContent = dict.service3Desc;
+            document.getElementById('service4-title').textContent = dict.service4Title;
+            document.getElementById('service4-desc').textContent = dict.service4Desc;
+            document.querySelector('#results h2').textContent = dict.resultsTitle;
+            document.querySelector('#result-revenue').nextElementSibling.textContent = dict.resultRevenue;
+            document.querySelector('#result-clients').nextElementSibling.textContent = dict.resultClients;
+            document.querySelector('#result-satisfaction').nextElementSibling.textContent = dict.resultSatisfaction;
+            document.querySelector('#team h2').textContent = dict.teamTitle;
+            document.querySelectorAll('#team .service-card, #team div > p').forEach((el, i) => {
+                if (i === 0) el.textContent = dict.teamAntoine;
+                if (i === 1) el.textContent = dict.teamCharli;
+                if (i === 2) el.textContent = dict.teamBradley;
+            });
+            document.getElementById('contact-title').textContent = dict.contactTitle;
+            document.getElementById('contact-desc').innerHTML = dict.contactDesc;
+            document.getElementById('form-name').placeholder = dict.formName;
+            document.getElementById('form-email').placeholder = dict.formEmail;
+            document.getElementById('form-message').placeholder = dict.formMessage;
+            document.getElementById('form-send').textContent = dict.formSend;
+            document.getElementById('footer-txt').innerHTML = dict.footer;
+            document.getElementById('client-satisfait').textContent = dict.clientSatisfait;
+            updateLangUI();
+        });
+        updateLangUI();
+
+        // Smooth scroll for menu navigation
+        document.querySelectorAll('nav a[href^="#"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href').slice(1);
+                const target = document.getElementById(targetId);
+                if (target) {
+                    e.preventDefault();
+                    window.scrollTo({
+                        top: target.getBoundingClientRect().top + window.scrollY - 32,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Scroll-to-top button
+        const scrollBtn = document.getElementById('scroll-top-btn');
+        window.addEventListener('scroll', () => {
+            scrollBtn.style.display = window.scrollY > 180 ? 'flex' : 'none';
+            scrollBtn.style.opacity = window.scrollY > 180 ? '1' : '0';
+            scrollBtn.style.transform = window.scrollY > 180 ? 'scale(1)' : 'scale(0.8)';
+            scrollBtn.style.boxShadow = window.scrollY > 180 ? '0 12px 36px #6c2eb6a0, 0 2px 8px #fff2 inset' : '0 2px 8px #6c2eb6a0';
+        });
+        scrollBtn.addEventListener('mouseenter', () => {
+            scrollBtn.style.background = 'linear-gradient(135deg, #6c2eb6 0%, #b48aff 100%)';
+            scrollBtn.style.boxShadow = '0 18px 48px #b48aff99, 0 2px 8px #fff2 inset';
+            scrollBtn.style.transform = 'scale(1.08)';
+        });
+        scrollBtn.addEventListener('mouseleave', () => {
+            scrollBtn.style.background = 'linear-gradient(135deg, #b48aff 0%, #6c2eb6 100%)';
+            scrollBtn.style.boxShadow = '0 12px 36px #6c2eb6a0, 0 2px 8px #fff2 inset';
+            scrollBtn.style.transform = 'scale(1)';
+        });
+        scrollBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
