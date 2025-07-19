@@ -1015,27 +1015,6 @@
                 font-size: 1.2em;
             }
         }
-
-            .nav-links {
-                gap: 20px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .profile-header {
-                flex-direction: column;
-                text-align: center;
-                gap: 15px;
-            }
-
-            .features-list {
-                grid-template-columns: 1fr;
-            }
-
-            .profile-actions {
-                grid-template-columns: 1fr;
-            }
-        }
     </style>
 </head>
 <body>
@@ -1856,6 +1835,17 @@
                 lastLogin: null,
                 isActive: true
             },
+            'valentin@synagency.fr': {
+                email: 'valentin@synagency.fr',
+                password: '$2a$10$vL3lO6uZz123456789AbCdE', // Hash simulé de "valouzz123"
+                role: 'user',
+                name: 'Valentin',
+                avatar: 'VA',
+                permissions: ['dashboard', 'content'],
+                createdAt: new Date().toISOString(),
+                lastLogin: null,
+                isActive: true
+            },
             'user@example.com': {
                 email: 'user@example.com',
                 password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye', // Hash simulé de "password123"
@@ -1949,7 +1939,8 @@
                 // Pour la démo, on compare directement les mots de passe
                 const knownPasswords = {
                     'Monstergtx123!': '$2a$10$N9qo8uLOickgx2ZMRZoMye',
-                    'password123': '$2a$10$92IXUNpkjO0rOQ5byMi.Ye'
+                    'password123': '$2a$10$92IXUNpkjO0rOQ5byMi.Ye',
+                    'valouzz123': '$2a$10$vL3lO6uZz123456789AbCdE'
                 };
                 return knownPasswords[password] === hash;
             }
