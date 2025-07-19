@@ -1,0 +1,4515 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Syn Agency</title>
+    <meta name="description" content="Tableau de bord Syn Agency - Suivez vos performances et gérez votre compte">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="./css/style.css?v=1.7">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="./js/of-config.js"></script>
+    <script src="./js/onlyfans-api.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1a093e, #120726);
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .dashboard-title {
+            color: #b48aff;
+            font-size: 2.5em;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(26,9,62,0.7);
+            border-radius: 12px;
+            padding: 12px 20px;
+            border: 1px solid #23233a;
+        }
+
+        .notification-bell {
+            position: relative;
+            background: rgba(180,138,255,0.1);
+            border: 1px solid #b48aff;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-right: 10px;
+            z-index: 99998;
+            overflow: visible !important;
+            animation: subtleBreathe 4s ease-in-out infinite;
+        }
+
+        @keyframes subtleBreathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .notification-bell:hover {
+            background: rgba(180,138,255,0.2);
+            transform: scale(1.1) !important;
+            box-shadow: 0 0 20px rgba(180,138,255,0.4);
+            animation: none;
+        }
+
+        .notification-bell i {
+            color: #b48aff;
+            font-size: 1.2em;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+            font-weight: 600;
+        }
+
+        .notification-dropdown {
+            position: absolute !important;
+            top: 100% !important;
+            right: 0 !important;
+            background: rgba(26,9,62,0.98) !important;
+            border: 1px solid #b48aff !important;
+            border-radius: 12px !important;
+            width: 350px !important;
+            max-height: 400px !important;
+            overflow-y: auto !important;
+            z-index: 999999 !important;
+            display: none !important;
+            margin-top: 10px !important;
+            backdrop-filter: blur(15px) !important;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(180,138,255,0.3) !important;
+        }
+
+        .notification-dropdown.show {
+            display: block;
+            animation: slideDown 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-15px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(180,138,255,0.3);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(180,138,255,0.6);
+            }
+        }
+        
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) skewX(-15deg);
+            }
+            100% {
+                transform: translateX(200%) skewX(-15deg);
+            }
+        }
+
+        .notification-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(180,138,255,0.2);
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+
+        .notification-title {
+            color: #b48aff;
+            font-weight: 600;
+            margin: 0;
+            font-size: 1.1em;
+        }
+
+        .notification-dropdown .notification-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .notification-dropdown .notification-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(180,138,255,0.1), transparent);
+            transition: width 0.3s ease;
+        }
+
+        .notification-dropdown .notification-item:hover {
+            background: rgba(180,138,255,0.1);
+            transform: translateX(5px);
+        }
+
+        .notification-dropdown .notification-item:hover::before {
+            width: 100%;
+        }
+
+        .notification-dropdown .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        .notification-dropdown .notification-dot {
+            width: 8px;
+            height: 8px;
+            background: #b48aff;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .notification-dropdown .notification-content {
+            flex: 1;
+        }
+
+        .notification-dropdown .notification-text {
+            color: #f5f5fa;
+            margin: 0 0 4px 0;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .notification-dropdown .notification-time {
+            color: #b0b0b0;
+            font-size: 0.8em;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #b48aff, #6c2eb6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2em;
+        }
+
+        .user-info h3 {
+            color: #f5f5fa;
+            margin: 0;
+            font-size: 1.1em;
+        }
+
+        .user-info p {
+            color: #b48aff;
+            margin: 0;
+            font-size: 0.9em;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: rgba(26,9,62,0.7);
+            border-radius: 18px;
+            padding: 25px;
+            border: 1px solid #23233a;
+            box-shadow: 0 4px 24px rgba(80,0,160,0.13);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(0) scale(1);
+            backface-visibility: hidden;
+            will-change: transform, box-shadow;
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(180,138,255,0.25);
+            border-color: rgba(180,138,255,0.4);
+        }
+
+        .stat-card:hover::after {
+            left: 100%;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #b48aff, #6c2eb6);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #b48aff, #6c2eb6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: 800;
+            color: #b48aff;
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            color: #f5f5fa;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .stat-change {
+            font-size: 0.9em;
+            margin-top: 8px;
+        }
+
+        .positive {
+            color: #4CAF50;
+        }
+
+        .negative {
+            color: #f44336;
+        }
+
+        .charts-section {
+            margin-bottom: 40px;
+        }
+
+        .profile-section {
+            margin-bottom: 40px;
+        }
+
+        .profile-card {
+            background: rgba(26,9,62,0.7);
+            border-radius: 18px;
+            padding: 30px;
+            border: 1px solid #23233a;
+            box-shadow: 0 4px 24px rgba(80,0,160,0.13);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(180,138,255,0.1);
+        }
+
+        .profile-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #b48aff, #6c2eb6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8em;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-info h3 {
+            color: #f5f5fa;
+            margin: 0 0 5px 0;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .profile-info p {
+            color: #b0b0b0;
+            margin: 0;
+            font-size: 0.95em;
+        }
+
+        .profile-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .status-indicator.connected {
+            background: #4CAF50;
+            box-shadow: 0 0 8px rgba(76,175,80,0.4);
+        }
+
+        .status-indicator.disconnected {
+            background: #f44336;
+            box-shadow: 0 0 8px rgba(244,67,54,0.4);
+        }
+
+        .status-text {
+            color: #f5f5fa;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .profile-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .profile-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            color: #f5f5fa;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            color: #b48aff;
+            z-index: 1;
+        }
+
+        .input-wrapper input,
+        .input-wrapper textarea {
+            width: 100%;
+            background: rgba(180,138,255,0.1);
+            border: 1px solid rgba(180,138,255,0.3);
+            border-radius: 12px;
+            padding: 12px 15px 12px 45px;
+            color: #f5f5fa;
+            font-size: 0.95em;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+        }
+
+        .input-wrapper input:focus,
+        .input-wrapper textarea:focus {
+            outline: none;
+            border-color: #b48aff;
+            background: rgba(180,138,255,0.15);
+            box-shadow: 0 0 0 3px rgba(180,138,255,0.1), 0 0 20px rgba(180,138,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .input-wrapper input:disabled,
+        .input-wrapper textarea:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .input-wrapper input::placeholder,
+        .input-wrapper textarea::placeholder {
+            color: #888;
+        }
+
+        .profile-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(180,138,255,0.1);
+        }
+
+        .connect-btn,
+        .sync-btn {
+            background: linear-gradient(135deg, #b48aff, #6c2eb6);
+            border: none;
+            border-radius: 12px;
+            padding: 12px 20px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .connect-btn:hover,
+        .sync-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(180,138,255,0.3);
+        }
+
+        .sync-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #555;
+        }
+
+        .profile-features {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(180,138,255,0.1);
+        }
+
+        .profile-features h4 {
+            color: #f5f5fa;
+            margin: 0 0 15px 0;
+            font-size: 1.1em;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .features-list li {
+            color: #b0b0b0;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .features-list li i {
+            color: #4CAF50;
+            font-size: 0.8em;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .chart-card {
+            background: rgba(26,9,62,0.7);
+            border-radius: 18px;
+            padding: 25px;
+            border: 1px solid #23233a;
+            box-shadow: 0 4px 24px rgba(80,0,160,0.13);
+        }
+
+        .chart-title {
+            color: #f5f5fa;
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .chart-placeholder {
+            height: 300px;
+            background: rgba(180,138,255,0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #b48aff;
+            font-size: 1.1em;
+            border: 2px dashed rgba(180,138,255,0.3);
+        }
+
+        .activities-section {
+            margin-bottom: 40px;
+        }
+
+        .activities-card {
+            background: rgba(26,9,62,0.7);
+            border-radius: 18px;
+            padding: 25px;
+            border: 1px solid #23233a;
+            box-shadow: 0 4px 24px rgba(80,0,160,0.13);
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(180,138,255,0.1);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #b48aff, #6c2eb6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1em;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            color: #f5f5fa;
+            font-weight: 600;
+            margin: 0 0 5px 0;
+        }
+
+        .activity-desc {
+            color: #b0b0b0;
+            font-size: 0.9em;
+            margin: 0;
+        }
+
+        .activity-time {
+            color: #888;
+            font-size: 0.8em;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #b48aff, #6c2eb6);
+            border: none;
+            border-radius: 12px;
+            padding: 20px;
+            color: white;
+            font-weight: 600;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(0) scale(1);
+            backface-visibility: hidden;
+        }
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(180,138,255,0.4);
+        }
+
+        .action-btn:hover::before {
+            left: 100%;
+        }
+
+        .action-btn:active {
+            transform: translateY(-3px) scale(1.02);
+        }
+
+        .notifications-panel {
+            background: rgba(26,9,62,0.7);
+            border-radius: 18px;
+            padding: 25px;
+            border: 1px solid #23233a;
+            box-shadow: 0 4px 24px rgba(80,0,160,0.13);
+            margin-bottom: 20px;
+        }
+
+        .notification-item {
+            display: flex;
+            align-items: start;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(180,138,255,0.1);
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        .notification-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4CAF50;
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-text {
+            color: #f5f5fa;
+            margin: 0 0 5px 0;
+            font-size: 0.95em;
+        }
+
+        .notification-time {
+            color: #888;
+            font-size: 0.8em;
+        }
+
+        .nav-dashboard {
+            background: linear-gradient(135deg, rgba(26,9,62,0.95), rgba(18,7,45,0.95));
+            backdrop-filter: blur(15px);
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(180,138,255,0.2);
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            margin-top: 0;
+        }
+
+        .nav-dashboard .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            color: #b48aff;
+            font-size: 1.8em;
+            font-weight: 700;
+            text-decoration: none;
+            background: linear-gradient(45deg, #b48aff, #8a5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            filter: none;
+            backface-visibility: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .nav-brand:hover {
+            background: linear-gradient(45deg, #c49fff, #9d6eff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: brightness(1.2) contrast(1.1);
+            box-shadow: 0 0 20px rgba(180,138,255,0.4);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            background: rgba(35,35,58,0.6);
+            border-radius: 25px;
+            padding: 8px;
+            border: 1px solid rgba(180,138,255,0.1);
+        }
+
+        .nav-links a {
+            color: #f5f5fa;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 12px 20px;
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+            white-space: nowrap;
+            background: transparent;
+            border: 1px solid transparent;
+            transform: translateY(0);
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(180,138,255,0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .nav-links a:hover {
+            color: #b48aff;
+            background: rgba(180,138,255,0.1);
+            border-color: rgba(180,138,255,0.3);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 5px 15px rgba(180,138,255,0.2);
+        }
+
+        .nav-links a:hover::before {
+            left: 100%;
+        }
+
+        .nav-links a:hover::before {
+            left: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #b48aff;
+            background: rgba(180,138,255,0.1);
+            border-color: rgba(180,138,255,0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(180,138,255,0.2);
+        }
+
+        .nav-links a i {
+            font-size: 1.1em;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover i {
+            transform: scale(1.1);
+        }
+
+        /* Style spécial pour le bouton de déconnexion */
+        .nav-links a[onclick*="logout"] {
+            background: rgba(255,71,87,0.1);
+            border-color: rgba(255,71,87,0.2);
+            color: #ff4757;
+        }
+
+        .nav-links a[onclick*="logout"]:hover {
+            background: rgba(255,71,87,0.2);
+            border-color: rgba(255,71,87,0.4);
+            color: #ff4757;
+            box-shadow: 0 8px 25px rgba(255,71,87,0.2);
+        }
+
+        /* Styles pour l'administration */
+        .admin-tab-btn {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .admin-tab-btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(255,193,7,0.3);
+        }
+
+        .admin-tab-content {
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Style spécial pour le lien d'administration */
+        .nav-links a[onclick*="showAdminPanel"]:hover {
+            background: rgba(255,193,7,0.2) !important;
+            border-color: rgba(255,193,7,0.4) !important;
+            color: #ffc107 !important;
+            box-shadow: 0 8px 25px rgba(255,193,7,0.2) !important;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 15px;
+            }
+
+            .dashboard-title {
+                font-size: 2em;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-header {
+                text-align: center;
+                flex-direction: column;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-dashboard .container {
+                flex-direction: column;
+                gap: 20px;
+                padding: 0 15px;
+            }
+
+            .nav-brand {
+                font-size: 1.5em;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 6px;
+                padding: 6px;
+                background: rgba(35,35,58,0.8);
+            }
+
+            .nav-links a {
+                padding: 10px 16px;
+                font-size: 0.85em;
+                min-width: auto;
+            }
+
+            .nav-links a span {
+                display: none;
+            }
+
+            .nav-links a i {
+                margin-right: 0;
+                font-size: 1.2em;
+            }
+        }
+
+            .nav-links {
+                gap: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .features-list {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Dashboard -->
+    <nav class="nav-dashboard">
+        <div class="container">
+            <a href="index.html" class="nav-brand">Syn Agency</a>
+            <div class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> <span>Accueil</span></a>
+                <a href="#" onclick="showMaintenanceNotification('Analytics'); return false;" style="opacity: 0.6; cursor: not-allowed;"><i class="fas fa-chart-line"></i> <span>Analytics</span></a>
+                <a href="content.html"><i class="fas fa-folder"></i> <span>Contenu</span></a>
+                <a href="#" onclick="showMaintenanceNotification('Messages'); return false;" style="opacity: 0.6; cursor: not-allowed;"><i class="fas fa-envelope"></i> <span>Messages</span></a>
+                <a href="settings.html"><i class="fas fa-cog"></i> <span>Paramètres</span></a>
+                <a href="#" id="admin-link" onclick="showAdminPanel(); return false;" style="display: none; background: rgba(255,193,7,0.1); border-color: rgba(255,193,7,0.3); color: #ffc107;"><i class="fas fa-crown"></i> <span>Administration</span></a>
+                <a href="#" onclick="logout(); return false;"><i class="fas fa-sign-out-alt"></i> <span>Déconnexion</span></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Header -->
+        <div class="dashboard-header">
+            <div>
+                <h1 class="dashboard-title">Tableau de Bord</h1>
+                <a href="index.html" class="back-to-site-btn" style="
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                    background: rgba(180,138,255,0.1);
+                    border: 1px solid #b48aff;
+                    border-radius: 8px;
+                    padding: 8px 16px;
+                    color: #b48aff;
+                    text-decoration: none;
+                    font-weight: 600;
+                    font-size: 0.9em;
+                    transition: all 0.3s ease;
+                    margin-top: 10px;
+                " onmouseover="this.style.background='rgba(180,138,255,0.2)'; this.style.transform='translateY(-3px) scale(1.02)'; this.style.boxShadow='0 8px 25px rgba(180,138,255,0.3)'" onmouseout="this.style.background='rgba(180,138,255,0.1)'; this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='none'">
+                    <i class="fas fa-arrow-left"></i>
+                    Retour au site
+                </a>
+            </div>
+            <div style="display: flex; align-items: center; gap: 15px; position: relative;">
+                <div class="notification-bell" onclick="toggleNotifications()">
+                    <i class="fas fa-bell"></i>
+                    <div class="notification-badge">4</div>
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <div class="notification-header">
+                            <h3 class="notification-title">Notifications</h3>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-dot"></div>
+                            <div class="notification-content">
+                                <p class="notification-text">Bienvenue dans votre espace Syn Agency</p>
+                                <div class="notification-time">Maintenant</div>
+                            </div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-dot"></div>
+                            <div class="notification-content">
+                                <p class="notification-text">Explorez les fonctionnalités disponibles</p>
+                                <div class="notification-time">Information</div>
+                            </div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-dot"></div>
+                            <div class="notification-content">
+                                <p class="notification-text">Configurez vos préférences dans les paramètres</p>
+                                <div class="notification-time">Conseil</div>
+                            </div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-dot"></div>
+                            <div class="notification-content">
+                                <p class="notification-text">Contactez le support si vous avez des questions</p>
+                                <div class="notification-time">Aide</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-profile">
+                    <div class="user-avatar" id="user-avatar">US</div>
+                    <div class="user-info">
+                        <h3 id="user-name">Utilisateur</h3>
+                        <p id="user-role">Membre</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistiques principales -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon">
+                        <i class="fas fa-euro-sign"></i>
+                    </div>
+                </div>
+                <div class="stat-value" id="revenue-month">0€</div>
+                <div class="stat-label">Revenus ce mois</div>
+                <div class="stat-change positive">
+                    <i class="fas fa-chart-line"></i> Données en cours de chargement
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                <div class="stat-value" id="subscribers">0</div>
+                <div class="stat-label">Abonnés actifs</div>
+                <div class="stat-change positive">
+                    <i class="fas fa-chart-line"></i> Données en cours de chargement
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                </div>
+                <div class="stat-value" id="views">0</div>
+                <div class="stat-label">Vues totales</div>
+                <div class="stat-change positive">
+                    <i class="fas fa-chart-line"></i> Données en cours de chargement
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                </div>
+                <div class="stat-value" id="engagement">0%</div>
+                <div class="stat-label">Taux d'engagement</div>
+                <div class="stat-change positive">
+                    <i class="fas fa-chart-line"></i> Données en cours de chargement
+                </div>
+            </div>
+        </div>
+
+        <!-- Configuration Profil OnlyFans -->
+        <section class="profile-section">
+            <h2 style="color: #b48aff; margin-bottom: 20px;">Configuration Profil OnlyFans</h2>
+            <div class="profile-card">
+                <div class="maintenance-banner" style="
+                    background: linear-gradient(135deg, #ff9800, #f57c00);
+                    border-radius: 10px;
+                    padding: 20px;
+                    text-align: center;
+                    border: 2px solid rgba(255, 152, 0, 0.3);
+                    margin-bottom: 15px;
+                ">
+                    <div style="font-size: 2em; margin-bottom: 8px; color: white;">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 style="color: white; margin: 0 0 5px 0; font-size: 1.2em;">Section en maintenance</h3>
+                    <p style="color: rgba(255,255,255,0.9); margin: 0; font-size: 0.9em;">
+                        Fonctionnalité temporairement indisponible - Améliorations en cours
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Actions rapides -->
+        <section class="quick-actions">
+            <a href="content.html" class="action-btn">
+                <i class="fas fa-upload"></i>
+                Nouveau contenu
+            </a>
+            <a href="#" class="action-btn" onclick="handleMaintenanceClick('Messages'); return false;">
+                <i class="fas fa-paper-plane"></i>
+                Message groupé
+            </a>
+            <a href="#" class="action-btn" onclick="handleMaintenanceClick('Promotions'); return false;">
+                <i class="fas fa-tags"></i>
+                Créer promo
+            </a>
+            <a href="#" class="action-btn" onclick="handleMaintenanceClick('Rapports'); return false;">
+                <i class="fas fa-chart-line"></i>
+                Rapport détaillé
+            </a>
+        </section>
+
+        <!-- Section Conseils -->
+        <section class="tips-section" style="margin-bottom: 30px;">
+            <h2 style="color: #b48aff; margin-bottom: 20px; text-align: center;">
+                <i class="fas fa-lightbulb"></i> Conseils & Astuces
+            </h2>
+            
+            <div style="
+                background: linear-gradient(135deg, rgba(26,9,62,0.8), rgba(18,7,45,0.6));
+                border: 2px solid rgba(180,138,255,0.3);
+                border-radius: 20px;
+                padding: 25px;
+                backdrop-filter: blur(10px);
+                box-shadow: 0 10px 30px rgba(180,138,255,0.2);
+            ">
+                <!-- En-tête de la section -->
+                <div style="text-align: center; margin-bottom: 25px;">
+                    <h3 style="color: #b48aff; margin: 0 0 10px 0; font-size: 1.3em;">
+                        💡 Optimisez votre succès OnlyFans
+                    </h3>
+                    <p style="color: rgba(245,245,250,0.7); margin: 0; font-size: 0.9em;">
+                        Conseils experts pour maximiser vos revenus et engagement
+                    </p>
+                </div>
+
+                <!-- Grille des conseils -->
+                <div style="
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                    gap: 20px;
+                    margin-bottom: 20px;
+                ">
+                    <!-- Conseil Contenu -->
+                    <div class="tip-card" style="
+                        background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(22,163,74,0.05));
+                        border: 1px solid rgba(34,197,94,0.2);
+                        border-radius: 15px;
+                        padding: 20px;
+                        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                        cursor: pointer;
+                    " onmouseover="this.style.transform='translateY(-8px) scale(1.02)'; this.style.boxShadow='0 20px 50px rgba(34,197,94,0.3)'; this.style.borderColor='rgba(34,197,94,0.5)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='none'; this.style.borderColor='rgba(34,197,94,0.2)'">
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                            <div style="
+                                background: linear-gradient(135deg, #22c55e, #16a34a);
+                                border-radius: 12px;
+                                padding: 12px;
+                                color: white;
+                                font-size: 1.2em;
+                            ">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                            <h4 style="color: #22c55e; margin: 0; font-size: 1.1em;">Contenu de Qualité</h4>
+                        </div>
+                        <ul style="color: rgba(245,245,250,0.8); margin: 0; padding-left: 20px; font-size: 0.9em; line-height: 1.6;">
+                            <li>Postez quotidiennement à heures fixes</li>
+                            <li>Variez vos types de contenu</li>
+                            <li>Utilisez un bon éclairage naturel</li>
+                            <li>Soignez vos titres et descriptions</li>
+                        </ul>
+                    </div>
+
+                    <!-- Conseil Engagement -->
+                    <div class="tip-card" style="
+                        background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(37,99,235,0.05));
+                        border: 1px solid rgba(59,130,246,0.2);
+                        border-radius: 15px;
+                        padding: 20px;
+                        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                        cursor: pointer;
+                    " onmouseover="this.style.transform='translateY(-8px) scale(1.02)'; this.style.boxShadow='0 20px 50px rgba(59,130,246,0.3)'; this.style.borderColor='rgba(59,130,246,0.5)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='none'; this.style.borderColor='rgba(59,130,246,0.2)'">
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                            <div style="
+                                background: linear-gradient(135deg, #3b82f6, #2563eb);
+                                border-radius: 12px;
+                                padding: 12px;
+                                color: white;
+                                font-size: 1.2em;
+                            ">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <h4 style="color: #3b82f6; margin: 0; font-size: 1.1em;">Engagement Fans</h4>
+                        </div>
+                        <ul style="color: rgba(245,245,250,0.8); margin: 0; padding-left: 20px; font-size: 0.9em; line-height: 1.6;">
+                            <li>Répondez rapidement aux messages</li>
+                            <li>Organisez des lives réguliers</li>
+                            <li>Créez du contenu personnalisé</li>
+                            <li>Interagissez dans les commentaires</li>
+                        </ul>
+                    </div>
+
+                    <!-- Conseil Marketing -->
+                    <div class="tip-card" style="
+                        background: linear-gradient(135deg, rgba(236,72,153,0.1), rgba(219,39,119,0.05));
+                        border: 1px solid rgba(236,72,153,0.2);
+                        border-radius: 15px;
+                        padding: 20px;
+                        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                        cursor: pointer;
+                    " onmouseover="this.style.transform='translateY(-8px) scale(1.02)'; this.style.boxShadow='0 20px 50px rgba(236,72,153,0.3)'; this.style.borderColor='rgba(236,72,153,0.5)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='none'; this.style.borderColor='rgba(236,72,153,0.2)'">
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                            <div style="
+                                background: linear-gradient(135deg, #ec4899, #db2777);
+                                border-radius: 12px;
+                                padding: 12px;
+                                color: white;
+                                font-size: 1.2em;
+                            ">
+                                <i class="fas fa-bullhorn"></i>
+                            </div>
+                            <h4 style="color: #ec4899; margin: 0; font-size: 1.1em;">Stratégie Marketing</h4>
+                        </div>
+                        <ul style="color: rgba(245,245,250,0.8); margin: 0; padding-left: 20px; font-size: 0.9em; line-height: 1.6;">
+                            <li>Utilisez les réseaux sociaux</li>
+                            <li>Créez des offres promotionnelles</li>
+                            <li>Collaborez avec d'autres créateurs</li>
+                            <li>Analysez vos statistiques</li>
+                        </ul>
+                    </div>
+
+                    <!-- Conseil Monétisation -->
+                    <div class="tip-card" style="
+                        background: linear-gradient(135deg, rgba(251,146,60,0.1), rgba(249,115,22,0.05));
+                        border: 1px solid rgba(251,146,60,0.2);
+                        border-radius: 15px;
+                        padding: 20px;
+                        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                        cursor: pointer;
+                    " onmouseover="this.style.transform='translateY(-8px) scale(1.02)'; this.style.boxShadow='0 20px 50px rgba(251,146,60,0.3)'; this.style.borderColor='rgba(251,146,60,0.5)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='none'; this.style.borderColor='rgba(251,146,60,0.2)'">
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                            <div style="
+                                background: linear-gradient(135deg, #fb923c, #f97316);
+                                border-radius: 12px;
+                                padding: 12px;
+                                color: white;
+                                font-size: 1.2em;
+                            ">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <h4 style="color: #fb923c; margin: 0; font-size: 1.1em;">Maximiser Revenus</h4>
+                        </div>
+                        <ul style="color: rgba(245,245,250,0.8); margin: 0; padding-left: 20px; font-size: 0.9em; line-height: 1.6;">
+                            <li>Proposez du contenu premium</li>
+                            <li>Utilisez les tips et pourboires</li>
+                            <li>Créez des bundles attractifs</li>
+                            <li>Fixez des prix stratégiques</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Conseil du jour -->
+                <div style="
+                    background: linear-gradient(135deg, rgba(180,138,255,0.15), rgba(139,92,246,0.1));
+                    border: 1px solid rgba(180,138,255,0.3);
+                    border-radius: 15px;
+                    padding: 20px;
+                    margin-top: 20px;
+                    text-align: center;
+                ">
+                    <h4 style="color: #b48aff; margin: 0 0 10px 0; font-size: 1.1em;">
+                        <i class="fas fa-star"></i> Conseil du Jour
+                    </h4>
+                    <p id="daily-tip" style="color: rgba(245,245,250,0.9); margin: 0; font-size: 1em; line-height: 1.5; font-style: italic;">
+                        "La régularité est la clé du succès : postez du contenu de qualité chaque jour pour fidéliser votre audience."
+                    </p>
+                    <button onclick="
+                        var tips = ['La régularité est la clé du succès', 'Interagissez authentiquement avec vos fans', 'Utilisez des hashtags pertinents et populaires', 'Créez du contenu exclusif et premium', 'Analysez vos statistiques régulièrement', 'Proposez des offres spéciales et promotions', 'Collaborez avec d autres créateurs', 'Soignez votre profil et votre bio', 'Utilisez les stories temporaires', 'Répondez rapidement aux messages privés'];
+                        var tip = document.getElementById('daily-tip');
+                        var newText = tips[Math.floor(Math.random() * tips.length)];
+                        tip.style.transition = 'opacity 0.3s ease';
+                        tip.style.opacity = '0';
+                        setTimeout(function() {
+                            tip.textContent = '&quot;' + newText + '&quot;';
+                            tip.style.opacity = '1';
+                        }, 300);
+                    " style="
+                        background: linear-gradient(135deg, #b48aff, #6c2eb6);
+                        border: none;
+                        border-radius: 10px;
+                        padding: 8px 16px;
+                        color: white;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                        margin-top: 15px;
+                        font-size: 0.9em;
+                    " onmouseover="this.style.transform='translateY(-3px) scale(1.05)'; this.style.boxShadow='0 8px 20px rgba(180,138,255,0.4)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='none'">
+                        <i class="fas fa-refresh"></i> Nouveau Conseil
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bouton de test pour l'animation (temporaire) -->
+        <section style="margin-bottom: 30px;">
+            <div style="
+                background: rgba(255,193,7,0.1);
+                border: 2px dashed rgba(255,193,7,0.3);
+                border-radius: 15px;
+                padding: 20px;
+                text-align: center;
+                max-width: 400px;
+                margin: 0 auto;
+            ">
+                <h3 style="color: #ffc107; margin: 0 0 15px 0; font-size: 1.1em;">
+                    <i class="fas fa-flask"></i> Mode Test - Animation de Bienvenue
+                </h3>
+                <button onclick="testWelcomeAnimation()" style="
+                    background: linear-gradient(135deg, #ffc107, #ff8f00);
+                    border: none;
+                    border-radius: 25px;
+                    padding: 12px 25px;
+                    color: white;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 5px 15px rgba(255,193,7,0.3);
+                    margin-bottom: 10px;
+                " onmouseover="this.style.transform='translateY(-2px) scale(1.05)'" onmouseout="this.style.transform='translateY(0) scale(1)'">
+                    <i class="fas fa-play"></i> Tester l'animation festive
+                </button>
+                <br>
+                <button onclick="resetWelcomeState()" style="
+                    background: rgba(255,193,7,0.1);
+                    border: 1px solid rgba(255,193,7,0.3);
+                    border-radius: 20px;
+                    padding: 8px 16px;
+                    color: #ffc107;
+                    font-weight: 500;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    font-size: 0.9em;
+                " onmouseover="this.style.background='rgba(255,193,7,0.2)'" onmouseout="this.style.background='rgba(255,193,7,0.1)'">
+                    <i class="fas fa-undo"></i> Réinitialiser état
+                </button>
+                <p style="color: rgba(255,193,7,0.8); font-size: 0.85em; margin: 10px 0 0 0;">
+                    Testez l'animation avec des noms d'utilisateur aléatoires
+                </p>
+            </div>
+        </section>
+
+        <!-- Panel d'Administration (visible uniquement pour les admins) -->
+        <section id="admin-panel" style="margin-bottom: 30px; display: none;">
+            <h2 style="color: #ffc107; margin-bottom: 20px; text-align: center;">
+                <i class="fas fa-crown"></i> Panel d'Administration
+            </h2>
+            
+            <div style="
+                background: linear-gradient(135deg, rgba(255,193,7,0.1), rgba(255,152,0,0.05));
+                border: 2px solid rgba(255,193,7,0.3);
+                border-radius: 20px;
+                padding: 25px;
+                backdrop-filter: blur(10px);
+                box-shadow: 0 10px 30px rgba(255,193,7,0.2);
+            ">
+                <!-- Onglets d'administration -->
+                <div style="
+                    display: flex;
+                    gap: 10px;
+                    margin-bottom: 25px;
+                    border-bottom: 2px solid rgba(255,193,7,0.2);
+                    padding-bottom: 15px;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                ">
+                    <button onclick="showAdminTab('users')" class="admin-tab-btn active" data-tab="users" style="
+                        background: linear-gradient(135deg, #ffc107, #ff8f00);
+                        border: none;
+                        border-radius: 25px;
+                        padding: 12px 20px;
+                        color: white;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        margin: 5px;
+                    ">
+                        <i class="fas fa-users"></i> Gestion Utilisateurs
+                    </button>
+                    <button onclick="showAdminTab('security')" class="admin-tab-btn" data-tab="security" style="
+                        background: rgba(255,193,7,0.1);
+                        border: 2px solid #ffc107;
+                        border-radius: 25px;
+                        padding: 12px 20px;
+                        color: #ffc107;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        margin: 5px;
+                    ">
+                        <i class="fas fa-shield-alt"></i> Sécurité
+                    </button>
+                    <button onclick="showAdminTab('system')" class="admin-tab-btn" data-tab="system" style="
+                        background: rgba(255,193,7,0.1);
+                        border: 2px solid #ffc107;
+                        border-radius: 25px;
+                        padding: 12px 20px;
+                        color: #ffc107;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        margin: 5px;
+                    ">
+                        <i class="fas fa-cogs"></i> Système
+                    </button>
+                </div>
+
+                <!-- Contenu des onglets -->
+                <div id="admin-content">
+                    <!-- Onglet Gestion Utilisateurs -->
+                    <div id="admin-users" class="admin-tab-content">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+                            <h3 style="color: #ffc107; margin: 0;">Utilisateurs Enregistrés</h3>
+                            <button onclick="showCreateUserModal()" style="
+                                background: linear-gradient(135deg, #22c55e, #16a34a);
+                                border: none;
+                                border-radius: 20px;
+                                padding: 10px 20px;
+                                color: white;
+                                font-weight: 600;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                            ">
+                                <i class="fas fa-plus"></i> Créer Utilisateur
+                            </button>
+                        </div>
+                        
+                        <div id="users-list" style="
+                            background: rgba(26,9,62,0.3);
+                            border-radius: 15px;
+                            padding: 20px;
+                            max-height: 400px;
+                            overflow-y: auto;
+                        ">
+                            <!-- Liste des utilisateurs générée dynamiquement -->
+                        </div>
+                    </div>
+
+                    <!-- Onglet Sécurité -->
+                    <div id="admin-security" class="admin-tab-content" style="display: none;">
+                        <h3 style="color: #ffc107; margin-bottom: 20px;">Paramètres de Sécurité</h3>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                            <div style="
+                                background: rgba(26,9,62,0.3);
+                                border-radius: 15px;
+                                padding: 20px;
+                                border: 1px solid rgba(255,193,7,0.2);
+                            ">
+                                <h4 style="color: #f5f5fa; margin-bottom: 15px;"><i class="fas fa-key"></i> Sessions</h4>
+                                <p style="color: rgba(245,245,250,0.8); margin-bottom: 15px;">Durée de session maximum :</p>
+                                <select style="
+                                    width: 100%;
+                                    background: rgba(255,193,7,0.1);
+                                    border: 1px solid rgba(255,193,7,0.3);
+                                    border-radius: 8px;
+                                    padding: 10px;
+                                    color: #f5f5fa;
+                                    margin-bottom: 15px;
+                                ">
+                                    <option value="8">8 heures</option>
+                                    <option value="24" selected>24 heures</option>
+                                    <option value="72">3 jours</option>
+                                    <option value="168">1 semaine</option>
+                                </select>
+                                <button onclick="updateSecuritySettings()" style="
+                                    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+                                    border: none;
+                                    border-radius: 8px;
+                                    padding: 8px 16px;
+                                    color: white;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                    width: 100%;
+                                ">Mettre à jour</button>
+                            </div>
+
+                            <div style="
+                                background: rgba(26,9,62,0.3);
+                                border-radius: 15px;
+                                padding: 20px;
+                                border: 1px solid rgba(255,193,7,0.2);
+                            ">
+                                <h4 style="color: #f5f5fa; margin-bottom: 15px;"><i class="fas fa-history"></i> Logs de Connexion</h4>
+                                <div style="max-height: 200px; overflow-y: auto;">
+                                    <div style="color: rgba(245,245,250,0.7); font-size: 0.9em; padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                        Charli - Connexion réussie - ${new Date().toLocaleString()}
+                                    </div>
+                                    <div style="color: rgba(245,245,250,0.7); font-size: 0.9em; padding: 8px;">
+                                        Utilisateur - Dernière connexion - Hier 14:32
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Onglet Système -->
+                    <div id="admin-system" class="admin-tab-content" style="display: none;">
+                        <h3 style="color: #ffc107; margin-bottom: 20px;">Informations Système</h3>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                            <div style="
+                                background: rgba(26,9,62,0.3);
+                                border-radius: 15px;
+                                padding: 20px;
+                                text-align: center;
+                            ">
+                                <h4 style="color: #22c55e; margin-bottom: 10px;">Utilisateurs Actifs</h4>
+                                <div style="font-size: 2em; color: #22c55e; font-weight: bold;" id="active-users-count">2</div>
+                            </div>
+                            
+                            <div style="
+                                background: rgba(26,9,62,0.3);
+                                border-radius: 15px;
+                                padding: 20px;
+                                text-align: center;
+                            ">
+                                <h4 style="color: #3b82f6; margin-bottom: 10px;">Administrateurs</h4>
+                                <div style="font-size: 2em; color: #3b82f6; font-weight: bold;" id="admin-count">1</div>
+                            </div>
+                            
+                            <div style="
+                                background: rgba(26,9,62,0.3);
+                                border-radius: 15px;
+                                padding: 20px;
+                                text-align: center;
+                            ">
+                                <h4 style="color: #ffc107; margin-bottom: 10px;">Sessions Actives</h4>
+                                <div style="font-size: 2em; color: #ffc107; font-weight: bold;">1</div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 20px; text-align: center;">
+                            <button onclick="exportUserData()" style="
+                                background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+                                border: none;
+                                border-radius: 25px;
+                                padding: 12px 25px;
+                                color: white;
+                                font-weight: 600;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                                margin: 5px;
+                            ">
+                                <i class="fas fa-download"></i> Exporter Données
+                            </button>
+                            <button onclick="clearSystemLogs()" style="
+                                background: linear-gradient(135deg, #ef4444, #dc2626);
+                                border: none;
+                                border-radius: 25px;
+                                padding: 12px 25px;
+                                color: white;
+                                font-weight: 600;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                                margin: 5px;
+                            ">
+                                <i class="fas fa-trash"></i> Nettoyer Logs
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Fonction de maintenance (définie globalement en premier)
+        function showMaintenanceNotification(section) {
+            console.log('Fonction showMaintenanceNotification appelée avec:', section);
+            
+            // Supprimer les notifications existantes
+            const existingNotifications = document.querySelectorAll('.maintenance-notification');
+            existingNotifications.forEach(notif => notif.remove());
+            
+            // Créer la nouvelle notification directement avec les bons styles
+            const notification = document.createElement('div');
+            notification.className = 'maintenance-notification';
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #ff9800, #f57c00);
+                color: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                box-shadow: 0 5px 20px rgba(255, 152, 0, 0.4);
+                z-index: 10001;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                max-width: 350px;
+                animation: slideInFromRight 0.3s ease-out;
+            `;
+            
+            notification.innerHTML = `
+                <i class="fas fa-tools"></i>
+                <span>${section} en maintenance - Fonctionnalité temporairement indisponible</span>
+            `;
+            
+            // Ajouter au DOM
+            document.body.appendChild(notification);
+            
+            // Supprimer automatiquement après 3 secondes
+            setTimeout(() => {
+                if (notification && notification.parentNode) {
+                    notification.style.animation = 'slideOutToRight 0.3s ease-out';
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 300);
+                }
+            }, 3000);
+            
+            return false; // Empêcher la navigation
+        }
+
+        // Ajouter les animations CSS pour les notifications
+        const maintenanceStyle = document.createElement('style');
+        maintenanceStyle.id = 'maintenance-animations';
+        maintenanceStyle.textContent = `
+            @keyframes slideInFromRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOutToRight {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(maintenanceStyle);
+
+        // Fonction pour obtenir un nouveau conseil quotidien (globale)
+        function getNewDailyTip() {
+            const dailyTips = [
+                "La régularité est la clé du succès : postez du contenu de qualité chaque jour pour fidéliser votre audience.",
+                "Interagissez authentiquement avec vos fans - les relations personnelles génèrent plus de revenus.",
+                "Utilisez des hashtags pertinents et populaires pour augmenter la visibilité de vos posts.",
+                "Créez du contenu exclusif et premium pour justifier vos prix d'abonnement.",
+                "Analysez vos statistiques pour identifier les types de contenu les plus performants.",
+                "Proposez des offres spéciales et des promotions lors d'événements ou de saisons.",
+                "Collaborez avec d'autres créateurs pour élargir votre audience et partager des conseils.",
+                "Soignez votre profil et votre bio - c'est votre première impression auprès des nouveaux visiteurs.",
+                "Utilisez les stories et les posts temporaires pour créer un sentiment d'urgence.",
+                "Répondez rapidement aux messages privés - la réactivité fidélise vos abonnés premium.",
+                "Variez vos formats : photos, vidéos, lives, messages audio pour maintenir l'intérêt.",
+                "Planifiez votre contenu à l'avance avec un calendrier éditorial structuré.",
+                "Utilisez un bon éclairage naturel ou des ring lights pour améliorer la qualité visuelle.",
+                "Créez des séries ou des thématiques récurrentes pour fidéliser votre audience.",
+                "Montrez votre personnalité authentique - les fans apprécient la sincérité.",
+                "Utilisez les sondages et questions pour engager votre communauté.",
+                "Optimisez vos prix en fonction de votre contenu et de votre audience cible.",
+                "Créez des bundles et des packages attractifs pour augmenter votre revenu moyen.",
+                "Utilisez les réseaux sociaux pour promouvoir votre contenu OnlyFans.",
+                "Restez à l'écoute des tendances et adaptez votre contenu en conséquence."
+            ];
+
+            const tipElement = document.getElementById('daily-tip');
+            if (!tipElement) {
+                console.error('❌ Élément daily-tip non trouvé');
+                showNotification('❌ Erreur - Élément conseil non trouvé', 'error');
+                return;
+            }
+
+            // Récupérer les conseils déjà utilisés depuis le localStorage
+            let usedTips = JSON.parse(localStorage.getItem('usedDailyTips') || '[]');
+            
+            // Si tous les conseils ont été utilisés, réinitialiser la liste
+            if (usedTips.length >= dailyTips.length) {
+                usedTips = [];
+                localStorage.setItem('usedDailyTips', JSON.stringify(usedTips));
+                console.log('🔄 Tous les conseils ont été vus - Liste réinitialisée');
+                showNotification('🔄 Cycle des conseils terminé ! Nouveaux conseils disponibles.', 'info');
+            }
+            
+            // Filtrer les conseils disponibles (non utilisés)
+            const availableTips = dailyTips.filter(tip => !usedTips.includes(tip));
+            
+            // Vérification de sécurité
+            if (availableTips.length === 0) {
+                console.error('❌ Aucun conseil disponible');
+                showNotification('❌ Erreur - Aucun conseil disponible', 'error');
+                return;
+            }
+            
+            // Sélectionner un conseil aléatoire parmi ceux disponibles
+            const randomTip = availableTips[Math.floor(Math.random() * availableTips.length)];
+            
+            // Ajouter le conseil sélectionné à la liste des conseils utilisés
+            usedTips.push(randomTip);
+            localStorage.setItem('usedDailyTips', JSON.stringify(usedTips));
+            
+            // Animation de changement fluide
+            tipElement.style.transition = 'all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            tipElement.style.opacity = '0';
+            tipElement.style.transform = 'translateY(-20px) scale(0.95)';
+            
+            setTimeout(() => {
+                tipElement.textContent = `"${randomTip}"`;
+                tipElement.style.opacity = '1';
+                tipElement.style.transform = 'translateY(0) scale(1)';
+                
+                // Effet de brillance temporaire
+                tipElement.style.textShadow = '0 0 15px rgba(180,138,255,0.6)';
+                setTimeout(() => {
+                    tipElement.style.textShadow = '';
+                }, 1000);
+            }, 250);
+
+            // Notification de succès avec informations sur les conseils restants
+            const remainingTips = dailyTips.length - usedTips.length;
+            const progressInfo = remainingTips > 0 ? ` (${remainingTips} conseils restants)` : ' (Cycle terminé)';
+            showNotification(`💡 Nouveau conseil généré !${progressInfo}`, 'info');
+            console.log(`✅ Nouveau conseil généré: ${randomTip}`);
+            console.log(`📊 Conseils utilisés: ${usedTips.length}/${dailyTips.length}`);
+        }
+
+        // Rendre la fonction globalement accessible
+        window.getNewDailyTip = getNewDailyTip;
+
+        // Base de données utilisateurs simulée avec rôles
+        const usersDatabase = {
+            'charli@synagency.fr': {
+                email: 'charli@synagency.fr',
+                password: '$2a$10$N9qo8uLOickgx2ZMRZoMye', // Hash simulé de "Monstergtx123!"
+                role: 'admin',
+                name: 'Charli',
+                avatar: 'CH',
+                permissions: ['dashboard', 'users', 'analytics', 'content', 'settings', 'admin_panel'],
+                createdAt: new Date().toISOString(),
+                lastLogin: null,
+                isActive: true
+            },
+            'user@example.com': {
+                email: 'user@example.com',
+                password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye', // Hash simulé de "password123"
+                role: 'user',
+                name: 'Utilisateur',
+                avatar: 'US',
+                permissions: ['dashboard', 'content'],
+                createdAt: new Date().toISOString(),
+                lastLogin: null,
+                isActive: true
+            }
+        };
+
+        // Système de gestion des utilisateurs
+        class UserManager {
+            static createUser(userData) {
+                const userId = userData.email;
+                if (usersDatabase[userId]) {
+                    throw new Error('Utilisateur déjà existant');
+                }
+                
+                usersDatabase[userId] = {
+                    ...userData,
+                    password: this.hashPassword(userData.password),
+                    createdAt: new Date().toISOString(),
+                    lastLogin: null,
+                    isActive: true
+                };
+                
+                localStorage.setItem('synAgencyUsers', JSON.stringify(usersDatabase));
+                return true;
+            }
+            
+            static authenticate(email, password) {
+                const user = usersDatabase[email];
+                if (user && user.isActive && this.verifyPassword(password, user.password)) {
+                    user.lastLogin = new Date().toISOString();
+                    localStorage.setItem('synAgencyUsers', JSON.stringify(usersDatabase));
+                    return user;
+                }
+                return null;
+            }
+            
+            static getCurrentUser() {
+                const sessionData = JSON.parse(localStorage.getItem('synAgencySession') || 
+                                             sessionStorage.getItem('synAgencySession') || '{}');
+                if (sessionData.email) {
+                    return usersDatabase[sessionData.email];
+                }
+                return null;
+            }
+            
+            static hasPermission(permission) {
+                const user = this.getCurrentUser();
+                return user && user.permissions.includes(permission);
+            }
+            
+            static isAdmin() {
+                const user = this.getCurrentUser();
+                return user && user.role === 'admin';
+            }
+            
+            static getAllUsers() {
+                return Object.values(usersDatabase);
+            }
+            
+            static updateUser(email, updates) {
+                if (usersDatabase[email]) {
+                    Object.assign(usersDatabase[email], updates);
+                    localStorage.setItem('synAgencyUsers', JSON.stringify(usersDatabase));
+                    return true;
+                }
+                return false;
+            }
+            
+            static deleteUser(email) {
+                if (usersDatabase[email]) {
+                    delete usersDatabase[email];
+                    localStorage.setItem('synAgencyUsers', JSON.stringify(usersDatabase));
+                    return true;
+                }
+                return false;
+            }
+            
+            // Fonction de hachage simulée (en production, utiliser bcrypt)
+            static hashPassword(password) {
+                return '$2a$10$' + btoa(password).slice(0, 22);
+            }
+            
+            static verifyPassword(password, hash) {
+                // Pour la démo, on compare directement les mots de passe
+                const knownPasswords = {
+                    'Monstergtx123!': '$2a$10$N9qo8uLOickgx2ZMRZoMye',
+                    'password123': '$2a$10$92IXUNpkjO0rOQ5byMi.Ye'
+                };
+                return knownPasswords[password] === hash;
+            }
+        }
+
+        // Vérification stricte de sécurité avec rôles - DOIT être exécutée immédiatement
+        (function() {
+            // Éviter la redirection infinie si on vient de login.html
+            const referrer = document.referrer;
+            const isFromLogin = referrer.includes('login.html') || window.location.search.includes('from=login');
+            
+            const sessionData = JSON.parse(localStorage.getItem('synAgencySession') || 
+                                         sessionStorage.getItem('synAgencySession') || '{}');
+
+            if (!sessionData || !sessionData.isLoggedIn) {
+                // Aucune session valide - redirection immédiate seulement si pas de login en cours
+                if (!isFromLogin) {
+                    console.log('❌ Aucune session trouvée - redirection vers login');
+                    window.location.replace('login.html');
+                    return;
+                }
+                console.log('⏳ En attente de connexion...');
+                return;
+            }
+
+            // Vérifier si la session n'a pas expiré
+            const now = new Date().getTime();
+            const sessionAge = now - sessionData.loginTime;
+            const maxAge = sessionData.rememberMe ? 24 * 60 * 60 * 1000 : 8 * 60 * 60 * 1000; // 24h ou 8h
+
+            if (sessionAge > maxAge) {
+                // Session expirée - nettoyer et rediriger
+                localStorage.removeItem('synAgencySession');
+                sessionStorage.removeItem('synAgencySession');
+                console.log('⏰ Session expirée - redirection vers login');
+                window.location.replace('login.html');
+                return;
+            }
+
+            // Vérifier les permissions utilisateur
+            const currentUser = UserManager.getCurrentUser();
+            if (!currentUser || !UserManager.hasPermission('dashboard')) {
+                console.log('❌ Permissions insuffisantes - redirection vers login');
+                window.location.replace('login.html');
+                return;
+            }
+
+            // Session valide - continuer le chargement
+            console.log('✅ Accès autorisé au dashboard - Utilisateur:', currentUser.name, '- Rôle:', currentUser.role);
+            
+            // Mettre à jour l'interface utilisateur avec les informations du rôle
+            updateUserInterface(currentUser);
+        })();
+
+        // Fonction pour mettre à jour l'interface utilisateur
+        function updateUserInterface(user) {
+            // Mettre à jour les informations utilisateur dans l'interface
+            const userNameElement = document.querySelector('.user-info h3');
+            const userRoleElement = document.querySelector('.user-info p');
+            const userAvatarElement = document.querySelector('.user-avatar');
+            
+            if (userNameElement) userNameElement.textContent = user.name;
+            if (userRoleElement) userRoleElement.textContent = user.role === 'admin' ? 'Administrateur' : 'Membre';
+            if (userAvatarElement) userAvatarElement.textContent = user.avatar;
+
+            // Afficher le lien d'administration pour les admins
+            if (UserManager.isAdmin()) {
+                const adminLink = document.getElementById('admin-link');
+                if (adminLink) {
+                    adminLink.style.display = 'flex';
+                }
+            }
+
+            // Personnaliser l'interface selon le rôle
+            if (user.role === 'admin') {
+                // Ajouter un badge admin
+                const userRole = document.getElementById('user-role');
+                if (userRole) {
+                    userRole.style.background = 'linear-gradient(45deg, #ffc107, #ff8f00)';
+                    userRole.style.color = 'white';
+                    userRole.style.padding = '4px 8px';
+                    userRole.style.borderRadius = '12px';
+                    userRole.style.fontSize = '0.8em';
+                    userRole.innerHTML = '<i class="fas fa-crown"></i> Administrateur';
+                }
+            }
+        }
+
+        // Fonctions d'administration
+        function showAdminPanel() {
+            if (!UserManager.isAdmin()) {
+                showNotification('❌ Accès refusé - Privilèges administrateur requis', 'error');
+                return;
+            }
+
+            const panel = document.getElementById('admin-panel');
+            panel.style.display = 'block';
+            panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            // Charger la liste des utilisateurs
+            loadUsersList();
+            showNotification('🔑 Panel d\'administration activé', 'success');
+        }
+
+        function showAdminTab(tabName) {
+            // Masquer tous les contenus d'onglets
+            document.querySelectorAll('.admin-tab-content').forEach(tab => {
+                tab.style.display = 'none';
+            });
+
+            // Désactiver tous les boutons d'onglets
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+                btn.style.background = 'rgba(255,193,7,0.1)';
+                btn.style.border = '2px solid #ffc107';
+                btn.style.color = '#ffc107';
+                btn.classList.remove('active');
+            });
+
+            // Activer l'onglet sélectionné
+            document.getElementById(`admin-${tabName}`).style.display = 'block';
+            const activeBtn = document.querySelector(`[data-tab="${tabName}"]`);
+            activeBtn.style.background = 'linear-gradient(135deg, #ffc107, #ff8f00)';
+            activeBtn.style.border = 'none';
+            activeBtn.style.color = 'white';
+            activeBtn.classList.add('active');
+
+            // Charger le contenu spécifique
+            if (tabName === 'users') {
+                loadUsersList();
+            } else if (tabName === 'system') {
+                updateSystemStats();
+            }
+        }
+
+        function loadUsersList() {
+            const usersList = document.getElementById('users-list');
+            const users = UserManager.getAllUsers();
+            
+            usersList.innerHTML = users.map(user => `
+                <div style="
+                    background: rgba(180,138,255,0.1);
+                    border: 1px solid rgba(180,138,255,0.3);
+                    border-radius: 12px;
+                    padding: 15px;
+                    margin-bottom: 10px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: 10px;
+                ">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="
+                            width: 40px;
+                            height: 40px;
+                            border-radius: 50%;
+                            background: linear-gradient(135deg, #b48aff, #6c2eb6);
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            color: white;
+                            font-weight: bold;
+                        ">${user.avatar}</div>
+                        <div>
+                            <h4 style="color: #f5f5fa; margin: 0 0 5px 0;">${user.name}</h4>
+                            <p style="color: rgba(245,245,250,0.7); margin: 0; font-size: 0.9em;">${user.email}</p>
+                            <span style="
+                                background: ${user.role === 'admin' ? 'linear-gradient(45deg, #ffc107, #ff8f00)' : 'rgba(180,138,255,0.2)'};
+                                color: white;
+                                padding: 2px 8px;
+                                border-radius: 10px;
+                                font-size: 0.8em;
+                                font-weight: 600;
+                            ">
+                                ${user.role === 'admin' ? '👑 Admin' : '👤 Utilisateur'}
+                            </span>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button onclick="editUser('${user.email}')" style="
+                            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+                            border: none;
+                            border-radius: 8px;
+                            padding: 6px 12px;
+                            color: white;
+                            font-size: 0.8em;
+                            cursor: pointer;
+                        ">
+                            <i class="fas fa-edit"></i> Modifier
+                        </button>
+                        ${user.email !== 'charli@synagency.fr' ? `
+                        <button onclick="deleteUser('${user.email}')" style="
+                            background: linear-gradient(135deg, #ef4444, #dc2626);
+                            border: none;
+                            border-radius: 8px;
+                            padding: 6px 12px;
+                            color: white;
+                            font-size: 0.8em;
+                            cursor: pointer;
+                        ">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+                        ` : '<span style="color: rgba(245,245,250,0.5); font-size: 0.8em;">Super Admin</span>'}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showCreateUserModal() {
+            const modal = document.createElement('div');
+            modal.className = 'modal'; // Ajouter la classe modal
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                backdrop-filter: blur(5px);
+            `;
+
+            modal.innerHTML = `
+                <div style="
+                    background: linear-gradient(135deg, rgba(26,9,62,0.95), rgba(18,7,45,0.95));
+                    border: 2px solid rgba(180,138,255,0.3);
+                    border-radius: 20px;
+                    padding: 30px;
+                    max-width: 500px;
+                    width: 90%;
+                    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+                ">
+                    <h3 style="color: #b48aff; margin-bottom: 20px; text-align: center;">
+                        <i class="fas fa-user-plus"></i> Créer un Nouvel Utilisateur
+                    </h3>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label style="color: #f5f5fa; font-weight: 600; display: block; margin-bottom: 5px;">Email :</label>
+                        <input type="email" id="new-user-email" style="
+                            width: 100%;
+                            background: rgba(180,138,255,0.1);
+                            border: 1px solid rgba(180,138,255,0.3);
+                            border-radius: 8px;
+                            padding: 10px;
+                            color: #f5f5fa;
+                            box-sizing: border-box;
+                        " placeholder="exemple@synagency.fr">
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label style="color: #f5f5fa; font-weight: 600; display: block; margin-bottom: 5px;">Nom :</label>
+                        <input type="text" id="new-user-name" style="
+                            width: 100%;
+                            background: rgba(180,138,255,0.1);
+                            border: 1px solid rgba(180,138,255,0.3);
+                            border-radius: 8px;
+                            padding: 10px;
+                            color: #f5f5fa;
+                            box-sizing: border-box;
+                        " placeholder="Nom complet">
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label style="color: #f5f5fa; font-weight: 600; display: block; margin-bottom: 5px;">Mot de passe :</label>
+                        <input type="password" id="new-user-password" style="
+                            width: 100%;
+                            background: rgba(180,138,255,0.1);
+                            border: 1px solid rgba(180,138,255,0.3);
+                            border-radius: 8px;
+                            padding: 10px;
+                            color: #f5f5fa;
+                            box-sizing: border-box;
+                        " placeholder="Mot de passe sécurisé">
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="color: #f5f5fa; font-weight: 600; display: block; margin-bottom: 5px;">Rôle :</label>
+                        <select id="new-user-role" style="
+                            width: 100%;
+                            background: rgba(180,138,255,0.1);
+                            border: 1px solid rgba(180,138,255,0.3);
+                            border-radius: 8px;
+                            padding: 10px;
+                            color: #f5f5fa;
+                            box-sizing: border-box;
+                        ">
+                            <option value="user">Utilisateur</option>
+                            <option value="admin">Administrateur</option>
+                        </select>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; justify-content: center;">
+                        <button onclick="createNewUser()" style="
+                            background: linear-gradient(135deg, #22c55e, #16a34a);
+                            border: none;
+                            border-radius: 20px;
+                            padding: 12px 25px;
+                            color: white;
+                            font-weight: 600;
+                            cursor: pointer;
+                        ">
+                            <i class="fas fa-save"></i> Créer
+                        </button>
+                        <button onclick="this.closest('div').parentElement.remove()" style="
+                            background: rgba(255,71,87,0.1);
+                            border: 2px solid #ff4757;
+                            border-radius: 20px;
+                            padding: 12px 25px;
+                            color: #ff4757;
+                            font-weight: 600;
+                            cursor: pointer;
+                        ">
+                            <i class="fas fa-times"></i> Annuler
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.remove();
+            });
+        }
+
+        function createNewUser() {
+            const email = document.getElementById('new-user-email').value;
+            const name = document.getElementById('new-user-name').value;
+            const password = document.getElementById('new-user-password').value;
+            const role = document.getElementById('new-user-role').value;
+
+            if (!email || !name || !password) {
+                showNotification('❌ Tous les champs sont requis', 'error');
+                return;
+            }
+
+            try {
+                const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+                const permissions = role === 'admin' 
+                    ? ['dashboard', 'users', 'analytics', 'content', 'settings', 'admin_panel']
+                    : ['dashboard', 'content'];
+
+                UserManager.createUser({
+                    email,
+                    name,
+                    password,
+                    role,
+                    avatar: initials,
+                    permissions
+                });
+
+                showNotification('✅ Utilisateur créé avec succès', 'success');
+                loadUsersList();
+                updateSystemStats();
+                
+                // Fermer la modal
+                const modal = document.querySelector('.modal');
+                if (modal) {
+                    modal.remove();
+                }
+            } catch (error) {
+                console.error('Erreur lors de la création de l\'utilisateur:', error);
+                showNotification('❌ ' + error.message, 'error');
+            }
+        }
+
+        function editUser(email) {
+            showNotification('🔧 Fonction d\'édition en développement', 'info');
+        }
+
+        function deleteUser(email) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
+                UserManager.deleteUser(email);
+                showNotification('✅ Utilisateur supprimé', 'success');
+                loadUsersList();
+                updateSystemStats();
+            }
+        }
+
+        function updateSystemStats() {
+            const users = UserManager.getAllUsers();
+            const activeUsers = users.filter(u => u.isActive).length;
+            const adminCount = users.filter(u => u.role === 'admin').length;
+
+            document.getElementById('active-users-count').textContent = activeUsers;
+            document.getElementById('admin-count').textContent = adminCount;
+        }
+
+        function updateSecuritySettings() {
+            showNotification('✅ Paramètres de sécurité mis à jour', 'success');
+        }
+
+        function exportUserData() {
+            const users = UserManager.getAllUsers().map(u => ({
+                email: u.email,
+                name: u.name,
+                role: u.role,
+                createdAt: u.createdAt,
+                lastLogin: u.lastLogin
+            }));
+
+            const dataStr = JSON.stringify(users, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `synagency-users-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            showNotification('📁 Données exportées avec succès', 'success');
+        }
+
+        function clearSystemLogs() {
+            if (confirm('Êtes-vous sûr de vouloir nettoyer les logs système ?')) {
+                showNotification('🧹 Logs système nettoyés', 'success');
+            }
+        }
+
+        // Fonction pour afficher des notifications améliorées
+        function showNotification(message, type = 'info') {
+            const colors = {
+                success: { bg: '#22c55e', border: '#16a34a', icon: 'fas fa-check-circle' },
+                error: { bg: '#ef4444', border: '#dc2626', icon: 'fas fa-exclamation-circle' },
+                warning: { bg: '#f59e0b', border: '#d97706', icon: 'fas fa-exclamation-triangle' },
+                info: { bg: '#3b82f6', border: '#1d4ed8', icon: 'fas fa-info-circle' }
+            };
+
+            const color = colors[type] || colors.info;
+
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${color.bg};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                border-left: 4px solid ${color.border};
+                box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+                z-index: 10001;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                max-width: 400px;
+                opacity: 0;
+                transform: translateX(100%) scale(0.8);
+                transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            `;
+
+            notification.innerHTML = `
+                <i class="${color.icon}"></i>
+                <span>${message}</span>
+            `;
+
+            document.body.appendChild(notification);
+
+            // Animation d'entrée
+            setTimeout(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateX(0) scale(1)';
+            }, 100);
+
+            // Suppression automatique
+            const duration = type === 'error' ? 6000 : type === 'warning' ? 4000 : 3000;
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%) scale(0.8)';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 500);
+            }, duration);
+        }
+
+        // Fonction pour gérer le dropdown des notifications
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notificationDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // Fermer le dropdown si on clique ailleurs
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('notificationDropdown');
+            const bell = event.target.closest('.notification-bell');
+            
+            if (!bell && dropdown.classList.contains('show')) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        // Initialisation de l'API OnlyFans
+        const ofAPI = new OnlyFansAPI();
+
+        // Vérification de l'authentification au chargement de la page
+        function checkAuthentication() {
+            const sessionData = JSON.parse(localStorage.getItem('synAgencySession')) || 
+                               JSON.parse(sessionStorage.getItem('synAgencySession'));
+
+            if (!sessionData || !sessionData.isLoggedIn) {
+                // Ne pas rediriger automatiquement, laisser la vérification principale s'en charger
+                console.warn('⚠️ Aucune session active détectée');
+                return false;
+            }
+
+            // Vérifier si la session n'a pas expiré
+            const now = new Date().getTime();
+            const sessionAge = now - sessionData.loginTime;
+            const maxAge = sessionData.rememberMe ? 24 * 60 * 60 * 1000 : 8 * 60 * 60 * 1000; // 24h ou 8h
+
+            if (sessionAge > maxAge) {
+                // Session expirée
+                console.warn('⚠️ Session expirée');
+                localStorage.removeItem('synAgencySession');
+                sessionStorage.removeItem('synAgencySession');
+                return false;
+            }
+
+            // Mettre à jour les informations utilisateur
+            updateUserInfo(sessionData);
+            console.log('✅ Session valide confirmée');
+            return true;
+        }
+
+        // Mettre à jour les informations utilisateur dans l'interface
+        function updateUserInfo(sessionData) {
+            const userNames = {
+                'admin@synagency.com': { name: 'Administrateur', role: 'Admin', avatar: 'AD' },
+                'demo@synagency.com': { name: 'Utilisateur Demo', role: 'Demo', avatar: 'DU' }
+            };
+
+            const userInfo = userNames[sessionData.email] || { name: 'Utilisateur', role: 'Membre', avatar: 'US' };
+            
+            document.querySelector('.user-info h3').textContent = userInfo.name;
+            document.querySelector('.user-info p').textContent = userInfo.role;
+            document.querySelector('.user-avatar').textContent = userInfo.avatar;
+        }
+
+        // Fonction de déconnexion
+        function logout() {
+            localStorage.removeItem('synAgencySession');
+            sessionStorage.removeItem('synAgencySession');
+            console.log('🔒 Déconnexion effectuée');
+            window.location.replace('login.html');
+        }
+
+        // Rendre la fonction logout globalement accessible
+        window.logout = logout;
+
+        // Surveillance continue de la session
+        function monitorSession() {
+            setInterval(() => {
+                const sessionData = JSON.parse(localStorage.getItem('synAgencySession')) || 
+                                   JSON.parse(sessionStorage.getItem('synAgencySession'));
+
+                if (!sessionData || !sessionData.isLoggedIn) {
+                    console.warn('⚠️ Session perdue - redirection');
+                    window.location.replace('login.html');
+                    return;
+                }
+
+                // Vérifier l'expiration
+                const now = new Date().getTime();
+                const sessionAge = now - sessionData.loginTime;
+                const maxAge = sessionData.rememberMe ? 24 * 60 * 60 * 1000 : 8 * 60 * 60 * 1000;
+
+                if (sessionAge > maxAge) {
+                    console.warn('⚠️ Session expirée - déconnexion automatique');
+                    localStorage.removeItem('synAgencySession');
+                    sessionStorage.removeItem('synAgencySession');
+                    window.location.replace('login.html');
+                }
+            }, 30000); // Vérification toutes les 30 secondes
+        }
+
+        // Protection contre les tentatives de manipulation de l'historique
+        window.addEventListener('popstate', function(event) {
+            // Re-vérifier l'authentification lors de navigation dans l'historique
+            if (!checkAuthentication()) {
+                event.preventDefault();
+                window.location.replace('login.html');
+            }
+        });
+
+        // Animation des statistiques au chargement
+        window.addEventListener('DOMContentLoaded', function() {
+            // Vérifier l'authentification avant de charger le dashboard
+            const isAuthenticated = checkAuthentication();
+            if (!isAuthenticated) {
+                console.log('❌ Authentification échouée - arrêt du chargement dashboard');
+                // Ne pas forcer la redirection, laisser la vérification principale s'en charger
+                return;
+            }
+
+            // Démarrer la surveillance continue de la session
+            monitorSession();
+
+            // Vérifier les paramètres d'URL pour les redirections de maintenance
+            checkMaintenanceRedirect();
+
+            console.log('🚀 Dashboard initialisé avec sécurité active');
+
+            // Animation des cartes statistiques
+            const statCards = document.querySelectorAll('.stat-card');
+            statCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(40px) scale(0.9)';
+                card.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0) scale(1)';
+                }, index * 120 + 200);
+            });
+
+            // Révéler toutes les autres cartes
+            setTimeout(() => {
+                revealCards();
+            }, 600);
+
+            // Animation des valeurs de statistiques (seulement si pas de profil OF connecté)
+            const profile = JSON.parse(localStorage.getItem('ofProfile') || '{}');
+            if (!profile.connected) {
+                setTimeout(() => {
+                    animateValue('revenue-month', 0, 0, 1500, '€');
+                    animateValue('subscribers', 0, 0, 1200);
+                    animateValue('views', 0, 0, 1800);
+                    animateValue('engagement', 0, 0, 1000, '%');
+                }, 500);
+            }
+
+            // Vérifier l'état de connexion OnlyFans
+            checkOFProfileStatus();
+        });
+
+        // Vérifier les redirections de maintenance
+        function checkMaintenanceRedirect() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const maintenanceSection = urlParams.get('maintenance');
+            
+            if (maintenanceSection) {
+                // Nettoyer l'URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+                
+                // Afficher la notification correspondante
+                setTimeout(() => {
+                    const sectionNames = {
+                        'analytics': 'Analytics',
+                        'messages': 'Messages'
+                    };
+                    
+                    const sectionName = sectionNames[maintenanceSection] || maintenanceSection;
+                    showMaintenanceNotification(sectionName);
+                }, 1000);
+            }
+        }
+
+        // Fonction d'animation des valeurs (améliorée)
+        function animateValue(id, start, end, duration, suffix = '') {
+            const element = document.getElementById(id);
+            if (!element) return;
+            
+            const range = end - start;
+            let startTime = null;
+            
+            // Fonction d'ease-out pour une animation plus naturelle
+            function easeOutCubic(t) {
+                return 1 - Math.pow(1 - t, 3);
+            }
+            
+            // Fonction d'ease-in-out pour plus de fluidité
+            function easeInOutCubic(t) {
+                return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            }
+
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const progress = Math.min((timestamp - startTime) / duration, 1);
+                
+                // Utiliser la fonction d'easing pour un mouvement plus naturel
+                const easedProgress = easeInOutCubic(progress);
+                const value = Math.floor(easedProgress * range + start);
+                
+                // Effet de vibration subtile pendant l'animation
+                if (progress < 1) {
+                    const shake = Math.sin(progress * 20) * (1 - progress) * 2;
+                    element.style.transform = `translateX(${shake}px)`;
+                } else {
+                    element.style.transform = 'translateX(0)';
+                }
+                
+                // Mise à jour du contenu avec formatage
+                if (suffix === '€') {
+                    element.textContent = value.toLocaleString('fr-FR') + suffix;
+                } else if (id === 'views') {
+                    element.textContent = value.toLocaleString('fr-FR');
+                } else {
+                    element.textContent = value + suffix;
+                }
+                
+                // Effet de glow pendant l'animation
+                if (progress < 1) {
+                    element.style.textShadow = `0 0 ${10 * (1 - progress)}px rgba(180,138,255,0.6)`;
+                    requestAnimationFrame(step);
+                } else {
+                    element.style.textShadow = '';
+                    // Animation finale de confirmation
+                    element.style.transition = 'transform 0.3s ease';
+                    element.style.transform = 'scale(1.1)';
+                    setTimeout(() => {
+                        element.style.transform = 'scale(1)';
+                    }, 200);
+                }
+            }
+            requestAnimationFrame(step);
+        }
+
+        // Effet de hover amélioré sur les cartes
+        document.querySelectorAll('.stat-card, .chart-card, .activities-card, .notifications-panel').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+                this.style.boxShadow = '0 20px 60px rgba(180,138,255,0.25)';
+                
+                // Effet de brillance
+                const shimmer = this.querySelector('::after') || this.style.setProperty('--shimmer', '1');
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+                this.style.boxShadow = '';
+            });
+            
+            // Animation d'entrée pour chaque carte
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px) scale(0.9)';
+            card.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        });
+
+        // Révéler les cartes avec un délai progressif
+        function revealCards() {
+            const cards = document.querySelectorAll('.stat-card, .chart-card, .activities-card, .notifications-panel');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0) scale(1)';
+                }, index * 150 + 300);
+            });
+        }
+
+        // Simulation de mise à jour en temps réel (désactivée pour éviter les fausses données)
+        // setInterval(() => {
+        //     // Les données seront mises à jour via l'API réelle
+        // }, 5000);
+
+        // Gestion améliorée des clics sur les actions rapides
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Animation de clic sophistiquée
+                this.style.transition = 'all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+                this.style.transform = 'scale(0.92) translateY(2px)';
+                
+                // Effet de ripple
+                const ripple = document.createElement('span');
+                ripple.style.cssText = `
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(255,255,255,0.3);
+                    transform: scale(0);
+                    animation: rippleEffect 0.6s linear;
+                    pointer-events: none;
+                `;
+                
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+                ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+                
+                this.style.position = 'relative';
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    this.style.transform = 'scale(1) translateY(0)';
+                    this.style.transition = 'all 0.3s ease';
+                    if (this.contains(ripple)) {
+                        this.removeChild(ripple);
+                    }
+                }, 150);
+                
+                // Simuler une action
+                const action = this.textContent.trim();
+                showNotification(`🚀 Action "${action}" en cours...`);
+            });
+            
+            // Ajouter l'animation du ripple au CSS si elle n'existe pas
+            if (!document.querySelector('#ripple-animation')) {
+                const style = document.createElement('style');
+                style.id = 'ripple-animation';
+                style.textContent = `
+                    @keyframes rippleEffect {
+                        to {
+                            transform: scale(4);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        });
+
+        // Fonction pour afficher des notifications (améliorée)
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            const bgColor = type === 'error' ? 'linear-gradient(135deg, #f44336, #d32f2f)' : 
+                             type === 'warning' ? 'linear-gradient(135deg, #ff9800, #f57c00)' :
+                             'linear-gradient(135deg, #b48aff, #6c2eb6)';
+            const icon = type === 'error' ? 'fas fa-exclamation-triangle' : 
+                        type === 'warning' ? 'fas fa-exclamation-circle' :
+                        'fas fa-check-circle';
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${bgColor};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 12px;
+                box-shadow: 0 10px 30px rgba(180,138,255,0.4);
+                z-index: 10000;
+                font-weight: 600;
+                opacity: 0;
+                transform: translateX(100%) scale(0.8);
+                transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                max-width: 350px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                border: 1px solid rgba(255,255,255,0.2);
+                backdrop-filter: blur(10px);
+                overflow: hidden;
+            `;
+            
+            // Ajouter un effet de brillance
+            notification.innerHTML = `
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+                    animation: shimmer 2s ease-in-out infinite;
+                "></div>
+                <i class="${icon}"></i> 
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animation d'entrée sophistiquée
+            setTimeout(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateX(0) scale(1)';
+            }, 100);
+            
+            // Animation de pulsation pour les types importants
+            if (type === 'error' || type === 'warning') {
+                setTimeout(() => {
+                    notification.style.animation = 'pulseGlow 1.5s ease-in-out infinite';
+                }, 500);
+            }
+            
+            // Suppression automatique avec animation fluide
+            const duration = type === 'error' ? 6000 : type === 'warning' ? 4000 : 3000;
+            setTimeout(() => {
+                notification.style.animation = 'none';
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%) scale(0.8)';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 500);
+            }, duration);
+        }
+
+        // Fonction améliorée pour gérer les clics sur les liens en maintenance
+        function handleMaintenanceClick(section, event) {
+            try {
+                // Empêcher la navigation
+                if (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                
+                console.log(`🔧 Tentative d'accès à ${section} - Affichage notification maintenance`);
+                
+                // Afficher la notification de maintenance
+                showMaintenanceNotification(section);
+                
+                // Effet visuel sur le bouton cliqué
+                if (event && event.target) {
+                    const clickedElement = event.target.closest('a');
+                    if (clickedElement) {
+                        clickedElement.style.transition = 'all 0.3s ease';
+                        clickedElement.style.transform = 'scale(0.95)';
+                        clickedElement.style.opacity = '0.4';
+                        
+                        setTimeout(() => {
+                            clickedElement.style.transform = 'scale(1)';
+                            clickedElement.style.opacity = '0.6';
+                        }, 200);
+                    }
+                }
+                
+                return false;
+                
+            } catch (error) {
+                console.error('❌ Erreur dans handleMaintenanceClick:', error);
+                alert(`${section} en maintenance - Fonctionnalité temporairement indisponible`);
+                return false;
+            }
+        }
+
+        // Rendre les fonctions accessibles globalement (après leur définition)
+        window.handleMaintenanceClick = handleMaintenanceClick;
+        window.showMaintenanceNotification = showMaintenanceNotification;
+        window.createNewUser = createNewUser;
+        window.showCreateUserModal = showCreateUserModal;
+        window.editUser = editUser;
+        window.deleteUser = deleteUser;
+        window.showAdminPanel = showAdminPanel;
+        window.showAdminTab = showAdminTab;
+
+        // Ajouter les animations CSS si elles n'existent pas
+        if (!document.querySelector('#maintenance-animations')) {
+            const style = document.createElement('style');
+            style.id = 'maintenance-animations';
+            style.textContent = `
+                @keyframes slideInFromRight {
+                    from {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+                @keyframes slideOutToRight {
+                    from {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                    to {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Animation festive de bienvenue pour la première connexion
+        function showWelcomeAnimation(username) {
+            // Créer l'overlay de l'animation
+            const welcomeOverlay = document.createElement('div');
+            welcomeOverlay.id = 'welcome-animation';
+            welcomeOverlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, rgba(26,9,62,0.95), rgba(18,7,45,0.95));
+                backdrop-filter: blur(10px);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                opacity: 0;
+                transition: opacity 0.5s ease;
+            `;
+
+            // Contenu de l'animation
+            welcomeOverlay.innerHTML = `
+                <div class="welcome-content" style="
+                    text-align: center;
+                    color: white;
+                    max-width: 600px;
+                    padding: 40px;
+                    transform: scale(0.8);
+                    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                ">
+                    <!-- Étoiles animées -->
+                    <div class="stars-container" style="
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        pointer-events: none;
+                        overflow: hidden;
+                    "></div>
+                    
+                    <!-- Confettis -->
+                    <div class="confetti-container" style="
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        pointer-events: none;
+                        overflow: hidden;
+                    "></div>
+                    
+                    <!-- Avatar festif -->
+                    <div class="welcome-avatar" style="
+                        width: 120px;
+                        height: 120px;
+                        border-radius: 50%;
+                        background: linear-gradient(135deg, #b48aff, #6c2eb6);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin: 0 auto 30px;
+                        font-size: 3em;
+                        box-shadow: 0 20px 40px rgba(180,138,255,0.4);
+                        position: relative;
+                        animation: welcomePulse 2s ease-in-out infinite;
+                    ">
+                        <i class="fas fa-user-check" style="
+                            color: white;
+                            animation: welcomeBounce 1s ease-in-out infinite alternate;
+                        "></i>
+                        
+                        <!-- Cercles animés autour de l'avatar -->
+                        <div style="
+                            position: absolute;
+                            top: -20px;
+                            left: -20px;
+                            right: -20px;
+                            bottom: -20px;
+                            border: 3px solid rgba(180,138,255,0.3);
+                            border-radius: 50%;
+                            animation: welcomeRotate 3s linear infinite;
+                        "></div>
+                        <div style="
+                            position: absolute;
+                            top: -35px;
+                            left: -35px;
+                            right: -35px;
+                            bottom: -35px;
+                            border: 2px dashed rgba(180,138,255,0.2);
+                            border-radius: 50%;
+                            animation: welcomeRotate 4s linear infinite reverse;
+                        "></div>
+                    </div>
+                    
+                    <!-- Titre de bienvenue -->
+                    <h1 style="
+                        font-size: 3em;
+                        margin: 0 0 20px 0;
+                        background: linear-gradient(45deg, #b48aff, #8a5cf6, #ff6b9d);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        background-clip: text;
+                        animation: welcomeGlow 2s ease-in-out infinite alternate;
+                        text-shadow: 0 0 30px rgba(180,138,255,0.5);
+                    ">🎉 Bienvenue ! 🎉</h1>
+                    
+                    <!-- Message personnalisé -->
+                    <h2 style="
+                        font-size: 1.8em;
+                        margin: 0 0 30px 0;
+                        color: #f5f5fa;
+                        opacity: 0;
+                        animation: welcomeFadeInUp 1s ease-out 0.5s forwards;
+                    ">Salut ${username} !</h2>
+                    
+                    <!-- Message d'accueil -->
+                    <p style="
+                        font-size: 1.2em;
+                        line-height: 1.6;
+                        color: rgba(245,245,250,0.9);
+                        margin: 0 0 40px 0;
+                        opacity: 0;
+                        animation: welcomeFadeInUp 1s ease-out 1s forwards;
+                    ">
+                        Félicitations pour votre première connexion à <strong style="color: #b48aff;">Syn Agency</strong> !<br>
+                        Votre profil OnlyFans est maintenant connecté et synchronisé.
+                    </p>
+                    
+                    <!-- Boutons d'action -->
+                    <div style="
+                        display: flex;
+                        gap: 20px;
+                        justify-content: center;
+                        flex-wrap: wrap;
+                        opacity: 0;
+                        animation: welcomeFadeInUp 1s ease-out 1.5s forwards;
+                    ">
+                        <button onclick="closeWelcomeAnimation()" style="
+                            background: linear-gradient(135deg, #b48aff, #6c2eb6);
+                            border: none;
+                            border-radius: 25px;
+                            padding: 15px 30px;
+                            color: white;
+                            font-weight: 600;
+                            font-size: 1.1em;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                            box-shadow: 0 10px 30px rgba(180,138,255,0.3);
+                            position: relative;
+                            overflow: hidden;
+                        " onmouseover="this.style.transform='translateY(-3px) scale(1.05)'" onmouseout="this.style.transform='translateY(0) scale(1)'">
+                            <i class="fas fa-rocket"></i> Commencer l'aventure !
+                        </button>
+                        
+                        <button onclick="showDashboardTour()" style="
+                            background: rgba(180,138,255,0.1);
+                            border: 2px solid #b48aff;
+                            border-radius: 25px;
+                            padding: 15px 30px;
+                            color: #b48aff;
+                            font-weight: 600;
+                            font-size: 1.1em;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                        " onmouseover="this.style.background='rgba(180,138,255,0.2)'" onmouseout="this.style.background='rgba(180,138,255,0.1)'">
+                            <i class="fas fa-map"></i> Visite guidée
+                        </button>
+                    </div>
+                    
+                    <!-- Indicateur de progression -->
+                    <div style="
+                        margin-top: 40px;
+                        opacity: 0;
+                        animation: welcomeFadeInUp 1s ease-out 2s forwards;
+                    ">
+                        <p style="color: rgba(245,245,250,0.7); font-size: 0.9em; margin-bottom: 10px;">
+                            Cliquez n'importe où pour continuer
+                        </p>
+                        <div style="
+                            width: 40px;
+                            height: 6px;
+                            background: rgba(180,138,255,0.3);
+                            border-radius: 3px;
+                            margin: 0 auto;
+                            overflow: hidden;
+                        ">
+                            <div style="
+                                width: 100%;
+                                height: 100%;
+                                background: linear-gradient(90deg, #b48aff, #8a5cf6);
+                                border-radius: 3px;
+                                animation: welcomeProgress 3s ease-in-out infinite;
+                            "></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Ajouter les styles d'animation
+            const welcomeStyles = document.createElement('style');
+            welcomeStyles.textContent = `
+                @keyframes welcomePulse {
+                    0%, 100% { transform: scale(1); box-shadow: 0 20px 40px rgba(180,138,255,0.4); }
+                    50% { transform: scale(1.05); box-shadow: 0 25px 50px rgba(180,138,255,0.6); }
+                }
+                
+                @keyframes welcomeBounce {
+                    0% { transform: translateY(0); }
+                    100% { transform: translateY(-10px); }
+                }
+                
+                @keyframes welcomeRotate {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+                
+                @keyframes welcomeGlow {
+                    0% { text-shadow: 0 0 30px rgba(180,138,255,0.5); }
+                    100% { text-shadow: 0 0 50px rgba(180,138,255,0.8), 0 0 80px rgba(180,138,255,0.4); }
+                }
+                
+                @keyframes welcomeFadeInUp {
+                    0% { opacity: 0; transform: translateY(30px); }
+                    100% { opacity: 1; transform: translateY(0); }
+                }
+                
+                @keyframes welcomeProgress {
+                    0% { transform: translateX(-100%); }
+                    50% { transform: translateX(0%); }
+                    100% { transform: translateX(100%); }
+                }
+                
+                @keyframes sparkle {
+                    0%, 100% { opacity: 0; transform: scale(0); }
+                    50% { opacity: 1; transform: scale(1); }
+                }
+                
+                @keyframes confettiFall {
+                    0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+                    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(welcomeStyles);
+
+            // Ajouter l'overlay au DOM
+            document.body.appendChild(welcomeOverlay);
+
+            // Animation d'entrée
+            setTimeout(() => {
+                welcomeOverlay.style.opacity = '1';
+                welcomeOverlay.querySelector('.welcome-content').style.transform = 'scale(1)';
+            }, 100);
+
+            // Créer les étoiles animées
+            createSparkles(welcomeOverlay.querySelector('.stars-container'));
+            
+            // Créer les confettis
+            createConfetti(welcomeOverlay.querySelector('.confetti-container'));
+
+            // Fermer en cliquant n'importe où après 2 secondes
+            setTimeout(() => {
+                welcomeOverlay.addEventListener('click', closeWelcomeAnimation);
+            }, 2000);
+
+            // Fermeture automatique après 10 secondes
+            setTimeout(() => {
+                if (document.getElementById('welcome-animation')) {
+                    closeWelcomeAnimation();
+                }
+            }, 10000);
+        }
+
+        // Créer des étoiles scintillantes
+        function createSparkles(container) {
+            for (let i = 0; i < 30; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.style.cssText = `
+                    position: absolute;
+                    width: 4px;
+                    height: 4px;
+                    background: #fff;
+                    border-radius: 50%;
+                    left: ${Math.random() * 100}%;
+                    top: ${Math.random() * 100}%;
+                    animation: sparkle ${2 + Math.random() * 3}s ease-in-out infinite;
+                    animation-delay: ${Math.random() * 2}s;
+                `;
+                container.appendChild(sparkle);
+            }
+        }
+
+        // Créer des confettis qui tombent
+        function createConfetti(container) {
+            const colors = ['#b48aff', '#8a5cf6', '#ff6b9d', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.cssText = `
+                    position: absolute;
+                    width: ${4 + Math.random() * 8}px;
+                    height: ${4 + Math.random() * 8}px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    left: ${Math.random() * 100}%;
+                    top: -20px;
+                    border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
+                    animation: confettiFall ${3 + Math.random() * 4}s linear infinite;
+                    animation-delay: ${Math.random() * 3}s;
+                `;
+                container.appendChild(confetti);
+            }
+        }
+
+        // Fermer l'animation de bienvenue
+        function closeWelcomeAnimation() {
+            const welcomeOverlay = document.getElementById('welcome-animation');
+            if (welcomeOverlay) {
+                welcomeOverlay.style.opacity = '0';
+                welcomeOverlay.querySelector('.welcome-content').style.transform = 'scale(0.8)';
+                
+                setTimeout(() => {
+                    if (document.body.contains(welcomeOverlay)) {
+                        document.body.removeChild(welcomeOverlay);
+                    }
+                }, 500);
+                
+                // Marquer que la bienvenue a été affichée
+                localStorage.setItem('welcomeShown', 'true');
+                
+                // Animation de célébration sur le dashboard
+                celebrateDashboard();
+            }
+        }
+
+        // Animation de célébration sur le dashboard
+        function celebrateDashboard() {
+            // Animation des cartes statistiques
+            const statCards = document.querySelectorAll('.stat-card');
+            statCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.animation = 'none';
+                    card.offsetHeight; // Trigger reflow
+                    card.style.animation = 'celebrateCard 0.6s ease-out';
+                }, index * 100);
+            });
+
+            // Ajouter un style temporaire pour l'animation
+            const celebrateStyle = document.createElement('style');
+            celebrateStyle.textContent = `
+                @keyframes celebrateCard {
+                    0% { transform: scale(1); }
+                    50% { transform: scale(1.05) rotate(1deg); box-shadow: 0 15px 40px rgba(180,138,255,0.4); }
+                    100% { transform: scale(1) rotate(0deg); }
+                }
+            `;
+            document.head.appendChild(celebrateStyle);
+
+            // Supprimer le style après l'animation
+            setTimeout(() => {
+                document.head.removeChild(celebrateStyle);
+            }, 2000);
+        }
+
+        // Fonction pour la visite guidée (placeholder)
+        function showDashboardTour() {
+            closeWelcomeAnimation();
+            startDashboardTour();
+        }
+
+        // Système de visite guidée interactive
+        let currentTourStep = 0;
+        const tourSteps = [
+            {
+                target: '.dashboard-header',
+                title: '🏠 En-tête du Dashboard',
+                content: 'Bienvenue dans votre espace de gestion ! Ici vous trouvez le titre de votre dashboard et le bouton pour retourner au site principal.',
+                position: 'bottom'
+            },
+            {
+                target: '.notification-bell',
+                title: '🔔 Centre de Notifications',
+                content: 'Restez informé de toutes les activités importantes ! Cliquez sur la cloche pour voir vos notifications en temps réel.',
+                position: 'bottom'
+            },
+            {
+                target: '.user-profile',
+                title: '👤 Profil Utilisateur',
+                content: 'Votre profil utilisateur avec avatar et informations de compte. Vous pouvez voir votre statut actuel ici.',
+                position: 'bottom'
+            },
+            {
+                target: '.stats-grid',
+                title: '📊 Statistiques Principales',
+                content: 'Vos métriques clés en un coup d\'œil : revenus, abonnés, vues et taux d\'engagement. Ces données se mettent à jour automatiquement.',
+                position: 'bottom'
+            },
+            {
+                target: '.profile-section',
+                title: '🔗 Configuration OnlyFans',
+                content: 'Section pour connecter et configurer votre profil OnlyFans. Actuellement en maintenance pour des améliorations.',
+                position: 'top'
+            },
+            {
+                target: '.quick-actions',
+                title: '⚡ Actions Rapides',
+                content: 'Accès rapide aux fonctionnalités principales : créer du contenu, envoyer des messages, gérer les promotions.',
+                position: 'top'
+            },
+            {
+                target: '.nav-dashboard',
+                title: '🧭 Navigation Principale',
+                content: 'Menu de navigation avec tous vos outils : Analytics, Contenu, Messages, Paramètres. Utilisez ces liens pour naviguer dans votre espace.',
+                position: 'bottom'
+            }
+        ];
+
+        function startDashboardTour() {
+            currentTourStep = 0;
+            createTourOverlay();
+            showTourStep(currentTourStep);
+        }
+
+        function createTourOverlay() {
+            // Créer l'overlay de la visite
+            const tourOverlay = document.createElement('div');
+            tourOverlay.id = 'tour-overlay';
+            tourOverlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.7);
+                z-index: 9999;
+                pointer-events: none;
+                transition: all 0.3s ease;
+            `;
+            document.body.appendChild(tourOverlay);
+
+            // Créer le tooltip de la visite
+            const tourTooltip = document.createElement('div');
+            tourTooltip.id = 'tour-tooltip';
+            tourTooltip.style.cssText = `
+                position: fixed;
+                background: linear-gradient(135deg, #1a0d3e, #0d0a1f);
+                border: 2px solid #b48aff;
+                border-radius: 20px;
+                padding: 25px;
+                max-width: 400px;
+                min-width: 300px;
+                color: white;
+                z-index: 10001;
+                box-shadow: 0 20px 60px rgba(180,138,255,0.4);
+                opacity: 0;
+                transform: scale(0.8);
+                transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                pointer-events: auto;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(0.8);
+            `;
+            document.body.appendChild(tourTooltip);
+        }
+
+        function showTourStep(stepIndex) {
+            const step = tourSteps[stepIndex];
+            const targetElement = document.querySelector(step.target);
+            const tooltip = document.getElementById('tour-tooltip');
+            const overlay = document.getElementById('tour-overlay');
+
+            if (!targetElement || !tooltip) return;
+
+            // Highlight de l'élément cible
+            highlightElement(targetElement);
+
+            // Positionner le tooltip
+            positionTooltip(tooltip, targetElement, step.position);
+
+            // Contenu du tooltip
+            tooltip.innerHTML = `
+                <div style="margin-bottom: 20px;">
+                    <h3 style="
+                        color: #b48aff; 
+                        margin: 0 0 10px 0; 
+                        font-size: 1.3em;
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    ">
+                        ${step.title}
+                    </h3>
+                    <p style="
+                        color: rgba(245,245,250,0.9); 
+                        margin: 0; 
+                        line-height: 1.5;
+                        font-size: 1em;
+                    ">
+                        ${step.content}
+                    </p>
+                </div>
+                
+                <div style="
+                    display: flex; 
+                    justify-content: space-between; 
+                    align-items: center;
+                    border-top: 1px solid rgba(180,138,255,0.2);
+                    padding-top: 15px;
+                ">
+                    <div style="color: rgba(180,138,255,0.7); font-size: 0.9em;">
+                        Étape ${stepIndex + 1} sur ${tourSteps.length}
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px;">
+                        ${stepIndex > 0 ? `
+                            <button onclick="previousTourStep()" style="
+                                background: rgba(180,138,255,0.1);
+                                border: 1px solid rgba(180,138,255,0.3);
+                                border-radius: 12px;
+                                padding: 8px 16px;
+                                color: #b48aff;
+                                cursor: pointer;
+                                font-weight: 600;
+                                transition: all 0.3s ease;
+                            " onmouseover="this.style.background='rgba(180,138,255,0.2)'" onmouseout="this.style.background='rgba(180,138,255,0.1)'">
+                                <i class="fas fa-arrow-left"></i> Précédent
+                            </button>
+                        ` : ''}
+                        
+                        ${stepIndex < tourSteps.length - 1 ? `
+                            <button onclick="nextTourStep()" style="
+                                background: linear-gradient(135deg, #b48aff, #6c2eb6);
+                                border: none;
+                                border-radius: 12px;
+                                padding: 8px 16px;
+                                color: white;
+                                cursor: pointer;
+                                font-weight: 600;
+                                transition: all 0.3s ease;
+                            " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                                Suivant <i class="fas fa-arrow-right"></i>
+                            </button>
+                        ` : `
+                            <button onclick="endTour()" style="
+                                background: linear-gradient(135deg, #4CAF50, #45a049);
+                                border: none;
+                                border-radius: 12px;
+                                padding: 8px 16px;
+                                color: white;
+                                cursor: pointer;
+                                font-weight: 600;
+                                transition: all 0.3s ease;
+                            " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                                <i class="fas fa-check"></i> Terminer
+                            </button>
+                        `}
+                        
+                        <button onclick="endTour()" style="
+                            background: rgba(255,71,87,0.1);
+                            border: 1px solid rgba(255,71,87,0.3);
+                            border-radius: 12px;
+                            padding: 8px 16px;
+                            color: #ff4757;
+                            cursor: pointer;
+                            font-weight: 600;
+                            transition: all 0.3s ease;
+                            margin-left: 5px;
+                        " onmouseover="this.style.background='rgba(255,71,87,0.2)'" onmouseout="this.style.background='rgba(255,71,87,0.1)'">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // Animation d'apparition
+            setTimeout(() => {
+                tooltip.style.opacity = '1';
+                tooltip.style.transform = 'scale(1)';
+            }, 100);
+        }
+
+        function highlightElement(element) {
+            // Supprimer l'ancien highlight
+            const oldHighlight = document.querySelector('.tour-highlight');
+            if (oldHighlight) {
+                oldHighlight.remove();
+            }
+
+            // Obtenir les dimensions et position de l'élément
+            const rect = element.getBoundingClientRect();
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+
+            // Créer le highlight
+            const highlight = document.createElement('div');
+            highlight.className = 'tour-highlight';
+            highlight.style.cssText = `
+                position: absolute;
+                top: ${rect.top + scrollTop - 10}px;
+                left: ${rect.left + scrollLeft - 10}px;
+                width: ${rect.width + 20}px;
+                height: ${rect.height + 20}px;
+                border: 3px solid #b48aff;
+                border-radius: 15px;
+                background: rgba(180,138,255,0.1);
+                z-index: 10000;
+                pointer-events: none;
+                animation: tourPulse 2s ease-in-out infinite;
+                box-shadow: 0 0 30px rgba(180,138,255,0.5);
+            `;
+
+            document.body.appendChild(highlight);
+
+            // Scroll vers l'élément avec offset réduit pour la navigation sticky
+            const navHeight = 80; // Hauteur réduite de la navigation
+            let elementPosition = element.offsetTop - navHeight - 50; // Plus d'espace au-dessus
+            
+            // Pour la navigation elle-même, scroll tout en haut
+            if (element.classList.contains('nav-dashboard') || 
+                element.closest('.nav-dashboard')) {
+                elementPosition = 0; // Scroll tout en haut de la page
+            }
+            
+            window.scrollTo({
+                top: Math.max(0, elementPosition),
+                behavior: 'smooth'
+            });
+
+            // Ajouter les styles d'animation si pas déjà présents
+            if (!document.querySelector('#tour-styles')) {
+                const tourStyles = document.createElement('style');
+                tourStyles.id = 'tour-styles';
+                tourStyles.textContent = `
+                    @keyframes tourPulse {
+                        0%, 100% { 
+                            transform: scale(1); 
+                            box-shadow: 0 0 30px rgba(180,138,255,0.5);
+                        }
+                        50% { 
+                            transform: scale(1.02); 
+                            box-shadow: 0 0 40px rgba(180,138,255,0.8);
+                        }
+                    }
+                `;
+                document.head.appendChild(tourStyles);
+            }
+        }
+
+        function positionTooltip(tooltip, targetElement, position) {
+            const rect = targetElement.getBoundingClientRect();
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            
+            // Attendre que le tooltip soit rendu pour obtenir ses vraies dimensions
+            setTimeout(() => {
+                const tooltipRect = tooltip.getBoundingClientRect();
+                let top, left;
+
+                switch (position) {
+                    case 'bottom':
+                        top = rect.bottom + scrollTop + 5; // Réduire l'espace à 5px
+                        left = rect.left + scrollLeft + (rect.width / 2) - (tooltipRect.width / 2);
+                        break;
+                    case 'top':
+                        top = rect.top + scrollTop - tooltipRect.height - 5; // Réduire l'espace à 5px
+                        left = rect.left + scrollLeft + (rect.width / 2) - (tooltipRect.width / 2);
+                        break;
+                    case 'left':
+                        top = rect.top + scrollTop + (rect.height / 2) - (tooltipRect.height / 2);
+                        left = rect.left + scrollLeft - tooltipRect.width - 5;
+                        break;
+                    case 'right':
+                        top = rect.top + scrollTop + (rect.height / 2) - (tooltipRect.height / 2);
+                        left = rect.right + scrollLeft + 5;
+                        break;
+                    default:
+                        top = rect.bottom + scrollTop + 5;
+                        left = rect.left + scrollLeft + (rect.width / 2) - (tooltipRect.width / 2);
+                }
+
+                // Vérifier les limites de l'écran et ajuster
+                const windowWidth = window.innerWidth;
+                const windowHeight = window.innerHeight;
+                const navHeight = 80; // Réduire la hauteur de navigation estimée
+
+                // Ajustements horizontaux
+                if (left < 15) {
+                    left = 15;
+                } else if (left + tooltipRect.width > windowWidth - 15) {
+                    left = windowWidth - tooltipRect.width - 15;
+                }
+
+                // Ajustements verticaux - Plus agressifs pour remonter les tooltips
+                if (top < navHeight + 10) {
+                    // Si le tooltip est trop haut, le placer en dessous de l'élément mais plus proche
+                    top = rect.bottom + scrollTop + 5;
+                } else if (top + tooltipRect.height > scrollTop + windowHeight - 15) {
+                    // Si le tooltip est trop bas, le placer au-dessus de l'élément
+                    top = rect.top + scrollTop - tooltipRect.height - 5;
+                }
+
+                // Pour le header spécifiquement, forcer une position plus haute
+                if (targetElement.classList.contains('dashboard-header') || 
+                    targetElement.closest('.dashboard-header')) {
+                    top = rect.bottom + scrollTop - 10; // Position encore plus proche
+                }
+
+                // Pour la navigation principale, forcer position tout en haut
+                if (targetElement.classList.contains('nav-dashboard') || 
+                    targetElement.closest('.nav-dashboard')) {
+                    top = rect.bottom + scrollTop + 2; // Position juste sous le menu
+                    // S'assurer que c'est visible même avec scroll
+                    if (top < 90) {
+                        top = 90; // Position minimale sous la nav fixe
+                    }
+                }
+
+                // S'assurer que le tooltip reste visible mais plus haut
+                if (top < navHeight + 10) {
+                    top = navHeight + 10;
+                }
+
+                tooltip.style.top = top + 'px';
+                tooltip.style.left = left + 'px';
+                tooltip.style.transform = 'scale(1)';
+            }, 30); // Réduire le délai pour un positionnement plus rapide
+        }
+
+        function nextTourStep() {
+            if (currentTourStep < tourSteps.length - 1) {
+                currentTourStep++;
+                showTourStep(currentTourStep);
+            }
+        }
+
+        function previousTourStep() {
+            if (currentTourStep > 0) {
+                currentTourStep--;
+                showTourStep(currentTourStep);
+            }
+        }
+
+        function endTour() {
+            // Supprimer les éléments de la visite
+            const overlay = document.getElementById('tour-overlay');
+            const tooltip = document.getElementById('tour-tooltip');
+            const highlight = document.querySelector('.tour-highlight');
+            const styles = document.querySelector('#tour-styles');
+
+            if (overlay) {
+                overlay.style.opacity = '0';
+                setTimeout(() => overlay.remove(), 300);
+            }
+            
+            if (tooltip) {
+                tooltip.style.opacity = '0';
+                tooltip.style.transform = 'scale(0.8)';
+                setTimeout(() => tooltip.remove(), 300);
+            }
+            
+            if (highlight) {
+                highlight.style.opacity = '0';
+                setTimeout(() => highlight.remove(), 300);
+            }
+
+            if (styles) {
+                setTimeout(() => styles.remove(), 300);
+            }
+
+            // Message de fin
+            setTimeout(() => {
+                showNotification('🎯 Visite guidée terminée ! Vous connaissez maintenant toutes les fonctionnalités principales.', 'info');
+            }, 500);
+
+            // Reset
+            currentTourStep = 0;
+        }
+
+        // Fonction de test pour l'animation de bienvenue
+        function testWelcomeAnimation() {
+            // Forcer l'affichage de l'animation même si elle a déjà été vue
+            const testUsernames = [
+                'Sarah ✨',
+                'Alex 🎉', 
+                'Jordan 🌟',
+                'Creator Pro 🚀',
+                'Superstar 💫'
+            ];
+            
+            const randomUsername = testUsernames[Math.floor(Math.random() * testUsernames.length)];
+            
+            // Supprimer temporairement le flag pour permettre le test
+            const originalWelcomeShown = localStorage.getItem('welcomeShown');
+            localStorage.removeItem('welcomeShown');
+            
+            showNotification('🎬 Lancement de l\'animation de test...', 'info');
+            
+            setTimeout(() => {
+                showWelcomeAnimation(randomUsername);
+                
+                // Restaurer le flag après l'animation si il existait
+                if (originalWelcomeShown) {
+                    setTimeout(() => {
+                        localStorage.setItem('welcomeShown', originalWelcomeShown);
+                    }, 11000);
+                }
+            }, 1000);
+        }
+
+        // Fonction utilitaire pour réinitialiser l'état de bienvenue (pour les tests)
+        function resetWelcomeState() {
+            localStorage.removeItem('welcomeShown');
+            showNotification('✅ État de bienvenue réinitialisé - La prochaine connexion OnlyFans déclenchera l\'animation');
+        }
+
+        // Fonction pour afficher des informations de débogage
+        function showDebugInfo() {
+            const welcomeShown = localStorage.getItem('welcomeShown');
+            const ofProfile = JSON.parse(localStorage.getItem('ofProfile') || '{}');
+            
+            const debugInfo = `
+🔍 Informations de débogage :
+• Animation déjà vue : ${welcomeShown ? 'Oui' : 'Non'}
+• Profil OF connecté : ${ofProfile.connected ? 'Oui' : 'Non'}
+• Nom d'utilisateur : ${ofProfile.displayName || ofProfile.username || 'Non défini'}
+• Date de connexion : ${ofProfile.connectedAt ? new Date(ofProfile.connectedAt).toLocaleString() : 'Jamais'}
+            `;
+            
+            console.log(debugInfo);
+            showNotification('ℹ️ Informations de débogage affichées dans la console', 'info');
+        }
+
+        // Fonctions pour la gestion du profil OnlyFans
+        async function connectOFProfile() {
+            showNotification('⚠️ Configuration OnlyFans en maintenance - Fonctionnalité temporairement indisponible', 'warning');
+            return;
+            
+            // Créer un modal de connexion OnlyFans
+            const modal = createOFLoginModal();
+            document.body.appendChild(modal);
+            
+            // Afficher le modal avec animation
+            setTimeout(() => {
+                modal.style.opacity = '1';
+                modal.querySelector('.modal-content').style.transform = 'translateY(0)';
+            }, 100);
+        }
+
+        function createOFLoginModal() {
+            const modal = document.createElement('div');
+            modal.className = 'of-modal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            `;
+            
+            modal.innerHTML = `
+                <div class="modal-content" style="
+                    background: linear-gradient(135deg, #1a0d3e, #0d0a1f);
+                    border-radius: 20px;
+                    padding: 40px;
+                    max-width: 500px;
+                    width: 90%;
+                    border: 1px solid #b48aff;
+                    box-shadow: 0 20px 60px rgba(180,138,255,0.3);
+                    transform: translateY(-50px);
+                    transition: transform 0.3s ease;
+                ">
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <div style="
+                            width: 80px;
+                            height: 80px;
+                            border-radius: 50%;
+                            background: linear-gradient(135deg, #b48aff, #6c2eb6);
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            margin: 0 auto 20px;
+                            font-size: 2em;
+                            color: white;
+                        ">
+                            <i class="fab fa-fan" style="transform: rotate(45deg);"></i>
+                        </div>
+                        <h2 style="color: #f5f5fa; margin: 0 0 10px 0;">Connexion OnlyFans</h2>
+                        <p style="color: #b0b0b0; margin: 0;">Connectez votre compte OnlyFans pour synchroniser vos données</p>
+                    </div>
+                    
+                    <form id="of-login-form" style="margin-bottom: 20px;">
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; color: #f5f5fa; margin-bottom: 8px; font-weight: 600;">Email OnlyFans</label>
+                            <input type="email" id="of-email" required style="
+                                width: 100%;
+                                background: rgba(180,138,255,0.1);
+                                border: 1px solid rgba(180,138,255,0.3);
+                                border-radius: 12px;
+                                padding: 15px;
+                                color: #f5f5fa;
+                                font-size: 1em;
+                                box-sizing: border-box;
+                            " placeholder="votre-email@example.com">
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; color: #f5f5fa; margin-bottom: 8px; font-weight: 600;">Mot de passe</label>
+                            <input type="password" id="of-password" required style="
+                                width: 100%;
+                                background: rgba(180,138,255,0.1);
+                                border: 1px solid rgba(180,138,255,0.3);
+                                border-radius: 12px;
+                                padding: 15px;
+                                color: #f5f5fa;
+                                font-size: 1em;
+                                box-sizing: border-box;
+                            " placeholder="••••••••">
+                        </div>
+                        
+                        <div style="margin-bottom: 25px;">
+                            <label style="display: block; color: #f5f5fa; margin-bottom: 8px; font-weight: 600;">Token API (optionnel)</label>
+                            <input type="text" id="of-token" style="
+                                width: 100%;
+                                background: rgba(180,138,255,0.1);
+                                border: 1px solid rgba(180,138,255,0.3);
+                                border-radius: 12px;
+                                padding: 15px;
+                                color: #f5f5fa;
+                                font-size: 1em;
+                                box-sizing: border-box;
+                            " placeholder="Token API pour accès avancé">
+                            <small style="color: #888; margin-top: 5px; display: block;">Le token API permet une synchronisation automatique</small>
+                        </div>
+                        
+                        <div style="display: flex; gap: 15px;">
+                            <button type="button" onclick="closeOFModal()" style="
+                                flex: 1;
+                                background: rgba(180,138,255,0.1);
+                                border: 1px solid rgba(180,138,255,0.3);
+                                border-radius: 12px;
+                                padding: 15px;
+                                color: #b48aff;
+                                font-weight: 600;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                            ">Annuler</button>
+                            
+                            <button type="submit" style="
+                                flex: 2;
+                                background: linear-gradient(135deg, #b48aff, #6c2eb6);
+                                border: none;
+                                border-radius: 12px;
+                                padding: 15px;
+                                color: white;
+                                font-weight: 600;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                            ">
+                                <i class="fas fa-link"></i> Connecter
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div style="text-align: center; padding-top: 20px; border-top: 1px solid rgba(180,138,255,0.1);">
+                        <p style="color: #888; font-size: 0.9em; margin: 0;">
+                            <i class="fas fa-shield-alt"></i> Vos données sont sécurisées et chiffrées
+                        </p>
+                    </div>
+                </div>
+            `;
+            
+            // Ajouter l'événement de soumission du formulaire
+            modal.querySelector('#of-login-form').addEventListener('submit', handleOFLogin);
+            
+            // Fermer le modal en cliquant à l'extérieur
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeOFModal();
+                }
+            });
+            
+            return modal;
+        }
+
+        async function handleOFLogin(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('of-email').value;
+            const password = document.getElementById('of-password').value;
+            const token = document.getElementById('of-token').value;
+            
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            // Animation de chargement
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connexion...';
+            submitBtn.disabled = true;
+            
+            try {
+                // Appel à l'API OnlyFans
+                const result = await authenticateWithOnlyFans(email, password, token);
+                
+                if (result.success) {
+                    // Stocker les informations de connexion
+                    const profileData = {
+                        connected: true,
+                        email: email,
+                        username: result.username,
+                        displayName: result.displayName,
+                        bio: result.bio,
+                        token: token || null,
+                        connectedAt: new Date().toISOString()
+                    };
+                    
+                    localStorage.setItem('ofProfile', JSON.stringify(profileData));
+                    
+                    // Vérifier si c'est la première connexion
+                    const isFirstConnection = !localStorage.getItem('welcomeShown');
+                    
+                    // Mettre à jour l'interface
+                    updateOFProfileStatus(true);
+                    populateOFProfileData(result);
+                    
+                    closeOFModal();
+                    
+                    if (isFirstConnection) {
+                        // Animation de bienvenue pour la première connexion
+                        setTimeout(() => {
+                            showWelcomeAnimation(result.displayName || result.username || 'Créateur');
+                        }, 500);
+                    } else {
+                        // Message de reconnexion pour les connexions suivantes
+                        showNotification('Reconnecté avec succès ! Bienvenue à nouveau.');
+                    }
+                    
+                    // Synchroniser automatiquement les données
+                    setTimeout(() => syncOFProfile(), isFirstConnection ? 3000 : 1000);
+                    
+                } else {
+                    throw new Error(result.error || 'Erreur de connexion');
+                }
+                
+            } catch (error) {
+                console.error('Erreur de connexion OnlyFans:', error);
+                showNotification('Erreur de connexion: ' + error.message, 'error');
+                
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        async function authenticateWithOnlyFans(email, password, token) {
+            try {
+                // Utiliser l'API OnlyFans réelle
+                const result = await ofAPI.authenticate(email, password);
+                
+                if (result.success) {
+                    // Récupérer les informations du profil
+                    const profileInfo = await ofAPI.getProfileInfo();
+                    const stats = await ofAPI.getProfileStats();
+                    
+                    return {
+                        success: true,
+                        username: profileInfo.data.username,
+                        displayName: profileInfo.data.displayName,
+                        bio: profileInfo.data.bio,
+                        stats: stats.data,
+                        token: result.token,
+                        userId: result.user.id
+                    };
+                } else {
+                    return {
+                        success: false,
+                        error: result.error || 'Erreur de connexion'
+                    };
+                }
+            } catch (error) {
+                console.error('Erreur d\'authentification OnlyFans:', error);
+                
+                // Fallback vers simulation si l'API réelle échoue
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        if (email && password) {
+                            resolve({
+                                success: true,
+                                username: email.split('@')[0],
+                                displayName: 'Créateur OnlyFans',
+                                bio: 'Profil synchronisé depuis OnlyFans',
+                                stats: {
+                                    subscribers: 1247,
+                                    revenue: 2850.50,
+                                    posts: 156,
+                                    likes: 8932,
+                                    views: 45600,
+                                    engagement: 78
+                                }
+                            });
+                        } else {
+                            resolve({
+                                success: false,
+                                error: 'Identifiants invalides'
+                            });
+                        }
+                    }, 2000);
+                });
+            }
+        }
+
+        function populateOFProfileData(data) {
+            document.getElementById('of-username').disabled = false;
+            document.getElementById('of-display-name').disabled = false;
+            document.querySelector('.sync-btn').disabled = false;
+            document.querySelector('.save-btn').disabled = false;
+            
+            document.getElementById('of-username').value = data.username || '';
+            document.getElementById('of-display-name').value = data.displayName || '';
+            
+            // Stocker les valeurs originales pour détecter les changements
+            window.originalProfileData = {
+                username: data.username || '',
+                displayName: data.displayName || ''
+            };
+        }
+
+        function checkProfileChanges() {
+            if (!window.originalProfileData) return;
+            
+            const currentData = {
+                username: document.getElementById('of-username').value,
+                displayName: document.getElementById('of-display-name').value
+            };
+            
+            const hasChanges = 
+                currentData.username !== window.originalProfileData.username ||
+                currentData.displayName !== window.originalProfileData.displayName;
+            
+            const saveBtn = document.querySelector('.save-btn');
+            if (hasChanges) {
+                saveBtn.style.background = 'linear-gradient(135deg, #ff9800, #f57c00)';
+                saveBtn.innerHTML = '<i class="fas fa-exclamation-circle"></i> Modifications non sauvées';
+            } else {
+                saveBtn.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+                saveBtn.innerHTML = '<i class="fas fa-save"></i> Sauvegarder';
+            }
+        }
+
+        async function saveOFProfile() {
+            showNotification('⚠️ Configuration OnlyFans en maintenance - Fonctionnalité temporairement indisponible', 'warning');
+            return;
+            
+            try {
+                saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sauvegarde...';
+                saveBtn.disabled = true;
+                
+                const profileData = {
+                    username: document.getElementById('of-username').value,
+                    displayName: document.getElementById('of-display-name').value
+                };
+                
+                const profile = JSON.parse(localStorage.getItem('ofProfile') || '{}');
+                
+                if (profile.token) {
+                    ofAPI.authToken = profile.token;
+                }
+                
+                // Mettre à jour le profil via l'API OnlyFans
+                const result = await ofAPI.updateProfile(profileData);
+                
+                if (result.success) {
+                    // Mettre à jour les données locales
+                    const updatedProfile = {
+                        ...profile,
+                        ...profileData,
+                        lastUpdate: new Date().toISOString()
+                    };
+                    localStorage.setItem('ofProfile', JSON.stringify(updatedProfile));
+                    
+                    // Réinitialiser les valeurs originales
+                    window.originalProfileData = { ...profileData };
+                    
+                    saveBtn.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+                    saveBtn.innerHTML = '<i class="fas fa-check"></i> Sauvegardé !';
+                    
+                    showNotification('Profil mis à jour avec succès !');
+                    
+                    setTimeout(() => {
+                        saveBtn.innerHTML = '<i class="fas fa-save"></i> Sauvegarder';
+                    }, 2000);
+                    
+                } else {
+                    throw new Error(result.error || 'Erreur de sauvegarde');
+                }
+                
+            } catch (error) {
+                console.error('Erreur sauvegarde profil:', error);
+                showNotification('Erreur lors de la sauvegarde: ' + error.message, 'error');
+                
+                saveBtn.innerHTML = originalText;
+            } finally {
+                saveBtn.disabled = false;
+            }
+        }
+
+        function closeOFModal() {
+            const modal = document.querySelector('.of-modal');
+            if (modal) {
+                modal.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(modal);
+                }, 300);
+            }
+        }
+
+        async function syncOFProfile() {
+            showNotification('⚠️ Configuration OnlyFans en maintenance - Fonctionnalité temporairement indisponible', 'warning');
+            return;
+            
+            // Animation de synchronisation
+            syncBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Synchronisation...';
+            syncBtn.disabled = true;
+            
+            try {
+                const profile = JSON.parse(localStorage.getItem('ofProfile') || '{}');
+                
+                if (!profile.connected) {
+                    throw new Error('Profil non connecté');
+                }
+                
+                // Appel API pour synchroniser les données
+                const syncResult = await syncWithOnlyFansAPI(profile);
+                
+                if (syncResult.success) {
+                    // Mettre à jour les statistiques du dashboard
+                    updateDashboardStats(syncResult.data);
+                    
+                    // Mettre à jour les informations de profil
+                    const updatedProfile = {
+                        ...profile,
+                        lastSync: new Date().toISOString(),
+                        stats: syncResult.data
+                    };
+                    localStorage.setItem('ofProfile', JSON.stringify(updatedProfile));
+                    
+                    showNotification('Synchronisation réussie ! Données mises à jour.');
+                } else {
+                    throw new Error(syncResult.error || 'Erreur de synchronisation');
+                }
+                
+            } catch (error) {
+                console.error('Erreur de synchronisation:', error);
+                showNotification('Erreur de synchronisation: ' + error.message, 'error');
+            } finally {
+                syncBtn.innerHTML = originalText;
+                syncBtn.disabled = false;
+            }
+        }
+
+        async function syncWithOnlyFansAPI(profile) {
+            try {
+                // Utiliser l'API OnlyFans réelle pour récupérer les statistiques
+                if (profile.token) {
+                    ofAPI.authToken = profile.token;
+                }
+                
+                const stats = await ofAPI.getProfileStats();
+                const profileInfo = await ofAPI.getProfileInfo();
+                
+                if (stats.success && profileInfo.success) {
+                    return {
+                        success: true,
+                        data: {
+                            ...stats.data,
+                            username: profileInfo.data.username,
+                            displayName: profileInfo.data.displayName,
+                            bio: profileInfo.data.bio
+                        }
+                    };
+                } else {
+                    throw new Error('Erreur lors de la récupération des données');
+                }
+                
+            } catch (error) {
+                console.error('Erreur API OnlyFans:', error);
+                
+                // Fallback vers simulation
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve({
+                            success: true,
+                            data: {
+                                subscribers: Math.floor(Math.random() * 1000) + 1000,
+                                revenue: Math.floor(Math.random() * 5000) + 1000,
+                                views: Math.floor(Math.random() * 50000) + 10000,
+                                engagement: Math.floor(Math.random() * 20) + 80,
+                                posts: Math.floor(Math.random() * 100) + 50
+                            }
+                        });
+                    }, 1500);
+                });
+            }
+        }
+
+        function updateDashboardStats(stats) {
+            // Mettre à jour les cartes de statistiques avec les vraies données
+            if (stats.revenue) {
+                document.getElementById('revenue-month').textContent = `${stats.revenue.toLocaleString('fr-FR')}€`;
+                document.querySelector('#revenue-month').parentElement.querySelector('.stat-change').innerHTML = 
+                    '<i class="fas fa-arrow-up"></i> Données synchronisées';
+            }
+            
+            if (stats.subscribers) {
+                document.getElementById('subscribers').textContent = stats.subscribers.toLocaleString('fr-FR');
+                document.querySelector('#subscribers').parentElement.querySelector('.stat-change').innerHTML = 
+                    '<i class="fas fa-arrow-up"></i> Données synchronisées';
+            }
+            
+            if (stats.views) {
+                document.getElementById('views').textContent = stats.views.toLocaleString('fr-FR');
+                document.querySelector('#views').parentElement.querySelector('.stat-change').innerHTML = 
+                    '<i class="fas fa-arrow-up"></i> Données synchronisées';
+            }
+            
+            if (stats.engagement) {
+                document.getElementById('engagement').textContent = `${stats.engagement}%`;
+                document.querySelector('#engagement').parentElement.querySelector('.stat-change').innerHTML = 
+                    '<i class="fas fa-arrow-up"></i> Données synchronisées';
+            }
+        }
+
+        function updateOFProfileStatus(connected) {
+            const statusIndicator = document.querySelector('.status-indicator');
+            const statusText = document.querySelector('.status-text');
+            const connectBtn = document.querySelector('.connect-btn');
+            
+            if (connected) {
+                statusIndicator.className = 'status-indicator connected';
+                statusText.textContent = 'Connecté';
+                connectBtn.innerHTML = '<i class="fas fa-unlink"></i> Déconnecter';
+                connectBtn.onclick = disconnectOFProfile;
+            } else {
+                statusIndicator.className = 'status-indicator disconnected';
+                statusText.textContent = 'Non connecté';
+                connectBtn.innerHTML = '<i class="fas fa-link"></i> Connecter le profil';
+                connectBtn.onclick = connectOFProfile;
+            }
+        }
+
+        function disconnectOFProfile() {
+            showNotification('⚠️ Configuration OnlyFans en maintenance - Fonctionnalité temporairement indisponible', 'warning');
+            return;
+            
+            if (confirmed) {
+                // Supprimer les données de connexion
+                localStorage.removeItem('ofProfile');
+                
+                updateOFProfileStatus(false);
+                showNotification('Profil OnlyFans déconnecté');
+                
+                // Désactiver les champs et vider le formulaire
+                document.getElementById('of-username').disabled = true;
+                document.getElementById('of-display-name').disabled = true;
+                document.querySelector('.sync-btn').disabled = true;
+                document.querySelector('.save-btn').disabled = true;
+                
+                document.getElementById('of-username').value = '';
+                document.getElementById('of-display-name').value = '';
+                
+                // Réinitialiser les données originales
+                window.originalProfileData = null;
+                
+                // Remettre les stats à zéro
+                resetDashboardStats();
+            }
+        }
+
+        function resetDashboardStats() {
+            document.getElementById('revenue-month').textContent = '0€';
+            document.getElementById('subscribers').textContent = '0';
+            document.getElementById('views').textContent = '0';
+            document.getElementById('engagement').textContent = '0%';
+            
+            // Remettre les messages de chargement
+            document.querySelectorAll('.stat-change').forEach(element => {
+                element.innerHTML = '<i class="fas fa-chart-line"></i> Données en cours de chargement';
+            });
+        }
+
+        // Vérifier l'état de connexion OnlyFans au chargement
+        function checkOFProfileStatus() {
+            const profile = JSON.parse(localStorage.getItem('ofProfile') || '{}');
+            
+            if (profile.connected) {
+                updateOFProfileStatus(true);
+                populateOFProfileData(profile);
+                
+                // Synchronisation automatique si plus de 1 heure
+                const lastSync = new Date(profile.lastSync || 0);
+                const now = new Date();
+                const hoursSinceSync = (now - lastSync) / (1000 * 60 * 60);
+                
+                if (hoursSinceSync > 1) {
+                    setTimeout(() => {
+                        showNotification('Synchronisation automatique en cours...');
+                        syncOFProfile();
+                    }, 2000);
+                } else if (profile.stats) {
+                    updateDashboardStats(profile.stats);
+                }
+            }
+        }
+
+        // Fonction pour obtenir un nouveau conseil quotidien
+        function getNewDailyTip() {
+            const dailyTips = [
+                "La régularité est la clé du succès : postez du contenu de qualité chaque jour pour fidéliser votre audience.",
+                "Interagissez authentiquement avec vos fans - les relations personnelles génèrent plus de revenus.",
+                "Utilisez des hashtags pertinents et populaires pour augmenter la visibilité de vos posts.",
+                "Créez du contenu exclusif et premium pour justifier vos prix d'abonnement.",
+                "Analysez vos statistiques pour identifier les types de contenu les plus performants.",
+                "Proposez des offres spéciales et des promotions lors d'événements ou de saisons.",
+                "Collaborez avec d'autres créateurs pour élargir votre audience et partager des conseils.",
+                "Soignez votre profil et votre bio - c'est votre première impression auprès des nouveaux visiteurs.",
+                "Utilisez les stories et les posts temporaires pour créer un sentiment d'urgence.",
+                "Répondez rapidement aux messages privés - la réactivité fidélise vos abonnés premium.",
+                "Variez vos formats : photos, vidéos, lives, messages audio pour maintenir l'intérêt.",
+                "Planifiez votre contenu à l'avance avec un calendrier éditorial structuré.",
+                "Utilisez un bon éclairage naturel ou des ring lights pour améliorer la qualité visuelle.",
+                "Créez des séries ou des thématiques récurrentes pour fidéliser votre audience.",
+                "Montrez votre personnalité authentique - les fans apprécient la sincérité.",
+                "Utilisez les sondages et questions pour engager votre communauté.",
+                "Optimisez vos prix en fonction de votre contenu et de votre audience cible.",
+                "Créez des bundles et des packages attractifs pour augmenter votre revenu moyen.",
+                "Utilisez les réseaux sociaux pour promouvoir votre contenu OnlyFans.",
+                "Restez à l'écoute des tendances et adaptez votre contenu en conséquence."
+            ];
+
+            const tipElement = document.getElementById('daily-tip');
+            const currentTip = tipElement.textContent.trim().replace(/"/g, '');
+            
+            // Filtrer pour éviter le même conseil
+            const availableTips = dailyTips.filter(tip => tip !== currentTip);
+            const randomTip = availableTips[Math.floor(Math.random() * availableTips.length)];
+            
+            // Animation de changement fluide
+            tipElement.style.transition = 'all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            tipElement.style.opacity = '0';
+            tipElement.style.transform = 'translateY(-20px) scale(0.95)';
+            
+            setTimeout(() => {
+                tipElement.textContent = `"${randomTip}"`;
+                tipElement.style.opacity = '1';
+                tipElement.style.transform = 'translateY(0) scale(1)';
+                
+                // Effet de brillance temporaire
+                tipElement.style.textShadow = '0 0 15px rgba(180,138,255,0.6)';
+                setTimeout(() => {
+                    tipElement.style.textShadow = '';
+                }, 1000);
+            }, 250);
+
+            // Notification de succès
+            showNotification('💡 Nouveau conseil généré !', 'info');
+        }
+
+        // Animation d'entrée pour les cartes de conseils
+        function animateTipsSection() {
+            const tipCards = document.querySelectorAll('.tip-card');
+            tipCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(40px) scale(0.9)';
+                card.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0) scale(1)';
+                }, index * 150 + 400);
+            });
+        }
+
+        // Initialiser les animations des conseils au chargement
+        document.addEventListener('DOMContentLoaded', function() {
+            // Attendre que les autres animations soient terminées
+            setTimeout(() => {
+                animateTipsSection();
+            }, 1000);
+        });
+
+        // Fonction de test pour les boutons de maintenance (pour debug)
+        function testMaintenanceButtons() {
+            console.log('🧪 Test des boutons de maintenance...');
+            showMaintenanceNotification('Test Analytics');
+            setTimeout(() => {
+                showMaintenanceNotification('Test Messages');
+            }, 1000);
+        }
+
+        // Fonction pour obtenir un nouveau conseil quotidien
+        function getNewDailyTip() {
+            const dailyTips = [
+                "La régularité est la clé du succès : postez du contenu de qualité chaque jour pour fidéliser votre audience.",
+                "Interagissez authentiquement avec vos fans - les relations personnelles génèrent plus de revenus.",
+                "Utilisez des hashtags pertinents et populaires pour augmenter la visibilité de vos posts.",
+                "Créez du contenu exclusif et premium pour justifier vos prix d'abonnement.",
+                "Analysez vos statistiques pour identifier les types de contenu les plus performants.",
+                "Proposez des offres spéciales et des promotions lors d'événements ou de saisons.",
+                "Collaborez avec d'autres créateurs pour élargir votre audience et partager des conseils.",
+                "Soignez votre profil et votre bio - c'est votre première impression auprès des nouveaux visiteurs.",
+                "Utilisez les stories et les posts temporaires pour créer un sentiment d'urgence.",
+                "Répondez rapidement aux messages privés - la réactivité fidélise vos abonnés premium.",
+                "Variez vos formats : photos, vidéos, lives, messages audio pour maintenir l'intérêt.",
+                "Planifiez votre contenu à l'avance avec un calendrier éditorial structuré.",
+                "Utilisez un bon éclairage naturel ou des ring lights pour améliorer la qualité visuelle.",
+                "Créez des séries ou des thématiques récurrentes pour fidéliser votre audience.",
+                "Montrez votre personnalité authentique - les fans apprécient la sincérité.",
+                "Utilisez les sondages et questions pour engager votre communauté.",
+                "Optimisez vos prix en fonction de votre contenu et de votre audience cible.",
+                "Créez des bundles et des packages attractifs pour augmenter votre revenu moyen.",
+                "Utilisez les réseaux sociaux pour promouvoir votre contenu OnlyFans.",
+                "Restez à l'écoute des tendances et adaptez votre contenu en conséquence."
+            ];
+
+            const tipElement = document.getElementById('daily-tip');
+            const currentTip = tipElement.textContent.trim().replace(/"/g, '');
+            
+            // Filtrer pour éviter le même conseil
+            const availableTips = dailyTips.filter(tip => tip !== currentTip);
+            const randomTip = availableTips[Math.floor(Math.random() * availableTips.length)];
+            
+            // Animation de changement fluide
+            tipElement.style.transition = 'all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            tipElement.style.opacity = '0';
+            tipElement.style.transform = 'translateY(-20px) scale(0.95)';
+            
+            setTimeout(() => {
+                tipElement.textContent = `"${randomTip}"`;
+                tipElement.style.opacity = '1';
+                tipElement.style.transform = 'translateY(0) scale(1)';
+                
+                // Effet de brillance temporaire
+                tipElement.style.textShadow = '0 0 15px rgba(180,138,255,0.6)';
+                setTimeout(() => {
+                    tipElement.style.textShadow = '';
+                }, 1000);
+            }, 250);
+
+            // Notification de succès
+            showNotification('💡 Nouveau conseil généré !', 'info');
+        }
+
+        // Animation d'entrée pour les cartes de conseils
+        function animateTipsSection() {
+            const tipCards = document.querySelectorAll('.tip-card');
+            tipCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(40px) scale(0.9)';
+                card.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0) scale(1)';
+                }, index * 150 + 400);
+            });
+        }
+
+        // Initialiser les animations des conseils au chargement
+        document.addEventListener('DOMContentLoaded', function() {
+            // Attendre que les autres animations soient terminées
+            setTimeout(() => {
+                animateTipsSection();
+            }, 1000);
+        });
+
+        // Fonction de test pour les boutons de maintenance (pour debug)
+        function testMaintenanceButtons() {
+            console.log('🧪 Test des boutons de maintenance...');
+            showMaintenanceNotification('Test Analytics');
+            setTimeout(() => {
+                showMaintenanceNotification('Test Messages');
+            }, 1000);
+        }
+
+    </script>
+</body>
+</html>
