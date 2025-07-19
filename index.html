@@ -4,11 +4,18 @@
     <meta charset="UTF-8">
     <title>Syn Agency – Agence Digitale Premium</title>
     <meta name="description" content="Syn Agency : agence digitale haut de gamme, portfolio, services, expertise OnlyFans.">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="./css/style.css?v=1.7">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Barre de progression de scroll -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+    
     <!-- Navigation -->
     <header>
         <div style="display:flex;align-items:center;justify-content:center;gap:22px;max-width:980px;margin:0 auto;">
@@ -19,18 +26,20 @@
             <a href="#home" id="nav-home">Accueil</a>
             <a href="#services" id="nav-services">Services</a>
             <a href="#results" id="nav-results">Résultats</a>
+            <a href="#testimonials" id="nav-testimonials">Avis</a>
             <a href="#team" id="nav-team">Équipe</a>
-            <a href="#contact" id="nav-contact">Contact</a>
+            <a href="#calculator" id="nav-calculator">Calculateur</a>
+            <a href="#faq" id="nav-faq">FAQ</a>
         </nav>
         <div id="lang-switch" style="margin-top:18px;display:flex;justify-content:center;gap:16px;">
-            <button id="fr-btn" class="btn" style="padding:8px 14px;font-size:1.1em;background:none;border:none;box-shadow:none;">🇫🇷</button>
-            <button id="en-btn" class="btn" style="padding:8px 14px;font-size:1.1em;background:none;border:none;box-shadow:none;">🇬🇧</button>
+            <button id="fr-btn" style="padding:8px 14px;font-size:1em;font-weight:600;background:rgba(26,9,62,0.7);border:1px solid #23233a;border-radius:8px;cursor:pointer;transition:all 0.2s;color:#f5f5fa;letter-spacing:0.5px;">FR</button>
+            <button id="en-btn" style="padding:8px 14px;font-size:1em;font-weight:600;background:rgba(26,9,62,0.7);border:1px solid #23233a;border-radius:8px;cursor:pointer;transition:all 0.2s;color:#f5f5fa;letter-spacing:0.5px;">EN</button>
         </div>
     </header>
     <main class="container" id="main-animate" style="opacity:0; transform:translateY(40px); transition:opacity 1.2s, transform 1.2s;">
         <!-- Accueil -->
-        <section id="home" class="section hero" style="min-height:48vh;">
-            <div class="hero-content" style="max-width:580px;">
+        <section id="home" class="section hero">
+            <div class="hero-content">
                 <h2 class="hero-title" id="hero-title">Agence digitale haut de gamme pour créateurs ambitieux</h2>
                 <div style="margin:28px 0;">
                     <span id="member-counter" style="font-size:2.6em;font-weight:700;color:#b48aff;">0</span>
@@ -39,7 +48,6 @@
                         -webkit-background-clip: text;
                         -webkit-text-fill-color: transparent;
                         background-clip: text;
-                        text-fill-color: transparent;
                         font-weight:600;
                         opacity:0; transition:opacity 1.2s;">
                         clients satisfaits
@@ -49,14 +57,32 @@
                     Syn Agency propulse votre image et votre business avec une approche créative, minimaliste et premium.<br>
                     <span class="highlight" id="hero-highlight">Stratégie. Créativité. Résultats.</span>
                 </p>
-                <a href="#contact" class="btn hero-btn" id="audit-btn">Demander un audit gratuit</a>
-                <a href="https://calendly.com/bytonio0ck/30min" target="_blank" rel="noopener" class="btn hero-btn" id="calendly-btn" style="margin-left:12px;">Prendre rendez-vous</a>
+                <div class="hero-buttons" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfTugazGGz7qGkhZdY-J1UlXmguVquAvKirhAVvalghTPlluQ/viewform?usp=dialog" target="_blank" rel="noopener" class="btn hero-btn" id="audit-btn">Lancer mon business !</a>
+                </div>
             </div>
         </section>
-        <!-- Images juste après Accueil -->
-        <div class="portfolio-grid" style="margin-bottom:56px; display:block;">
-            <div class="portfolio-item" style="width:100%; max-width:540px; margin:0 auto;">
-                <img src="assets/portfolio1.jpg" alt="Projet 1 Syn Agency" class="fade-img" style="opacity:0; width:100%; height:220px; object-fit:cover;">
+        <!-- Slider d'images juste après Accueil -->
+        <div class="image-slider" style="margin-bottom:56px;">
+            <div class="slider-container">
+                <div class="slides">
+                    <div class="slide active">
+                        <img src="assets/portfolio1.jpg" alt="Projet 1 Syn Agency">
+                    </div>
+                    <div class="slide">
+                        <img src="assets/femmeagence.jpg" alt="Femme Agence 1 Syn Agency">
+                    </div>
+                    <div class="slide">
+                        <img src="assets/femmeagence2.jpg" alt="Femme Agence 2 Syn Agency">
+                    </div>
+                </div>
+                <button class="slider-btn prev" onclick="changeSlide(-1)">❮</button>
+                <button class="slider-btn next" onclick="changeSlide(1)">❯</button>
+                <div class="slider-dots">
+                    <span class="dot active" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                </div>
             </div>
         </div>
         <!-- Services -->
@@ -85,17 +111,59 @@
         <section id="results" class="section">
             <h2 style="color:#b48aff;">Nos résultats</h2>
             <div style="display:flex;flex-wrap:wrap;gap:36px;justify-content:center;">
-                <div style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:180px;max-width:220px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
+                <div class="result-card" style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:180px;max-width:220px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
                     <div id="result-revenue" style="font-size:2.2em;font-weight:800;color:#b48aff;margin-bottom:8px;">0€</div>
                     <div style="color:#f5f5fa;font-size:1em;">Revenus générés pour nos clients</div>
                 </div>
-                <div style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:180px;max-width:220px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
+                <div class="result-card" style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:180px;max-width:220px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
                     <div id="result-clients" style="font-size:2.2em;font-weight:800;color:#b48aff;margin-bottom:8px;">0</div>
                     <div style="color:#f5f5fa;font-size:1em;">Clients satisfaits</div>
                 </div>
-                <div style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:180px;max-width:220px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
+                <div class="result-card" style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:180px;max-width:220px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
                     <div id="result-satisfaction" style="font-size:2.2em;font-weight:800;color:#b48aff;margin-bottom:8px;">0%</div>
                     <div style="color:#f5f5fa;font-size:1em;">Taux de satisfaction</div>
+                </div>
+            </div>
+        </section>
+        <!-- Clients & Avis -->
+        <section id="testimonials" class="section">
+            <h2 id="testimonials-title">Clients & Avis</h2>
+            <div class="testimonials-container">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="stars">★★★★★</div>
+                        <p id="testimonial-1" class="testimonial-text">"Syn Agency a transformé mon business ! Mes revenus ont triplé en seulement 2 mois. L'équipe est professionnelle et discrète."</p>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <h4 id="testimonial-author-1">Emma L.</h4>
+                                <span id="testimonial-job-1">Créatrice de contenu</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="stars">★★★★★</div>
+                        <p id="testimonial-2" class="testimonial-text">"Une approche premium qui fait la différence. Mon compte a explosé grâce à leur stratégie marketing innovante."</p>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <h4 id="testimonial-author-2">Sophia M.</h4>
+                                <span id="testimonial-job-2">Influenceuse</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="stars">★★★★★</div>
+                        <p id="testimonial-3" class="testimonial-text">"Service client exceptionnel, résultats au-delà de mes attentes. Je recommande vivement Syn Agency !"</p>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <h4 id="testimonial-author-3">Léa R.</h4>
+                                <span id="testimonial-job-3">Entrepreneure digitale</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -103,36 +171,126 @@
         <section id="team" class="section">
             <h2 style="color:#b48aff;">Notre équipe</h2>
             <div style="display:flex;flex-wrap:wrap;gap:36px;justify-content:center;">
-                <div style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
+                <a href="https://www.instagram.com/antoinehzr2/" target="_blank" rel="noopener" class="team-card" style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;text-decoration:none;display:block;transition:all 0.3s ease;">
                     <img src="assets/team-antoine.jpg" alt="Antoine CEO" style="width:80px;height:80px;border-radius:50%;margin-bottom:14px;object-fit:cover;">
                     <h3 style="color:#b48aff;margin-bottom:8px;font-size:1.12em;font-weight:700;">Antoine</h3>
                     <p style="color:#f5f5fa;font-size:1em;margin:0;">CEO & Stratégie</p>
-                </div>
-                <div style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
+                </a>
+                <a href="https://www.instagram.com/charli.sclr/" target="_blank" rel="noopener" class="team-card" style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;text-decoration:none;display:block;transition:all 0.3s ease;">
                     <img src="assets/team-charli.jpg" alt="Charli CEO" style="width:80px;height:80px;border-radius:50%;margin-bottom:14px;object-fit:cover;">
                     <h3 style="color:#b48aff;margin-bottom:8px;font-size:1.12em;font-weight:700;">Charli</h3>
                     <p style="color:#f5f5fa;font-size:1em;margin:0;">CEO</p>
-                </div>
-                <div style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
+                </a>
+                <div class="team-card" style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
                     <img src="assets/team-bradley.jpg" alt="Bradley Marketing Digital" style="width:80px;height:80px;border-radius:50%;margin-bottom:14px;object-fit:cover;">
                     <h3 style="color:#b48aff;margin-bottom:8px;font-size:1.12em;font-weight:700;">Bradley</h3>
                     <p style="color:#f5f5fa;font-size:1em;margin:0;">Marketing Digital</p>
                 </div>
             </div>
         </section>
-        <!-- Contact -->
-        <section id="contact" class="section">
-            <h2 id="contact-title">Contactez-nous</h2>
-            <p id="contact-desc">
-                Prêt à passer au niveau supérieur ?<br>
-                Écrivez-nous à <a href="mailto:contact@synagency.fr" class="highlight" id="contact-mail">contact@synagency.fr</a> ou remplissez le formulaire ci-dessous.
-            </p>
-            <form>
-                <input type="text" placeholder="Votre nom" required id="form-name">
-                <input type="email" placeholder="Votre email" required id="form-email">
-                <textarea placeholder="Votre message" required id="form-message"></textarea>
-                <button type="submit" class="btn" id="form-send">Envoyer</button>
-            </form>
+        <!-- FAQ -->
+        <section id="faq" class="section">
+            <h2 id="faq-title">Questions Fréquentes</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question" data-faq="1">
+                        <h3 id="faq-q1">Comment fonctionne votre service de gestion OnlyFans ?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer" id="faq-answer-1">
+                        <p id="faq-a1">Nous prenons en charge l'intégralité de la gestion de votre compte : création de contenu, interaction avec les abonnés, optimisation des revenus, analyse des performances et stratégies de croissance personnalisées.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" data-faq="2">
+                        <h3 id="faq-q2">Quels sont vos tarifs ?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer" id="faq-answer-2">
+                        <p id="faq-a2">Nos tarifs sont basés sur un pourcentage de vos revenus générés, sans frais fixes. Nous ne gagnons que si vous gagnez. Contactez-nous pour un devis personnalisé adapté à vos objectifs.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" data-faq="3">
+                        <h3 id="faq-q3">Combien de temps faut-il pour voir des résultats ?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer" id="faq-answer-3">
+                        <p id="faq-a3">Généralement, nos clients voient une amélioration significative dès le premier mois, avec une croissance optimale après 2-3 mois de collaboration. Chaque cas est unique selon votre situation de départ.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" data-faq="4">
+                        <h3 id="faq-q4">Garantissez-vous la confidentialité ?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer" id="faq-answer-4">
+                        <p id="faq-a4">Absolument. La confidentialité est notre priorité. Nous signons des accords de non-divulgation stricts et toutes vos données sont protégées selon les standards les plus élevés de sécurité.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" data-faq="5">
+                        <h3 id="faq-q5">Travaillez-vous avec des débutants ?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer" id="faq-answer-5">
+                        <p id="faq-a5">Oui, nous accompagnons aussi bien les créateurs débutants que ceux déjà établis. Notre expertise nous permet d'adapter notre stratégie à votre niveau et vos ambitions spécifiques.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Calculateur -->
+        <section id="calculator" class="section">
+            <h2 id="calculator-title">Calculateur de revenus OnlyFans</h2>
+            <p id="calculator-desc">Découvrez votre potentiel de revenus et ce que Syn Agency peut vous apporter</p>
+            
+            <div class="calculator-container">
+                <div class="calculator-inputs">
+                    <div class="input-group">
+                        <label for="subscribers" id="label-subscribers">Nombre d'abonnés</label>
+                        <input type="number" id="subscribers" placeholder="1000" min="0">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="monthly-price" id="label-monthly-price">Prix mensuel de l'abonnement (€)</label>
+                        <input type="number" id="monthly-price" placeholder="15" min="0" step="0.01">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="upsell-amount" id="label-upsell-amount">Montant moyen en contenu privé par acheteur (€)</label>
+                        <input type="number" id="upsell-amount" placeholder="50" min="0" step="0.01">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="buyers-percentage" id="label-buyers-percentage">Pourcentage d'acheteurs de contenu privé (%)</label>
+                        <div class="slider-container">
+                            <input type="range" id="buyers-percentage" min="0" max="100" value="25" class="slider">
+                            <span class="slider-value" id="buyers-value">25%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="calculator-results">
+                    <div class="result-card current-revenue">
+                        <h3 id="current-title">Revenus actuels estimés</h3>
+                        <div class="revenue-amount" id="current-revenue">0 €</div>
+                        <div class="revenue-breakdown" id="current-breakdown">
+                            <div id="subscription-revenue">Abonnements: 0 €</div>
+                            <div id="private-revenue">Contenu privé: 0 €</div>
+                        </div>
+                    </div>
+                    
+                    <div class="result-card potential-revenue">
+                        <h3 id="potential-title">Avec Syn Agency (+30%)</h3>
+                        <div class="revenue-amount potential" id="potential-revenue">0 €</div>
+                        <div class="revenue-boost" id="boost-amount">+0 € dès le premier mois</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cta-container">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfTugazGGz7qGkhZdY-J1UlXmguVquAvKirhAVvalghTPlluQ/viewform?usp=dialog" target="_blank" rel="noopener" class="btn calculator-cta" id="calculator-cta">Obtenir ma stratégie personnalisée</a>
+            </div>
         </section>
     </main>
     <!-- ...existing code... -->
@@ -169,6 +327,30 @@
         <img src="https://images.icon-icons.com/1875/PNG/512/arrowup_120105.png" alt="Scroll to top" style="width:40px;height:40px;filter:brightness(0) invert(0);margin-top:-2px;">
     </button>
     <script>
+        // Détection du navigateur et affichage des drapeaux appropriés
+        function initLanguageButtons() {
+            const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+            const frBtn = document.getElementById('fr-btn');
+            const enBtn = document.getElementById('en-btn');
+            
+            if (!isChrome) {
+                // Pour tous les navigateurs sauf Chrome, afficher les drapeaux emojis
+                frBtn.innerHTML = '🇫🇷';
+                enBtn.innerHTML = '🇬🇧';
+                // Ajouter la classe pour les styles d'emojis
+                frBtn.classList.add('emoji-mode');
+                enBtn.classList.add('emoji-mode');
+                // Ajuster la taille de police pour les emojis
+                frBtn.style.fontSize = '1.4em';
+                enBtn.style.fontSize = '1.4em';
+                frBtn.style.fontWeight = 'normal';
+                enBtn.style.fontWeight = 'normal';
+                frBtn.style.letterSpacing = '0';
+                enBtn.style.letterSpacing = '0';
+            }
+            // Pour Chrome, on garde "FR" et "EN" comme c'est déjà défini dans le HTML
+        }
+        
         // Animation au survol portfolio
         document.querySelectorAll('.portfolio-item img').forEach(img => {
             img.addEventListener('mouseenter', () => img.classList.add('active'));
@@ -191,6 +373,9 @@
         }
         window.addEventListener('scroll', triggerResultsAnimation);
         window.addEventListener('DOMContentLoaded', () => {
+            // Initialiser les boutons de langue selon le navigateur
+            initLanguageButtons();
+            
             setTimeout(() => {
                 document.getElementById('main-animate').style.opacity = '1';
                 document.getElementById('main-animate').style.transform = 'translateY(0)';
@@ -200,6 +385,12 @@
                 document.querySelector('header').style.transform = 'translateY(0)';
                 document.getElementById('header-title').style.opacity = '1';
                 document.getElementById('header-title').style.transform = 'translateY(0)';
+                
+                // Ajouter l'animation glow au titre
+                setTimeout(() => {
+                    document.getElementById('header-title').classList.add('loaded');
+                }, 500);
+                
                 triggerResultsAnimation(); // au cas où la section est déjà visible au chargement
             }, 100);
         });
@@ -271,12 +462,11 @@
 
         // Langues
         const fr = {
-            nav: ["Accueil", "Services", "Résultats", "Équipe", "Contact"],
+            nav: ["Accueil", "Services", "Résultats", "Avis", "Équipe", "Calculateur", "FAQ"],
             langBtn: "EN",
             heroTitle: "Agence digitale haut de gamme pour créateurs ambitieux",
             heroDesc: "Syn Agency propulse votre image et votre business avec une approche créative, minimaliste et premium.<br><span class='highlight' id='hero-highlight'>Stratégie. Créativité. Résultats.</span>",
-            auditBtn: "Demander un audit gratuit",
-            calendlyBtn: "Prendre rendez-vous",
+            auditBtn: "Lancer mon business !",
             servicesTitle: "Nos Services",
             service1Title: "Gestion & Optimisation",
             service1Desc: "Prise en charge complète de votre compte OnlyFans : contenu, abonnés, messages, analyse de performance.",
@@ -290,26 +480,52 @@
             resultRevenue: "Revenus générés pour nos clients",
             resultClients: "Clients satisfaits",
             resultSatisfaction: "Taux de satisfaction",
+            testimonialsTitle: "Clients & Avis",
+            testimonial1: "\"Syn Agency a transformé mon business ! Mes revenus ont triplé en seulement 2 mois. L'équipe est professionnelle et discrète.\"",
+            testimonialAuthor1: "Emma L.",
+            testimonialJob1: "Créatrice de contenu",
+            testimonial2: "\"Une approche premium qui fait la différence. Mon compte a explosé grâce à leur stratégie marketing innovante.\"",
+            testimonialAuthor2: "Sophia M.",
+            testimonialJob2: "Influenceuse",
+            testimonial3: "\"Service client exceptionnel, résultats au-delà de mes attentes. Je recommande vivement Syn Agency !\"",
+            testimonialAuthor3: "Léa R.",
+            testimonialJob3: "Entrepreneure digitale",
             teamTitle: "Notre équipe",
             teamAntoine: "CEO & Stratégie",
             teamCharli: "CEO",
             teamBradley: "Marketing Digital",
-            contactTitle: "Contactez-nous",
-            contactDesc: "Prêt à passer au niveau supérieur ?<br>Écrivez-nous à <a href='mailto:contact@synagency.fr' class='highlight' id='contact-mail'>contact@synagency.fr</a> ou remplissez le formulaire ci-dessous.",
-            formName: "Votre nom",
-            formEmail: "Votre email",
-            formMessage: "Votre message",
-            formSend: "Envoyer",
+            calculatorTitle: "Calculateur de revenus OnlyFans",
+            calculatorDesc: "Découvrez votre potentiel de revenus et ce que Syn Agency peut vous apporter",
+            labelSubscribers: "Nombre d'abonnés",
+            labelMonthlyPrice: "Prix mensuel de l'abonnement (€)",
+            labelBuyersPercentage: "Pourcentage d'acheteurs de contenu privé (%)",
+            labelUpsellAmount: "Montant moyen en contenu privé par acheteur (€)",
+            currentTitle: "Revenus actuels estimés",
+            potentialTitle: "Avec Syn Agency (+30%)",
+            calculatorCta: "Obtenir ma stratégie personnalisée",
+            subscriptionLabel: "Abonnements",
+            privateContentLabel: "Contenu privé",
+            firstMonthBoost: "dès le premier mois",
+            faqTitle: "Questions Fréquentes",
+            faqQ1: "Comment fonctionne votre service de gestion OnlyFans ?",
+            faqA1: "Nous prenons en charge l'intégralité de la gestion de votre compte : création de contenu, interaction avec les abonnés, optimisation des revenus, analyse des performances et stratégies de croissance personnalisées.",
+            faqQ2: "Quels sont vos tarifs ?",
+            faqA2: "Nos tarifs sont basés sur un pourcentage de vos revenus générés, sans frais fixes. Nous ne gagnons que si vous gagnez. Contactez-nous pour un devis personnalisé adapté à vos objectifs.",
+            faqQ3: "Combien de temps faut-il pour voir des résultats ?",
+            faqA3: "Généralement, nos clients voient une amélioration significative dès le premier mois, avec une croissance optimale après 2-3 mois de collaboration. Chaque cas est unique selon votre situation de départ.",
+            faqQ4: "Garantissez-vous la confidentialité ?",
+            faqA4: "Absolument. La confidentialité est notre priorité. Nous signons des accords de non-divulgation stricts et toutes vos données sont protégées selon les standards les plus élevés de sécurité.",
+            faqQ5: "Travaillez-vous avec des débutants ?",
+            faqA5: "Oui, nous accompagnons aussi bien les créateurs débutants que ceux déjà établis. Notre expertise nous permet d'adapter notre stratégie à votre niveau et vos ambitions spécifiques.",
             footer: "&copy; 2025 Syn Agency. Expertise digitale premium. Tous droits réservés.",
             clientSatisfait: "clients satisfaits"
         };
         const en = {
-            nav: ["Home", "Services", "Results", "Team", "Contact"],
+            nav: ["Home", "Services", "Results", "Reviews", "Team", "Calculator", "FAQ"],
             langBtn: "FR",
             heroTitle: "Premium digital agency for ambitious creators",
             heroDesc: "Syn Agency boosts your image and business with a creative, minimalist and premium approach.<br><span class='highlight' id='hero-highlight'>Strategy. Creativity. Results.</span>",
-            auditBtn: "Request a free audit",
-            calendlyBtn: "Book an appointment",
+            auditBtn: "Launch my business!",
             servicesTitle: "Our Services",
             service1Title: "Management & Optimization",
             service1Desc: "Full management of your OnlyFans account: content, subscribers, messages, performance analysis.",
@@ -323,126 +539,395 @@
             resultRevenue: "Revenue generated for our clients",
             resultClients: "Satisfied clients",
             resultSatisfaction: "Satisfaction rate",
+            testimonialsTitle: "Clients & Reviews",
+            testimonial1: "\"Syn Agency transformed my business! My revenue tripled in just 2 months. The team is professional and discreet.\"",
+            testimonialAuthor1: "Emma L.",
+            testimonialJob1: "Content Creator",
+            testimonial2: "\"A premium approach that makes the difference. My account exploded thanks to their innovative marketing strategy.\"",
+            testimonialAuthor2: "Sophia M.",
+            testimonialJob2: "Influencer",
+            testimonial3: "\"Exceptional customer service, results beyond my expectations. I highly recommend Syn Agency!\"",
+            testimonialAuthor3: "Léa R.",
+            testimonialJob3: "Digital Entrepreneur",
             teamTitle: "Our Team",
             teamAntoine: "CEO & Strategy",
             teamCharli: "CEO",
             teamBradley: "Digital Marketing",
-            contactTitle: "Contact Us",
-            contactDesc: "Ready to take it to the next level?<br>Email us at <a href='mailto:contact@synagency.fr' class='highlight' id='contact-mail'>contact@synagency.fr</a> or fill out the form below.",
-            formName: "Your name",
-            formEmail: "Your email",
-            formMessage: "Your message",
-            formSend: "Send",
+            calculatorTitle: "OnlyFans Revenue Calculator",
+            calculatorDesc: "Discover your revenue potential and what Syn Agency can bring you",
+            labelSubscribers: "Number of subscribers",
+            labelMonthlyPrice: "Monthly subscription price (€)",
+            labelBuyersPercentage: "Percentage of private content buyers (%)",
+            labelUpsellAmount: "Average private content amount per buyer (€)",
+            currentTitle: "Current estimated revenue",
+            potentialTitle: "With Syn Agency (+30%)",
+            calculatorCta: "Get my personalized strategy",
+            subscriptionLabel: "Subscriptions",
+            privateContentLabel: "Private content",
+            firstMonthBoost: "from the first month",
+            faqTitle: "Frequently Asked Questions",
+            faqQ1: "How does your OnlyFans management service work?",
+            faqA1: "We handle the complete management of your account: content creation, subscriber interaction, revenue optimization, performance analysis and personalized growth strategies.",
+            faqQ2: "What are your rates?",
+            faqA2: "Our rates are based on a percentage of your generated revenue, with no fixed fees. We only earn when you earn. Contact us for a personalized quote tailored to your goals.",
+            faqQ3: "How long does it take to see results?",
+            faqA3: "Generally, our clients see significant improvement from the first month, with optimal growth after 2-3 months of collaboration. Each case is unique depending on your starting situation.",
+            faqQ4: "Do you guarantee confidentiality?",
+            faqA4: "Absolutely. Confidentiality is our priority. We sign strict non-disclosure agreements and all your data is protected according to the highest security standards.",
+            faqQ5: "Do you work with beginners?",
+            faqA5: "Yes, we support both beginner creators and those already established. Our expertise allows us to adapt our strategy to your level and specific ambitions.",
             footer: "&copy; 2025 Syn Agency. Premium digital expertise. All rights reserved.",
             clientSatisfait: "satisfied clients"
         };
         let currentLang = "fr";
         function updateLangUI() {
-            document.getElementById('fr-btn').style.opacity = currentLang === "fr" ? "1" : "0.5";
-            document.getElementById('en-btn').style.opacity = currentLang === "en" ? "1" : "0.5";
+            // Reset complet des styles des boutons avant de définir l'opacité
+            const frBtn = document.getElementById('fr-btn');
+            const enBtn = document.getElementById('en-btn');
+            
+            // Définir les styles de base pour chaque bouton
+            [frBtn, enBtn].forEach(btn => {
+                btn.style.padding = '8px 14px';
+                btn.style.fontSize = '1.4em';
+                btn.style.background = 'rgba(26,9,62,0.7)';
+                btn.style.border = '1px solid #23233a';
+                btn.style.borderRadius = '8px';
+                btn.style.cursor = 'pointer';
+                btn.style.transition = 'all 0.2s';
+                btn.style.color = '#f5f5fa';
+            });
+            
+            // Appliquer l'opacité selon la langue actuelle
+            frBtn.style.opacity = currentLang === "fr" ? "1" : "0.5";
+            enBtn.style.opacity = currentLang === "en" ? "1" : "0.5";
+        }
+
+        // Fonction pour animer le changement de langue
+        function animateLanguageChange(newDict) {
+            // Animation des boutons de langue avec effet ultra-fluide
+            const buttons = document.querySelectorAll('#lang-switch button');
+            buttons.forEach((btn, index) => {
+                setTimeout(() => {
+                    btn.style.transition = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    btn.style.transform = 'scale(1.2) rotateY(10deg) translateZ(10px)';
+                    btn.style.background = 'linear-gradient(135deg, #b48aff, #ffffff, #6c2eb6, #ffffff, #b48aff)';
+                    btn.style.backgroundSize = '300% 300%';
+                    btn.style.backgroundPosition = '100% 0';
+                    btn.style.boxShadow = '0 10px 50px rgba(180, 138, 255, 0.9), 0 0 80px rgba(108, 46, 182, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.4)';
+                    btn.style.filter = 'brightness(1.4) saturate(1.5) drop-shadow(0 5px 15px rgba(180, 138, 255, 0.5))';
+                    
+                    setTimeout(() => {
+                        btn.style.transform = '';
+                        btn.style.background = '';
+                        btn.style.backgroundSize = '';
+                        btn.style.backgroundPosition = '';
+                        btn.style.boxShadow = '';
+                        btn.style.filter = '';
+                        btn.style.transition = '';
+                        
+                        // Force le reset complet des styles
+                        btn.removeAttribute('style');
+                        btn.style.padding = '8px 14px';
+                        btn.style.fontSize = '1.4em';
+                        btn.style.background = 'rgba(26,9,62,0.7)';
+                        btn.style.border = '1px solid #23233a';
+                        btn.style.borderRadius = '8px';
+                        btn.style.cursor = 'pointer';
+                        btn.style.transition = 'all 0.2s';
+                        btn.style.color = '#f5f5fa';
+                        
+                        // Réappliquer l'opacité selon la langue actuelle
+                        updateLangUI();
+                    }, 800);
+                }, index * 80);
+            });
+
+            // Animation de sortie ultra-fluide avec effet de dispersion
+            const elementsToAnimate = document.querySelectorAll('h1, h2, p, button, a, input, textarea, .highlight, .service-card, .result-card, .team-card');
+            
+            elementsToAnimate.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    el.style.opacity = '0.1';
+                    el.style.transform = 'translateY(-20px) scale(0.92) rotateX(8deg) translateZ(-20px)';
+                    el.style.filter = 'blur(4px) brightness(0.7) saturate(0.5)';
+                }, index * 12); // Cascade plus rapide et fluide
+            });
+
+            // Effet de vague lumineuse traversant l'écran
+            const body = document.body;
+            const wave = document.createElement('div');
+            wave.style.position = 'fixed';
+            wave.style.top = '0';
+            wave.style.left = '-100%';
+            wave.style.width = '300%';
+            wave.style.height = '100vh';
+            wave.style.background = 'linear-gradient(90deg, transparent, rgba(180, 138, 255, 0.15), rgba(255, 255, 255, 0.1), rgba(180, 138, 255, 0.15), transparent)';
+            wave.style.zIndex = '9998';
+            wave.style.transition = 'left 1.4s cubic-bezier(0.4, 0, 0.2, 1)';
+            wave.style.pointerEvents = 'none';
+            wave.style.backdropFilter = 'blur(2px)';
+            body.appendChild(wave);
+            
+            setTimeout(() => {
+                wave.style.left = '100%';
+                setTimeout(() => {
+                    body.removeChild(wave);
+                }, 1400);
+            }, 200);
+
+            // Changement du contenu avec timing optimisé
+            setTimeout(() => {
+                updateContent(newDict);
+                
+                // Animation d'entrée ultra-fluide avec effet de matérialisation
+                elementsToAnimate.forEach((el, index) => {
+                    setTimeout(() => {
+                        el.style.transition = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0) scale(1) rotateX(0deg) translateZ(0)';
+                        el.style.filter = 'blur(0) brightness(1) saturate(1)';
+                        
+                        // Petit effet de rebond en fin d'animation
+                        setTimeout(() => {
+                            el.style.transform = 'translateY(-2px) scale(1.02)';
+                            setTimeout(() => {
+                                el.style.transform = 'translateY(0) scale(1)';
+                                // Reset des transitions après l'animation complète
+                                setTimeout(() => {
+                                    el.style.transition = '';
+                                }, 300);
+                            }, 150);
+                        }, 600);
+                        
+                    }, index * 8); // Cascade d'entrée plus rapide et plus fluide
+                });
+            }, 500);
+        }
+
+        // Fonction pour mettre à jour le contenu
+        function updateContent(dict) {
+            document.getElementById('nav-home').textContent = dict.nav[0];
+            document.getElementById('nav-services').textContent = dict.nav[1];
+            document.getElementById('nav-results').textContent = dict.nav[2];
+            document.getElementById('nav-testimonials').textContent = dict.nav[3];
+            document.getElementById('nav-team').textContent = dict.nav[4];
+            document.getElementById('nav-calculator').textContent = dict.nav[5];
+            document.getElementById('nav-faq').textContent = dict.nav[6];
+            document.getElementById('hero-title').textContent = dict.heroTitle;
+            document.getElementById('hero-desc').innerHTML = dict.heroDesc;
+            document.getElementById('audit-btn').textContent = dict.auditBtn;
+            document.getElementById('services-title').textContent = dict.servicesTitle;
+            document.getElementById('service1-title').textContent = dict.service1Title;
+            document.getElementById('service1-desc').textContent = dict.service1Desc;
+            document.getElementById('service2-title').textContent = dict.service2Title;
+            document.getElementById('service2-desc').textContent = dict.service2Desc;
+            document.getElementById('service3-title').textContent = dict.service3Title;
+            document.getElementById('service3-desc').textContent = dict.service3Desc;
+            document.getElementById('service4-title').textContent = dict.service4Title;
+            document.getElementById('service4-desc').textContent = dict.service4Desc;
+            document.querySelector('#results h2').textContent = dict.resultsTitle;
+            document.querySelector('#result-revenue').nextElementSibling.textContent = dict.resultRevenue;
+            document.querySelector('#result-clients').nextElementSibling.textContent = dict.resultClients;
+            document.querySelector('#result-satisfaction').nextElementSibling.textContent = dict.resultSatisfaction;
+            document.getElementById('testimonials-title').textContent = dict.testimonialsTitle;
+            document.getElementById('testimonial-1').textContent = dict.testimonial1;
+            document.getElementById('testimonial-author-1').textContent = dict.testimonialAuthor1;
+            document.getElementById('testimonial-job-1').textContent = dict.testimonialJob1;
+            document.getElementById('testimonial-2').textContent = dict.testimonial2;
+            document.getElementById('testimonial-author-2').textContent = dict.testimonialAuthor2;
+            document.getElementById('testimonial-job-2').textContent = dict.testimonialJob2;
+            document.getElementById('testimonial-3').textContent = dict.testimonial3;
+            document.getElementById('testimonial-author-3').textContent = dict.testimonialAuthor3;
+            document.getElementById('testimonial-job-3').textContent = dict.testimonialJob3;
+            document.querySelector('#team h2').textContent = dict.teamTitle;
+            document.querySelectorAll('#team .team-card p').forEach((el, i) => {
+                if (i === 0) el.textContent = dict.teamAntoine;
+                if (i === 1) el.textContent = dict.teamCharli;
+                if (i === 2) el.textContent = dict.teamBradley;
+            });
+            document.getElementById('calculator-title').textContent = dict.calculatorTitle;
+            document.getElementById('calculator-desc').textContent = dict.calculatorDesc;
+            document.getElementById('label-subscribers').textContent = dict.labelSubscribers;
+            document.getElementById('label-monthly-price').textContent = dict.labelMonthlyPrice;
+            document.getElementById('label-buyers-percentage').textContent = dict.labelBuyersPercentage;
+            document.getElementById('label-upsell-amount').textContent = dict.labelUpsellAmount;
+            document.getElementById('current-title').textContent = dict.currentTitle;
+            document.getElementById('potential-title').textContent = dict.potentialTitle;
+            document.getElementById('calculator-cta').textContent = dict.calculatorCta;
+            document.getElementById('faq-title').textContent = dict.faqTitle;
+            document.getElementById('faq-q1').textContent = dict.faqQ1;
+            document.getElementById('faq-a1').textContent = dict.faqA1;
+            document.getElementById('faq-q2').textContent = dict.faqQ2;
+            document.getElementById('faq-a2').textContent = dict.faqA2;
+            document.getElementById('faq-q3').textContent = dict.faqQ3;
+            document.getElementById('faq-a3').textContent = dict.faqA3;
+            document.getElementById('faq-q4').textContent = dict.faqQ4;
+            document.getElementById('faq-a4').textContent = dict.faqA4;
+            document.getElementById('faq-q5').textContent = dict.faqQ5;
+            document.getElementById('faq-a5').textContent = dict.faqA5;
+            document.getElementById('footer-txt').innerHTML = dict.footer;
+            document.getElementById('client-satisfait').textContent = dict.clientSatisfait;
         }
         document.getElementById('fr-btn').addEventListener('click', function() {
+            if (currentLang === "fr") return; // Éviter l'animation si déjà en français
+            
             currentLang = "fr";
-            const dict = fr;
-            document.getElementById('nav-home').textContent = dict.nav[0];
-            document.getElementById('nav-services').textContent = dict.nav[1];
-            document.getElementById('nav-results').textContent = dict.nav[2];
-            document.getElementById('nav-team').textContent = dict.nav[3];
-            document.getElementById('nav-contact').textContent = dict.nav[4];
-            document.getElementById('hero-title').textContent = dict.heroTitle;
-            document.getElementById('hero-desc').innerHTML = dict.heroDesc;
-            document.getElementById('audit-btn').textContent = dict.auditBtn;
-            document.getElementById('calendly-btn').textContent = dict.calendlyBtn;
-            document.getElementById('services-title').textContent = dict.servicesTitle;
-            document.getElementById('service1-title').textContent = dict.service1Title;
-            document.getElementById('service1-desc').textContent = dict.service1Desc;
-            document.getElementById('service2-title').textContent = dict.service2Title;
-            document.getElementById('service2-desc').textContent = dict.service2Desc;
-            document.getElementById('service3-title').textContent = dict.service3Title;
-            document.getElementById('service3-desc').textContent = dict.service3Desc;
-            document.getElementById('service4-title').textContent = dict.service4Title;
-            document.getElementById('service4-desc').textContent = dict.service4Desc;
-            document.querySelector('#results h2').textContent = dict.resultsTitle;
-            document.querySelector('#result-revenue').nextElementSibling.textContent = dict.resultRevenue;
-            document.querySelector('#result-clients').nextElementSibling.textContent = dict.resultClients;
-            document.querySelector('#result-satisfaction').nextElementSibling.textContent = dict.resultSatisfaction;
-            document.querySelector('#team h2').textContent = dict.teamTitle;
-            document.querySelectorAll('#team .service-card, #team div > p').forEach((el, i) => {
-                if (i === 0) el.textContent = dict.teamAntoine;
-                if (i === 1) el.textContent = dict.teamCharli;
-                if (i === 2) el.textContent = dict.teamBradley;
-            });
-            document.getElementById('contact-title').textContent = dict.contactTitle;
-            document.getElementById('contact-desc').innerHTML = dict.contactDesc;
-            document.getElementById('form-name').placeholder = dict.formName;
-            document.getElementById('form-email').placeholder = dict.formEmail;
-            document.getElementById('form-message').placeholder = dict.formMessage;
-            document.getElementById('form-send').textContent = dict.formSend;
-            document.getElementById('footer-txt').innerHTML = dict.footer;
-            document.getElementById('client-satisfait').textContent = dict.clientSatisfait;
+            
+            // Animation du bouton cliqué
+            this.style.transform = 'scale(1.2)';
+            this.style.transition = 'all 0.3s ease';
+            
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 300);
+            
+            animateLanguageChange(fr);
             updateLangUI();
+            
+            // Mettre à jour les traductions du calculateur si il existe
+            if (typeof window.updateCalculatorTranslations === 'function') {
+                setTimeout(() => {
+                    window.updateCalculatorTranslations();
+                }, 600);
+            }
         });
         document.getElementById('en-btn').addEventListener('click', function() {
+            if (currentLang === "en") return; // Éviter l'animation si déjà en anglais
+            
             currentLang = "en";
-            const dict = en;
-            document.getElementById('nav-home').textContent = dict.nav[0];
-            document.getElementById('nav-services').textContent = dict.nav[1];
-            document.getElementById('nav-results').textContent = dict.nav[2];
-            document.getElementById('nav-team').textContent = dict.nav[3];
-            document.getElementById('nav-contact').textContent = dict.nav[4];
-            document.getElementById('hero-title').textContent = dict.heroTitle;
-            document.getElementById('hero-desc').innerHTML = dict.heroDesc;
-            document.getElementById('audit-btn').textContent = dict.auditBtn;
-            document.getElementById('calendly-btn').textContent = dict.calendlyBtn;
-            document.getElementById('services-title').textContent = dict.servicesTitle;
-            document.getElementById('service1-title').textContent = dict.service1Title;
-            document.getElementById('service1-desc').textContent = dict.service1Desc;
-            document.getElementById('service2-title').textContent = dict.service2Title;
-            document.getElementById('service2-desc').textContent = dict.service2Desc;
-            document.getElementById('service3-title').textContent = dict.service3Title;
-            document.getElementById('service3-desc').textContent = dict.service3Desc;
-            document.getElementById('service4-title').textContent = dict.service4Title;
-            document.getElementById('service4-desc').textContent = dict.service4Desc;
-            document.querySelector('#results h2').textContent = dict.resultsTitle;
-            document.querySelector('#result-revenue').nextElementSibling.textContent = dict.resultRevenue;
-            document.querySelector('#result-clients').nextElementSibling.textContent = dict.resultClients;
-            document.querySelector('#result-satisfaction').nextElementSibling.textContent = dict.resultSatisfaction;
-            document.querySelector('#team h2').textContent = dict.teamTitle;
-            document.querySelectorAll('#team .service-card, #team div > p').forEach((el, i) => {
-                if (i === 0) el.textContent = dict.teamAntoine;
-                if (i === 1) el.textContent = dict.teamCharli;
-                if (i === 2) el.textContent = dict.teamBradley;
-            });
-            document.getElementById('contact-title').textContent = dict.contactTitle;
-            document.getElementById('contact-desc').innerHTML = dict.contactDesc;
-            document.getElementById('form-name').placeholder = dict.formName;
-            document.getElementById('form-email').placeholder = dict.formEmail;
-            document.getElementById('form-message').placeholder = dict.formMessage;
-            document.getElementById('form-send').textContent = dict.formSend;
-            document.getElementById('footer-txt').innerHTML = dict.footer;
-            document.getElementById('client-satisfait').textContent = dict.clientSatisfait;
+            
+            // Animation du bouton cliqué
+            this.style.transform = 'scale(1.2)';
+            this.style.transition = 'all 0.3s ease';
+            
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 300);
+            
+            animateLanguageChange(en);
             updateLangUI();
+            
+            // Mettre à jour les traductions du calculateur si il existe
+            if (typeof window.updateCalculatorTranslations === 'function') {
+                setTimeout(() => {
+                    window.updateCalculatorTranslations();
+                }, 600);
+            }
         });
         updateLangUI();
 
-        // Smooth scroll for menu navigation
+        // Smooth scroll for menu navigation avec ralenti personnalisé
         document.querySelectorAll('nav a[href^="#"]').forEach(link => {
             link.addEventListener('click', function(e) {
+                // Retirer la classe active de tous les liens
+                document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+                // Ajouter la classe active au lien cliqué
+                this.classList.add('active');
+                
                 const targetId = this.getAttribute('href').slice(1);
                 const target = document.getElementById(targetId);
                 if (target) {
                     e.preventDefault();
-                    window.scrollTo({
-                        top: target.getBoundingClientRect().top + window.scrollY - 32,
-                        behavior: 'smooth'
-                    });
+                    
+                    // Scroll fluide personnalisé avec ralenti
+                    let targetPosition;
+                    
+                    // Pour la section "home", aller au tout début de la page
+                    if (targetId === 'home') {
+                        targetPosition = 0;
+                    } else {
+                        targetPosition = target.getBoundingClientRect().top + window.scrollY - 120;
+                    }
+                    const startPosition = window.scrollY;
+                    const distance = targetPosition - startPosition;
+                    const duration = Math.min(Math.abs(distance) * 0.8 + 800, 2500); // Durée variable selon la distance
+                    let start = null;
+                    
+                    function smoothScroll(timestamp) {
+                        if (!start) start = timestamp;
+                        const progress = Math.min((timestamp - start) / duration, 1);
+                        
+                        // Fonction d'easing pour un ralenti en fin de course
+                        const ease = 1 - Math.pow(1 - progress, 4);
+                        
+                        window.scrollTo(0, startPosition + (distance * ease));
+                        
+                        if (progress < 1) {
+                            requestAnimationFrame(smoothScroll);
+                        }
+                    }
+                    
+                    requestAnimationFrame(smoothScroll);
                 }
             });
         });
 
-        // Scroll-to-top button
+        // Observer pour mettre à jour l'état actif basé sur le scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('nav a[href^="#"]');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, {
+            threshold: 0.3,
+            rootMargin: '-120px 0px -50% 0px' // Ajusté pour tenir compte du header
+        });
+
+        sections.forEach(section => observer.observe(section));
+
+        // Intersection Observer pour les animations au scroll
+        const scrollObserverOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    
+                    // Animation spéciale pour les cartes
+                    if (entry.target.classList.contains('service-card') || 
+                        entry.target.classList.contains('result-card') || 
+                        entry.target.classList.contains('team-card') ||
+                        entry.target.classList.contains('testimonial-card')) {
+                        entry.target.style.animation = 'slideInUp 0.6s ease-out forwards';
+                    }
+                }
+            });
+        }, scrollObserverOptions);
+
+        // Observer tous les éléments animables
+        document.querySelectorAll('.section, .service-card, .result-card, .team-card, .portfolio-item, .testimonial-card').forEach(el => {
+            scrollObserver.observe(el);
+        });
+
+        // Scroll-to-top button et barre de progression
         const scrollBtn = document.getElementById('scroll-top-btn');
+        const scrollProgress = document.getElementById('scroll-progress');
+        
         window.addEventListener('scroll', () => {
+            // Calcul du pourcentage de scroll
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            
+            // Mise à jour de la barre de progression
+            scrollProgress.style.width = scrollPercent + '%';
+            
+            // Bouton scroll-to-top
             scrollBtn.style.display = window.scrollY > 180 ? 'flex' : 'none';
             scrollBtn.style.opacity = window.scrollY > 180 ? '1' : '0';
             scrollBtn.style.transform = window.scrollY > 180 ? 'scale(1)' : 'scale(0.8)';
@@ -459,7 +944,198 @@
             scrollBtn.style.transform = 'scale(1)';
         });
         scrollBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Scroll vers le haut avec ralenti personnalisé
+            const startPosition = window.scrollY;
+            const duration = Math.min(startPosition * 0.6 + 600, 2000);
+            let start = null;
+            
+            function smoothScrollToTop(timestamp) {
+                if (!start) start = timestamp;
+                const progress = Math.min((timestamp - start) / duration, 1);
+                
+                // Fonction d'easing pour un ralenti en fin de course
+                const ease = 1 - Math.pow(1 - progress, 4);
+                
+                window.scrollTo(0, startPosition * (1 - ease));
+                
+                if (progress < 1) {
+                    requestAnimationFrame(smoothScrollToTop);
+                }
+            }
+            
+            requestAnimationFrame(smoothScrollToTop);
+        });
+
+        // Effet de clic sur les cartes d'équipe cliquables uniquement
+        document.querySelectorAll('#team a.team-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Animation de clic
+                this.style.transform = 'translateY(-10px) scale(0.95)';
+                this.style.transition = 'all 0.1s ease-out';
+                
+                setTimeout(() => {
+                    this.style.transform = 'translateY(-15px) scale(1.05)';
+                    this.style.transition = 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                }, 100);
+                
+                // Petit délai avant la redirection pour voir l'animation
+                setTimeout(() => {
+                    window.open(this.href, '_blank');
+                }, 200);
+                
+                e.preventDefault();
+            });
+        });
+        
+        // Fonctionnalité FAQ interactive
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const faqItem = this.parentNode;
+                    const faqAnswer = faqItem.querySelector('.faq-answer');
+                    const isActive = faqItem.classList.contains('active');
+                    
+                    // Fermer toutes les autres FAQ
+                    document.querySelectorAll('.faq-item').forEach(item => {
+                        if (item !== faqItem) {
+                            item.classList.remove('active');
+                            item.querySelector('.faq-answer').classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle la FAQ actuelle
+                    if (isActive) {
+                        faqItem.classList.remove('active');
+                        faqAnswer.classList.remove('active');
+                    } else {
+                        faqItem.classList.add('active');
+                        faqAnswer.classList.add('active');
+                    }
+                });
+            });
+
+            // Calculateur de revenus OnlyFans
+            const subscribersInput = document.getElementById('subscribers');
+            const monthlyPriceInput = document.getElementById('monthly-price');
+            const buyersPercentageSlider = document.getElementById('buyers-percentage');
+            const buyersValueDisplay = document.getElementById('buyers-value');
+            const upsellAmountInput = document.getElementById('upsell-amount');
+            const currentRevenueDisplay = document.getElementById('current-revenue');
+            const potentialRevenueDisplay = document.getElementById('potential-revenue');
+            const subscriptionRevenueDisplay = document.getElementById('subscription-revenue');
+            const privateRevenueDisplay = document.getElementById('private-revenue');
+            const boostAmountDisplay = document.getElementById('boost-amount');
+
+            // Mise à jour du slider
+            buyersPercentageSlider.addEventListener('input', function() {
+                buyersValueDisplay.textContent = this.value + '%';
+                calculateRevenue();
+            });
+
+            // Calcul des revenus
+            function calculateRevenue() {
+                const subscribers = parseInt(subscribersInput.value) || 0;
+                const monthlyPrice = parseFloat(monthlyPriceInput.value) || 0;
+                const buyersPercentage = parseFloat(buyersPercentageSlider.value) || 0;
+                const upsellAmount = parseFloat(upsellAmountInput.value) || 0;
+
+                // Calcul selon la formule fournie
+                const subscriptionRevenue = subscribers * monthlyPrice;
+                const privateContentRevenue = subscribers * (buyersPercentage / 100) * upsellAmount;
+                const totalRevenue = subscriptionRevenue + privateContentRevenue;
+
+                // Estimation avec l'agence (+30%)
+                const potentialRevenue = totalRevenue * 1.3;
+                const boost = potentialRevenue - totalRevenue;
+
+                // Formatage et affichage
+                const formatEur = (amount) => new Intl.NumberFormat('fr-FR', {
+                    style: 'currency',
+                    currency: 'EUR',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(amount);
+
+                currentRevenueDisplay.textContent = formatEur(totalRevenue);
+                potentialRevenueDisplay.textContent = formatEur(potentialRevenue);
+                
+                // Mise à jour des labels selon la langue
+                const currentDict = currentLang === 'fr' ? fr : en;
+                subscriptionRevenueDisplay.textContent = `${currentDict.subscriptionLabel}: ${formatEur(subscriptionRevenue)}`;
+                privateRevenueDisplay.textContent = `${currentDict.privateContentLabel}: ${formatEur(privateContentRevenue)}`;
+                boostAmountDisplay.textContent = `+${formatEur(boost)} ${currentDict.firstMonthBoost}`;
+
+                // Animation des résultats
+                if (totalRevenue > 0) {
+                    document.querySelectorAll('.result-card').forEach(card => {
+                        card.style.transform = 'scale(1.02)';
+                        setTimeout(() => {
+                            card.style.transform = 'scale(1)';
+                        }, 200);
+                    });
+                }
+            }
+
+            // Event listeners pour le calcul en temps réel
+            [subscribersInput, monthlyPriceInput, upsellAmountInput].forEach(input => {
+                input.addEventListener('input', calculateRevenue);
+                input.addEventListener('keyup', calculateRevenue);
+            });
+
+            // Fonction pour mettre à jour les traductions du calculateur
+            window.updateCalculatorTranslations = function() {
+                calculateRevenue(); // Recalcule pour mettre à jour les labels
+            };
+
+            // Calcul initial avec des valeurs par défaut
+            subscribersInput.value = 1000;
+            monthlyPriceInput.value = 15;
+            upsellAmountInput.value = 50;
+            calculateRevenue();
+
+            // Slider d'images
+            let currentSlideIndex = 0;
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.dot');
+            const totalSlides = slides.length;
+
+            // Auto-slide toutes les 4 secondes
+            setInterval(() => {
+                changeSlide(1);
+            }, 4000);
+
+            function showSlide(index) {
+                // Cache toutes les slides
+                slides.forEach(slide => slide.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
+                
+                // Affiche la slide active
+                slides[index].classList.add('active');
+                dots[index].classList.add('active');
+            }
+
+            function changeSlide(direction) {
+                currentSlideIndex += direction;
+                
+                if (currentSlideIndex >= totalSlides) {
+                    currentSlideIndex = 0;
+                } else if (currentSlideIndex < 0) {
+                    currentSlideIndex = totalSlides - 1;
+                }
+                
+                showSlide(currentSlideIndex);
+            }
+
+            function currentSlide(index) {
+                currentSlideIndex = index - 1;
+                showSlide(currentSlideIndex);
+            }
+
+            // Rendre les fonctions globales pour les onclick
+            window.changeSlide = changeSlide;
+            window.currentSlide = currentSlide;
         });
     </script>
 </body>
