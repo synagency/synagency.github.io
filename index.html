@@ -460,6 +460,103 @@
         }
         animateCounter('member-counter', 100, 2500);
 
+        // Fonctionnalité du slider d'images
+        let currentSlideIndex = 1;
+        const totalSlides = 3;
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.dot');
+            
+            if (n > totalSlides) { currentSlideIndex = 1; }
+            if (n < 1) { currentSlideIndex = totalSlides; }
+            
+            // Masquer toutes les slides
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            // Masquer tous les dots
+            dots.forEach(dot => {
+                dot.classList.remove('active');
+            });
+            
+            // Afficher la slide et le dot actifs
+            if (slides[currentSlideIndex - 1]) {
+                slides[currentSlideIndex - 1].classList.add('active');
+            }
+            if (dots[currentSlideIndex - 1]) {
+                dots[currentSlideIndex - 1].classList.add('active');
+            }
+        }
+
+        function changeSlide(n) {
+            showSlide(currentSlideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlide(currentSlideIndex = n);
+        }
+
+        // Auto-play du slider (optionnel)
+        setInterval(() => {
+            changeSlide(1);
+        }, 5000); // Change de slide toutes les 5 secondes
+
+        // Fonctionnalité du calculateur OnlyFans
+        function updateCalculator() {
+            const subscribers = parseFloat(document.getElementById('subscribers').value) || 0;
+            const monthlyPrice = parseFloat(document.getElementById('monthly-price').value) || 0;
+            const upsellAmount = parseFloat(document.getElementById('upsell-amount').value) || 0;
+            const buyersPercentage = parseFloat(document.getElementById('buyers-percentage').value) || 0;
+
+            // Calculs
+            const subscriptionRevenue = subscribers * monthlyPrice;
+            const privateContentBuyers = subscribers * (buyersPercentage / 100);
+            const privateRevenue = privateContentBuyers * upsellAmount;
+            const currentTotal = subscriptionRevenue + privateRevenue;
+            const potentialTotal = currentTotal * 1.3; // +30% avec Syn Agency
+            const boost = potentialTotal - currentTotal;
+
+            // Formatage des nombres
+            const formatCurrency = (amount) => {
+                return new Intl.NumberFormat('fr-FR', {
+                    style: 'currency',
+                    currency: 'EUR',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(amount);
+            };
+
+            // Mise à jour de l'affichage
+            document.getElementById('current-revenue').textContent = formatCurrency(currentTotal);
+            document.getElementById('subscription-revenue').textContent = `Abonnements: ${formatCurrency(subscriptionRevenue)}`;
+            document.getElementById('private-revenue').textContent = `Contenu privé: ${formatCurrency(privateRevenue)}`;
+            document.getElementById('potential-revenue').textContent = formatCurrency(potentialTotal);
+            document.getElementById('boost-amount').textContent = `+${formatCurrency(boost)} dès le premier mois`;
+        }
+
+        // Mise à jour du slider de pourcentage
+        function updateSliderValue() {
+            const slider = document.getElementById('buyers-percentage');
+            const valueDisplay = document.getElementById('buyers-value');
+            valueDisplay.textContent = slider.value + '%';
+            updateCalculator();
+        }
+
+        // Event listeners pour le calculateur
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ajouter les event listeners aux inputs
+            document.getElementById('subscribers').addEventListener('input', updateCalculator);
+            document.getElementById('monthly-price').addEventListener('input', updateCalculator);
+            document.getElementById('upsell-amount').addEventListener('input', updateCalculator);
+            document.getElementById('buyers-percentage').addEventListener('input', updateSliderValue);
+
+            // Initialiser le calculateur
+            updateCalculator();
+            updateSliderValue();
+        });
+
         // Langues
         const fr = {
             nav: ["Accueil", "Services", "Résultats", "Avis", "Équipe", "Calculateur", "FAQ"],

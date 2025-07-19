@@ -967,8 +967,6 @@ input:focus, textarea:focus {
     text-align: center;
 }
 
-
-
 .calculator-results {
     display: flex;
     flex-direction: column;
