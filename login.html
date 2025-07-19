@@ -412,18 +412,18 @@
 
             // Simulation d'une vérification (remplacez par votre logique d'authentification)
             setTimeout(() => {
-                // Validation des identifiants
-                const validCredentials = [
-                    { email: 'admin@synagency.com', password: 'SynAgency2025!' },
-                    { email: 'emma@synagency.com', password: 'Emma2025!' },
-                    { email: 'demo@synagency.com', password: 'Demo123!' },
-                    { email: 'charli@synagency.fr', password: 'Monstergtx123!' },
-                    { email: 'valentin@synagency.fr', password: 'valouzz123' }
-                ];
+                // Base de données utilisateurs (synchronisée avec dashboard.html)
+                const usersDatabase = {
+                    'admin@synagency.com': { email: 'admin@synagency.com', password: 'SynAgency2025!', isActive: true },
+                    'emma@synagency.com': { email: 'emma@synagency.com', password: 'Emma2025!', isActive: true },
+                    'demo@synagency.com': { email: 'demo@synagency.com', password: 'Demo123!', isActive: true },
+                    'charli@synagency.fr': { email: 'charli@synagency.fr', password: 'Monstergtx123!', isActive: true },
+                    'valentin@synagency.fr': { email: 'valentin@synagency.fr', password: 'valouzz123', isActive: true }
+                };
 
-                const isValid = validCredentials.some(cred => 
-                    cred.email === email && cred.password === password
-                );
+                // Vérification des identifiants
+                const user = usersDatabase[email];
+                const isValid = user && user.isActive && user.password === password;
 
                 if (isValid) {
                     // Stocker l'état de connexion

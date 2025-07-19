@@ -1892,9 +1892,13 @@
             static getCurrentUser() {
                 const sessionData = JSON.parse(localStorage.getItem('synAgencySession') || 
                                              sessionStorage.getItem('synAgencySession') || '{}');
+                console.log('🔍 Session data:', sessionData);
                 if (sessionData.email) {
-                    return usersDatabase[sessionData.email];
+                    const user = usersDatabase[sessionData.email];
+                    console.log('🔍 User found:', user);
+                    return user;
                 }
+                console.log('❌ No email in session data');
                 return null;
             }
             
