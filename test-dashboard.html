@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Dashboard - Diagnostic</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            padding: 20px;
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(26,9,62,0.8);
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid #b48aff;
+        }
+        
+        h1 {
+            color: #b48aff;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+        
+        .test-section {
+            background: rgba(180,138,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid rgba(180,138,255,0.3);
+        }
+        
+        .test-section h2 {
+            color: #22c55e;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .info {
+            color: #f5f5fa;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .highlight {
+            color: #ffc107;
+            font-weight: bold;
+        }
+        
+        .success {
+            color: #22c55e;
+            font-weight: bold;
+        }
+        
+        .error {
+            color: #ef4444;
+            font-weight: bold;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #b48aff, #9333ea);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 24px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(180,138,255,0.4);
+        }
+        
+        .diagnostic-results {
+            background: rgba(0,0,0,0.5);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔧 Dashboard - Diagnostic de Visibilité</h1>
+        
+        <div class="test-section">
+            <h2>✅ Test de Base</h2>
+            <p class="info">Si vous voyez cette page, le problème n'est PAS dans le CSS de base.</p>
+            <p class="success">✓ HTML fonctionne</p>
+            <p class="success">✓ CSS fonctionne</p>
+            <p class="success">✓ Fichiers accessibles</p>
+        </div>
+        
+        <div class="test-section">
+            <h2>🔍 Tests Automatiques</h2>
+            <p class="info">Cliquez sur les boutons pour diagnostiquer le problème :</p>
+            
+            <button class="btn" onclick="testCSSLoad()">Tester Chargement CSS</button>
+            <button class="btn" onclick="testJavaScript()">Tester JavaScript</button>
+            <button class="btn" onclick="testDashboard()">Ouvrir Dashboard Original</button>
+            
+            <div id="diagnostic-results" class="diagnostic-results" style="display: none;">
+                <h3 style="color: #ffc107; margin-bottom: 10px;">📊 Résultats du Diagnostic :</h3>
+                <div id="results-content"></div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>🎯 Dashboard Simplifié (Test)</h2>
+            <p class="info">Version ultra-simple du dashboard pour test :</p>
+            
+            <div style="background: rgba(26,9,62,0.7); padding: 20px; border-radius: 15px; margin: 15px 0;">
+                <h3 style="color: #b48aff; margin-bottom: 15px;">
+                    <i style="color: #3b82f6;">💳</i> Gestion Financière
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                    <div style="background: rgba(59,130,246,0.1); border-radius: 10px; padding: 15px; border: 1px solid rgba(59,130,246,0.3);">
+                        <h4 style="color: #3b82f6; margin-bottom: 5px;">Nombre de modèles</h4>
+                        <div style="color: #f59e0b; font-size: 1.5em; font-weight: bold;">0</div>
+                    </div>
+                    
+                    <div style="background: rgba(34,197,94,0.1); border-radius: 10px; padding: 15px; border: 1px solid rgba(34,197,94,0.3);">
+                        <h4 style="color: #22c55e; margin-bottom: 5px;">Revenus</h4>
+                        <div style="color: #22c55e; font-size: 1.5em; font-weight: bold;">--</div>
+                    </div>
+                    
+                    <div style="background: rgba(236,72,153,0.1); border-radius: 10px; padding: 15px; border: 1px solid rgba(236,72,153,0.3);">
+                        <h4 style="color: #ec4899; margin-bottom: 5px;">Commissions</h4>
+                        <div style="color: #ec4899; font-size: 1.5em; font-weight: bold;">--</div>
+                    </div>
+                </div>
+                
+                <button class="btn" onclick="alert('✅ Bouton fonctionne ! Le problème n est pas dans le JavaScript de base.')">
+                    <span style="margin-right: 8px;">➕</span>
+                    Ajouter un modèle (Test)
+                </button>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>💡 Instructions</h2>
+            <p class="info">1. <span class="highlight">Si vous voyez cette page</span> → Le problème est spécifique au dashboard.html</p>
+            <p class="info">2. <span class="highlight">Si cette page ne s'affiche pas non plus</span> → Problème de serveur/fichiers</p>
+            <p class="info">3. <span class="highlight">Testez les boutons</span> → Ils vont diagnostiquer le problème exact</p>
+        </div>
+    </div>
+    
+    <script>
+        function testCSSLoad() {
+            const results = document.getElementById('diagnostic-results');
+            const content = document.getElementById('results-content');
+            
+            results.style.display = 'block';
+            content.innerHTML = '';
+            
+            // Test du fichier CSS principal
+            const linkElement = document.createElement('link');
+            linkElement.rel = 'stylesheet';
+            linkElement.href = './css/style.css';
+            
+            linkElement.onload = function() {
+                content.innerHTML += '<p class="success">✓ CSS principal (style.css) chargé avec succès</p>';
+            };
+            
+            linkElement.onerror = function() {
+                content.innerHTML += '<p class="error">✗ ERREUR : Impossible de charger css/style.css</p>';
+                content.innerHTML += '<p class="info">→ Vérifiez que le fichier css/style.css existe</p>';
+            };
+            
+            document.head.appendChild(linkElement);
+        }
+        
+        function testJavaScript() {
+            const results = document.getElementById('diagnostic-results');
+            const content = document.getElementById('results-content');
+            
+            results.style.display = 'block';
+            content.innerHTML = '<p class="success">✓ JavaScript fonctionne parfaitement</p>';
+            content.innerHTML += '<p class="info">→ Le problème n\'est pas dans JavaScript</p>';
+        }
+        
+        function testDashboard() {
+            const results = document.getElementById('diagnostic-results');
+            const content = document.getElementById('results-content');
+            
+            results.style.display = 'block';
+            content.innerHTML = '<p class="info">🔄 Ouverture du dashboard original...</p>';
+            
+            // Ouvrir dans un nouvel onglet
+            window.open('./dashboard.html', '_blank');
+            
+            setTimeout(() => {
+                content.innerHTML += '<p class="highlight">→ Dashboard ouvert dans un nouvel onglet</p>';
+                content.innerHTML += '<p class="info">→ Comparez ce que vous voyez dans les deux onglets</p>';
+            }, 1000);
+        }
+        
+        // Test automatique au chargement
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('✅ Page de test chargée avec succès');
+            console.log('🔧 Prêt pour le diagnostic du dashboard');
+        });
+    </script>
+</body>
+</html>

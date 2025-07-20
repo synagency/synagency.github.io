@@ -1,0 +1,16 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Ouvrir Dashboard OnlyFans",
+			"type": "shell",
+			"command": "start",
+			"args": [
+				"dashboard.html"
+			],
+			"group": "build",
+			"isBackground": false,
+			"problemMatcher": []
+		}
+	]
+}

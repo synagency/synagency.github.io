@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Simple Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #120726, #1a093e);
+            color: #f5f5fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(26,9,62,0.7);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid #23233a;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .title {
+            font-size: 2.5em;
+            color: #b48aff;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: rgba(245,245,250,0.8);
+            font-size: 1.2em;
+        }
+        
+        .test-section {
+            background: rgba(180,138,255,0.1);
+            border: 1px solid #b48aff;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .success {
+            color: #22c55e;
+            font-size: 1.2em;
+        }
+        
+        .error {
+            color: #ef4444;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><i class="fas fa-tachometer-alt"></i> Test Simple</h1>
+            <p class="subtitle">Diagnostic du problème de visibilité</p>
+        </div>
+        
+        <div class="test-section">
+            <h3><i class="fas fa-check-circle success"></i> CSS chargé correctement</h3>
+            <p>Si vous voyez cette section stylée, le CSS fonctionne.</p>
+        </div>
+        
+        <div class="test-section">
+            <h3><i class="fas fa-code"></i> Test JavaScript</h3>
+            <button onclick="testJS()" style="
+                background: linear-gradient(135deg, #b48aff, #9333ea);
+                border: none;
+                border-radius: 10px;
+                padding: 10px 20px;
+                color: white;
+                font-weight: 600;
+                cursor: pointer;
+                margin: 10px 0;
+            ">Tester JavaScript</button>
+            <div id="js-result" style="margin-top: 10px;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3><i class="fas fa-info-circle"></i> Informations du navigateur</h3>
+            <p><strong>User Agent:</strong> <span id="user-agent"></span></p>
+            <p><strong>Taille de l'écran:</strong> <span id="screen-size"></span></p>
+            <p><strong>Taille de la fenêtre:</strong> <span id="window-size"></span></p>
+        </div>
+        
+        <div class="test-section">
+            <h3><i class="fas fa-external-link-alt"></i> Accès au dashboard principal</h3>
+            <a href="dashboard.html" style="
+                display: inline-block;
+                background: linear-gradient(135deg, #22c55e, #16a34a);
+                color: white;
+                text-decoration: none;
+                padding: 12px 25px;
+                border-radius: 10px;
+                font-weight: 600;
+                margin: 10px 0;
+            ">Ouvrir le Dashboard Principal</a>
+        </div>
+    </div>
+
+    <script>
+        // Test des informations système
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('user-agent').textContent = navigator.userAgent;
+            document.getElementById('screen-size').textContent = screen.width + ' x ' + screen.height;
+            document.getElementById('window-size').textContent = window.innerWidth + ' x ' + window.innerHeight;
+        });
+        
+        function testJS() {
+            const result = document.getElementById('js-result');
+            result.innerHTML = '<span class="success"><i class="fas fa-check"></i> JavaScript fonctionne correctement!</span>';
+            
+            // Test avec une petite animation
+            result.style.transition = 'all 0.3s ease';
+            result.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                result.style.transform = 'scale(1)';
+            }, 300);
+        }
+    </script>
+</body>
+</html>

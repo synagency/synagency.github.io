@@ -19,9 +19,32 @@
     
     <!-- Navigation -->
     <header>
-        <div style="display:flex;align-items:center;justify-content:center;gap:22px;max-width:980px;margin:0 auto;">
-            <!-- Le logo a été retiré -->
-            <h1 id="header-title" style="opacity:0; transform:translateY(-40px); transition:opacity 1.2s 0.1s, transform 1.2s 0.1s;">Syn Agency</h1>
+        <div style="display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:0 20px;">
+            <div style="display:flex;align-items:center;justify-content:center;gap:22px;">
+                <!-- Le logo a été retiré -->
+                <h1 id="header-title" style="opacity:0; transform:translateY(-40px); transition:opacity 1.2s 0.1s, transform 1.2s 0.1s;">Syn Agency</h1>
+            </div>
+            
+            <!-- Bouton Dashboard en haut à droite -->
+            <a href="login.html" class="btn dashboard-btn" style="
+                background: rgba(180,138,255,0.1);
+                border: 2px solid #b48aff;
+                color: #b48aff;
+                padding: 10px 20px;
+                border-radius: 10px;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 0.9em;
+                transition: all 0.3s ease;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                opacity: 0;
+                transform: translateY(-40px);
+            " onmouseover="this.style.background='#b48aff'; this.style.color='white'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 25px rgba(180,138,255,0.3)'" onmouseout="this.style.background='rgba(180,138,255,0.1)'; this.style.color='#b48aff'; this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                <i class="fas fa-chart-line"></i>
+                Dashboard
+            </a>
         </div>
         <nav>
             <a href="#home" id="nav-home">Accueil</a>
@@ -60,23 +83,6 @@
                 </p>
                 <div class="hero-buttons" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSfTugazGGz7qGkhZdY-J1UlXmguVquAvKirhAVvalghTPlluQ/viewform?usp=dialog" target="_blank" rel="noopener" class="btn hero-btn" id="audit-btn">Lancer mon business !</a>
-                    <a href="login.html" class="btn dashboard-btn" style="
-                        background: rgba(180,138,255,0.1);
-                        border: 2px solid #b48aff;
-                        color: #b48aff;
-                        padding: 14px 28px;
-                        border-radius: 12px;
-                        text-decoration: none;
-                        font-weight: 600;
-                        font-size: 1em;
-                        transition: all 0.3s ease;
-                        display: inline-flex;
-                        align-items: center;
-                        gap: 10px;
-                    " onmouseover="this.style.background='#b48aff'; this.style.color='white'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 30px rgba(180,138,255,0.3)'" onmouseout="this.style.background='rgba(180,138,255,0.1)'; this.style.color='#b48aff'; this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-                        <i class="fas fa-chart-line"></i>
-                        Accéder au Dashboard
-                    </a>
                 </div>
             </div>
         </section>
@@ -403,6 +409,11 @@
                 document.querySelector('header').style.transform = 'translateY(0)';
                 document.getElementById('header-title').style.opacity = '1';
                 document.getElementById('header-title').style.transform = 'translateY(0)';
+                
+                // Animer le bouton dashboard
+                document.querySelector('.dashboard-btn').style.transition = 'opacity 1.2s 0.2s, transform 1.2s 0.2s';
+                document.querySelector('.dashboard-btn').style.opacity = '1';
+                document.querySelector('.dashboard-btn').style.transform = 'translateY(0)';
                 
                 // Ajouter l'animation glow au titre
                 setTimeout(() => {
