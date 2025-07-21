@@ -12,6 +12,21 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .antoine-card, .charli-card {
+            position: relative;
+        }
+        
+        .antoine-card:hover, .charli-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 30px rgba(180,138,255,0.3);
+        }
+    </style>
 </head>
 <body>
     <!-- Barre de progression de scroll -->
@@ -195,16 +210,24 @@
         <section id="team" class="section">
             <h2 style="color:#b48aff;">Notre équipe</h2>
             <div style="display:flex;flex-wrap:wrap;gap:36px;justify-content:center;">
-                <a href="https://www.instagram.com/antoinehzr2/" target="_blank" rel="noopener" class="team-card" style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;text-decoration:none;display:block;transition:all 0.3s ease;">
+                <div onclick="loadAntoinePortfolio()" class="team-card antoine-card" style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;text-decoration:none;display:block;transition:all 0.3s ease;cursor:pointer;">
                     <img src="assets/team-antoine.jpg" alt="Antoine CEO" style="width:80px;height:80px;border-radius:50%;margin-bottom:14px;object-fit:cover;">
                     <h3 style="color:#b48aff;margin-bottom:8px;font-size:1.12em;font-weight:700;">Antoine</h3>
                     <p style="color:#f5f5fa;font-size:1em;margin:0;">CEO & Stratégie</p>
-                </a>
-                <a href="https://www.instagram.com/charli.sclr/" target="_blank" rel="noopener" class="team-card" style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;text-decoration:none;display:block;transition:all 0.3s ease;">
+                    <div class="loading-overlay" style="position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(26,9,62,0.95);border-radius:18px;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:10;">
+                        <div class="loading-spinner" style="width:40px;height:40px;border:3px solid rgba(180,138,255,0.3);border-top:3px solid #b48aff;border-radius:50%;animation:spin 1s linear infinite;margin-bottom:10px;"></div>
+                        <p style="color:#b48aff;font-size:0.9em;margin:0;">Accès au portfolio...</p>
+                    </div>
+                </div>
+                <div onclick="loadCharliPortfolio()" class="team-card charli-card" style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;text-decoration:none;display:block;transition:all 0.3s ease;cursor:pointer;position:relative;">
                     <img src="assets/team-charli.jpg" alt="Charli CEO" style="width:80px;height:80px;border-radius:50%;margin-bottom:14px;object-fit:cover;">
                     <h3 style="color:#b48aff;margin-bottom:8px;font-size:1.12em;font-weight:700;">Charli</h3>
                     <p style="color:#f5f5fa;font-size:1em;margin:0;">CEO</p>
-                </a>
+                    <div class="loading-overlay" style="position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(26,9,62,0.95);border-radius:18px;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:10;">
+                        <div class="loading-spinner" style="width:40px;height:40px;border:3px solid rgba(180,138,255,0.3);border-top:3px solid #b48aff;border-radius:50%;animation:spin 1s linear infinite;margin-bottom:10px;"></div>
+                        <p style="color:#b48aff;font-size:0.9em;margin:0;">Accès au portfolio...</p>
+                    </div>
+                </div>
                 <div class="team-card" style="background:rgba(26,9,62,0.7);border-radius:18px;padding:28px 22px;min-width:220px;max-width:260px;box-shadow:0 4px 24px rgba(80,0,160,0.13);border:1px solid #23233a;text-align:center;">
                     <img src="assets/team-bradley.jpg" alt="Bradley Marketing Digital" style="width:80px;height:80px;border-radius:50%;margin-bottom:14px;object-fit:cover;">
                     <h3 style="color:#b48aff;margin-bottom:8px;font-size:1.12em;font-weight:700;">Bradley</h3>
@@ -351,6 +374,52 @@
         <img src="https://images.icon-icons.com/1875/PNG/512/arrowup_120105.png" alt="Scroll to top" style="width:40px;height:40px;filter:brightness(0) invert(0);margin-top:-2px;">
     </button>
     <script>
+        // Fonction pour le chargement du portfolio d'Antoine
+        function loadAntoinePortfolio() {
+            const antoineCard = document.querySelector('.antoine-card');
+            const loadingOverlay = antoineCard.querySelector('.loading-overlay');
+            
+            // Ajouter l'effet de hover et afficher le loading
+            antoineCard.style.transform = 'translateY(-5px)';
+            antoineCard.style.boxShadow = '0 8px 35px rgba(180,138,255,0.4)';
+            loadingOverlay.style.display = 'flex';
+            
+            // Après 2 secondes, rediriger vers le portfolio
+            setTimeout(() => {
+                window.open('https://www.synagency.github.io/portfolio', '_blank');
+                
+                // Réinitialiser l'état après la redirection
+                setTimeout(() => {
+                    antoineCard.style.transform = '';
+                    antoineCard.style.boxShadow = '';
+                    loadingOverlay.style.display = 'none';
+                }, 500);
+            }, 2000);
+        }
+        
+        // Fonction pour le chargement du portfolio de Charli
+        function loadCharliPortfolio() {
+            const charliCard = document.querySelector('.charli-card');
+            const loadingOverlay = charliCard.querySelector('.loading-overlay');
+            
+            // Ajouter l'effet de hover et afficher le loading
+            charliCard.style.transform = 'translateY(-5px)';
+            charliCard.style.boxShadow = '0 8px 35px rgba(180,138,255,0.4)';
+            loadingOverlay.style.display = 'flex';
+            
+            // Après 2 secondes, rediriger vers le portfolio
+            setTimeout(() => {
+                window.open('https://www.synagency.github.io/portfolio', '_blank');
+                
+                // Réinitialiser l'état après la redirection
+                setTimeout(() => {
+                    charliCard.style.transform = '';
+                    charliCard.style.boxShadow = '';
+                    loadingOverlay.style.display = 'none';
+                }, 500);
+            }, 2000);
+        }
+        
         // Détection du navigateur et affichage des drapeaux appropriés
         function initLanguageButtons() {
             const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
